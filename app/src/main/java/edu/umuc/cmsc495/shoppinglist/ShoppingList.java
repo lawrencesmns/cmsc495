@@ -1,7 +1,5 @@
 package edu.umuc.cmsc495.shoppinglist;
 
-import android.support.annotation.NonNull;
-
 import java.util.*;
 /**
  * Created by James on 6/7/2016.
@@ -16,7 +14,7 @@ public class ShoppingList {
 
     /**
      * Constructor for the shopping list. Fills the name and list objects.
-     * @param name
+     * @param name - Name of the list to be built.
      */
     ShoppingList(String name){
         this.name = name;
