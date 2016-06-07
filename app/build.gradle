@@ -6,8 +6,8 @@ android {
 
     defaultConfig {
         applicationId "edu.umuc.cmsc495.shoppinglist"
-        minSdkVersion 16
-        targetSdkVersion 23
+        minSdkVersion 8
+        targetSdkVersion 8
         versionCode 1
         versionName "1.0"
     }
