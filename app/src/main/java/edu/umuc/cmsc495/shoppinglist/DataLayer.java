@@ -22,7 +22,7 @@ public class DataLayer {
 
     protected boolean addRecipe(Recipe newRecipe){
 
-        return true;
+        return  true;
     }
 
     protected boolean addShoppingList(ShoppingList shoppingList){
