@@ -41,18 +41,18 @@ public class DataLayer {
     }
 
     protected FileList getRecipeList(){
-
+        return null;
     }
 
     protected FileList getShoppingLists(){
-
+        return null;
     }
 
     protected Recipe getRecipe(){
-
+        return null;
     }
 
     protected ShoppingList getShoppingList(){
-
+        return null;
     }
 }
