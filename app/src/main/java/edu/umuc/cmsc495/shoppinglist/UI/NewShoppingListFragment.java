@@ -8,6 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import edu.umuc.cmsc495.shoppinglist.R;
 
 /**
@@ -64,6 +68,17 @@ public class NewShoppingListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        //this is dummy data!
+        String[] fakeRecipiesArray = {
+                "Sausage and Pepperoni Pizza",
+                "Chicken Cordon Bleu",
+                "New York Strip Steak",
+                "Oatmeal Raisin Cookies",
+                "Chicken Carbonera"
+        };
+
+        List<String> recipies = new ArrayList<String>(Arrays.asList(fakeRecipiesArray));
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_new_shopping_list, container, false);
     }
