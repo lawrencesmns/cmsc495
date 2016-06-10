@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,6 +25,8 @@ import edu.umuc.cmsc495.shoppinglist.R;
  * create an instance of this fragment.
  */
 public class NewShoppingListFragment extends Fragment {
+    ArrayAdapter<String> mRecipeAdapter;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -69,7 +73,7 @@ public class NewShoppingListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         //this is dummy data!
-        String[] fakeRecipiesArray = {
+        String[] dummyRecipesArray = {
                 "Sausage and Pepperoni Pizza",
                 "Chicken Cordon Bleu",
                 "New York Strip Steak",
@@ -77,10 +81,17 @@ public class NewShoppingListFragment extends Fragment {
                 "Chicken Carbonera"
         };
 
-        List<String> recipies = new ArrayList<String>(Arrays.asList(fakeRecipiesArray));
+        List<String> dummyRecipes = new ArrayList(Arrays.asList(dummyRecipesArray));
+        mRecipeAdapter = new ArrayAdapter(getActivity(),
+                R.layout.list_item_new_shopping, R.id.list_item_recipename_textview, dummyRecipes);
+
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_new_shopping_list, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_new_shopping_list, container, false);
+
+        ListView listView = (ListView) rootView.findViewById(R.id.listview_recipesnew);
+        listView.setAdapter(mRecipeAdapter);
+        return rootView;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
