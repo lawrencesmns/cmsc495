@@ -69,11 +69,9 @@ public class NewShoppingListFragment extends Fragment {
                              Bundle savedInstanceState) {
         //this is dummy data!
         String[] dummyRecipesArray = {
-                "Sausage and Pepperoni Pizza",
-                "Chicken Cordon Bleu",
-                "New York Strip Steak",
-                "Oatmeal Raisin Cookies",
-                "Chicken Carbonera"
+                "Ice cream", "Apple juice", "Elephant", "Candy", "Beer", "Vodka", "Bread", "Chips",
+                "Mozzarella", "New York Strip Steak", "Oatmeal Raisin Cookies", "Chicken", "Radishes",
+                "Onions"
         };
 
         List<String> dummyRecipes = new ArrayList(Arrays.asList(dummyRecipesArray));
