@@ -58,10 +58,10 @@ public class NewShoppingListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        getActivity().closeOptionsMenu();
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         actionBar.setTitle("Test");
         actionBar.setDisplayHomeAsUpEnabled(true);
+
     }
 
     @Override
@@ -125,4 +125,5 @@ public class NewShoppingListFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
 }
