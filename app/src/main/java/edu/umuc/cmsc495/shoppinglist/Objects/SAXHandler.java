@@ -17,17 +17,16 @@ public class SAXHandler extends DefaultHandler{
     //DataLayer data;
     String elementValue = null;
     Boolean elementOn = false;
-    public static XMLGettersSetters data = null;
-        public static XMLGettersSetters getXMLData(){ return data; }
-        public static void setXMLData(XMLGettersSetters data){ SAXHandler.data = data; }
+    public static XML_GettersSetters data = null;
+        public static XML_GettersSetters getXMLData(){ return data; }
+        public static void setXMLData(XML_GettersSetters data){ SAXHandler.data = data; }
 
 
     public void startElement(String localName, String qName,
                              Attributes attributes) throws SAXException {
 
-            elementOn = true;
+        elementOn = true;
 
-        if(localName.)
     }
 
 

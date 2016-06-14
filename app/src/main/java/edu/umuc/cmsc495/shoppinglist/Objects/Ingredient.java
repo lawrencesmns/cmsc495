@@ -4,13 +4,13 @@ package edu.umuc.cmsc495.shoppinglist.Objects;
  * Created by James on 6/6/2016.
  */
 public class Ingredient {
-    protected String name;
-    protected int Measurement, Count;
+    protected String name, Measurement;
+    protected int Count;
     protected boolean isCrossedOut, isValid, usesMeasure, usesCount;
 
     //TODO: Determine how enum should be implemented on measure/count
 
-    Ingredient(String name, int Measurement, int Count){
+    Ingredient(String name, String Measurement, int Count){
         this.name = name;
         this.Measurement = Measurement;
         this.Count = Count;
@@ -38,16 +38,12 @@ public class Ingredient {
     protected void editName(String name){
         this.name = name;
     }
-    protected void editMeasurement(int Measurement){
+    protected void editMeasurement(String Measurement){
         this.Measurement = Measurement;
     }
-    protected void addMeasurement(int add) { this.Measurement += add; }
-    protected void subMeasurement(int sub) { this.Measurement += sub; }
     protected void editCount(int Count){
         this.Count = Count;
     }
-    protected void addCount(int add) { this.Count += add; }
-    protected void subCount(int sub) { this.Count += sub; }
     protected void CrossOutItem(){
         this.isCrossedOut = true;
     }
@@ -59,7 +55,7 @@ public class Ingredient {
     protected String getName(){
         return this.name;
     }
-    protected int getMeasurement(){
+    protected String getMeasurement(){
         return this.Measurement;
     }
     protected int getCount(){

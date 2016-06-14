@@ -30,7 +30,7 @@ public class ShoppingList {
      * If it is NOT, it simply adds the ingredient to the list.
      * @param newRecipe
      * @return true
-     */
+
     protected boolean addRecipe(Recipe newRecipe){
         List<Ingredient> recipeIngredients = newRecipe.getIngredientList();
 
@@ -38,7 +38,7 @@ public class ShoppingList {
             if(isIngredientAlreadyPresent(newIngredient)){
                 int indexOf = getIndexOfName(newIngredient);
                 Ingredient targetIngredient = this.Ingredients.get(indexOf);
-                targetIngredient = updateIngredient(targetIngredient, newIngredient);
+                //targetIngredient = updateIngredient(targetIngredient, newIngredient);
                 this.Ingredients.set(indexOf, targetIngredient);
             }else{
                 addIngredient(newIngredient);
@@ -46,18 +46,18 @@ public class ShoppingList {
         }
         return true;
     }
+    */
 
     /**
      * updates the quantities of oldIngredient by adding the quantities of newIngredient.
      * @param oldIngredient
      * @param newIngredient
      * @return updated Ingredient
-     */
+
     private Ingredient updateIngredient(Ingredient oldIngredient, Ingredient newIngredient){
-        oldIngredient.addCount(newIngredient.getCount());
-        oldIngredient.addMeasurement(newIngredient.getMeasurement());
         return oldIngredient;
     }
+    */
 
     /**
      * Checks if the given ingredient is present in the list by comparing the names
