@@ -170,6 +170,7 @@ public class ShoppingList {
     }
 
     //Get Methods
+    public String getName(){ return this.name; }
     protected String getEmailBody(){
         return this.emailBody;
     }

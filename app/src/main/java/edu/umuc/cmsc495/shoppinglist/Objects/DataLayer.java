@@ -12,10 +12,6 @@ public class DataLayer{
     String RECIPE_FILE_PREFIX = "r_";
     String SHOPPINGLIST_FILE_PREFIX = "sl_";
     char[] INVALID_FILE_NAME_CHARS = {'?',':','\\','\"','\'','*','|','/','<','>',';'};
-    FileOutputStream outputStream;
-
-    public void main(String args[]){
-    }
 
     /**
     protected getXMLReader(){
@@ -51,7 +47,6 @@ public class DataLayer{
     }
 
     protected Recipe getRecipe(){
-
 
         return null;
     }

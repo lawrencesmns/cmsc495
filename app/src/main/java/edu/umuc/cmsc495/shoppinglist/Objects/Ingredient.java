@@ -56,13 +56,13 @@ public class Ingredient {
     }
 
     //Get Methods
-    protected String getName(){
+    public String getName(){
         return this.name;
     }
-    protected int getMeasurement(){
+    public int getMeasurement(){
         return this.Measurement;
     }
-    protected int getCount(){
+    public int getCount(){
         return this.Count;
     }
     protected boolean getCrossed(){

@@ -7,9 +7,8 @@ import java.util.*;
  */
 public class Recipe {
     //Class Variable Declarations
-    String recipeName;
+    String recipeName, instructions, emailBody, emailSubject;
     List<Ingredient> ingredientList;
-    String instructions, emailBody, emailSubject;
 
     //Constructor
     Recipe(String recipeName){
@@ -67,19 +66,19 @@ public class Recipe {
     }
 
     //get Methods
-    protected String getRecipeName(){
+    public String getRecipeName(){
         return this.recipeName;
     }
-    protected String getInstructions(){
+    public String getInstructions(){
         return this.instructions;
     }
-    protected List<Ingredient> getIngredientList(){
+    public List<Ingredient> getIngredientList(){
         return this.ingredientList;
     }
-    protected String getEmailBody(){
+    public String getEmailBody(){
         return this.emailBody;
     }
-    protected String getEmailSubject(){
+    public String getEmailSubject(){
         return this.emailSubject;
     }
 }
