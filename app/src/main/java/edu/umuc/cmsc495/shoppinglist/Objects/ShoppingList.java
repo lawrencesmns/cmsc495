@@ -1,4 +1,4 @@
-package edu.umuc.cmsc495.shoppinglist;
+package edu.umuc.cmsc495.shoppinglist.Objects;
 
 import java.util.*;
 /**

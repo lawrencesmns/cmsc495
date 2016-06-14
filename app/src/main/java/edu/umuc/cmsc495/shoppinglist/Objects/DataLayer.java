@@ -1,7 +1,4 @@
-package edu.umuc.cmsc495.shoppinglist;
-
-import android.nfc.Tag;
-import android.util.Log;
+package edu.umuc.cmsc495.shoppinglist.Objects;
 
 import java.io.*;
 
@@ -9,7 +6,7 @@ import java.io.*;
  * Created by James on 6/7/2016.
  * Last Modified by james on 6/7/2016.
  */
-public class DataLayer {
+public class DataLayer{
 
     //Class Variables
     String RECIPE_FILE_PREFIX = "r_";
@@ -19,6 +16,11 @@ public class DataLayer {
 
     public void main(String args[]){
     }
+
+    /**
+    protected getXMLReader(){
+
+    }**/
 
     protected boolean addRecipe(Recipe newRecipe){
 
@@ -49,6 +51,8 @@ public class DataLayer {
     }
 
     protected Recipe getRecipe(){
+
+
         return null;
     }
 

@@ -1,4 +1,4 @@
-package edu.umuc.cmsc495.shoppinglist;
+package edu.umuc.cmsc495.shoppinglist.Objects;
 
 /**
  * Created by James on 6/6/2016.

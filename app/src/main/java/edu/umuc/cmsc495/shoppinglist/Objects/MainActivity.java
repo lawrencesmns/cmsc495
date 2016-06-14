@@ -1,4 +1,4 @@
-package edu.umuc.cmsc495.shoppinglist;
+package edu.umuc.cmsc495.shoppinglist.Objects;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import edu.umuc.cmsc495.shoppinglist.R;
 import edu.umuc.cmsc495.shoppinglist.UI.NewShoppingListFragment;
 
 public class MainActivity extends AppCompatActivity implements NewShoppingListFragment.OnFragmentInteractionListener {
