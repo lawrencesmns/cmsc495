@@ -66,19 +66,19 @@ public class Recipe {
     }
 
     //get Methods
-    public String getRecipeName(){
+    protected String getRecipeName(){
         return this.recipeName;
     }
-    public String getInstructions(){
+    protected String getInstructions(){
         return this.instructions;
     }
-    public List<Ingredient> getIngredientList(){
+    protected List<Ingredient> getIngredientList(){
         return this.ingredientList;
     }
-    public String getEmailBody(){
+    protected String getEmailBody(){
         return this.emailBody;
     }
-    public String getEmailSubject(){
+    protected String getEmailSubject(){
         return this.emailSubject;
     }
 }

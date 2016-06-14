@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--xml elements for recipe:-->
+<Recipe>
+    <Name>Grilled Chicken</Name>
+    <DateCreated>Jun 30, 2009 7:03:47 AM</DateCreated>
+    <DateModified>Jun 30, 2009 7:03:47 AM</DateModified>
+    <Instructions>Season the chicken, then place on a preheated grill, flipping the chicken every 2 minutes until cooked through</Instructions>
+    <Ingredients>
+        <Ingredient>
+            <Name>Raw Chicken Breast</Name>
+            <Measurement>Lb</Measurement>
+            <Quantity>4</Quantity>
+        </Ingredient>
+        <Ingredient>
+            <Name>Mama's Seasoning</Name>
+            <Measurement>Cup</Measurement>
+            <Quantity>1/2</Quantity>
+        </Ingredient>
+    </Ingredients>
+</Recipe>

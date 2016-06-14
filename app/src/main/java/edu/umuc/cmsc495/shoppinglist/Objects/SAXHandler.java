@@ -1,5 +1,7 @@
 package edu.umuc.cmsc495.shoppinglist.Objects;
 
+import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
 import org.xml.sax.helpers.*;
 import edu.umuc.cmsc495.shoppinglist.Objects.*;
 
@@ -12,14 +14,22 @@ import javax.xml.parsers.SAXParser;
  */
 public class SAXHandler extends DefaultHandler{
 
-    DataLayer data;
+    //DataLayer data;
     String elementValue = null;
     Boolean elementOn = false;
+    public static XMLGettersSetters data = null;
+        public static XMLGettersSetters getXMLData(){ return data; }
+        public static void setXMLData(XMLGettersSetters data){ SAXHandler.data = data; }
 
-    //Constructor
-    protected SAXHandler(DataLayer dataObject){
-        data = dataObject;
+
+    public void startElement(String localName, String qName,
+                             Attributes attributes) throws SAXException {
+
+            elementOn = true;
+
+        if(localName.)
     }
+
 
 
 }
