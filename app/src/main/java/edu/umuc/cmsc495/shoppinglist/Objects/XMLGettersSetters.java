@@ -1,4 +1,4 @@
-package edu.umuc.cmsc495.shoppinglist.SAXHandler;
+package edu.umuc.cmsc495.shoppinglist.Objects;
 
 import android.util.Log;
 

@@ -1,4 +1,4 @@
-package edu.umuc.cmsc495.shoppinglist.SAXHandler;
+package edu.umuc.cmsc495.shoppinglist.Objects;
 
 import org.xml.sax.helpers.*;
 import edu.umuc.cmsc495.shoppinglist.Objects.*;
