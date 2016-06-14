@@ -5,8 +5,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="edu.umuc.cmsc495.shoppinglist.UI.NewShoppingListFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,7 +16,7 @@
         android:layout_height="56dp"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
+        android:tint="@android:color/white"
         android:src="@android:drawable/ic_input_add" />
-    <!-- TODO figure out if that plus icon is part of the default icon set. If it isn't make own drawable -->
 
 </FrameLayout>
