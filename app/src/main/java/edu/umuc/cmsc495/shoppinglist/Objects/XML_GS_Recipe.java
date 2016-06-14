@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 /**
  * Created by James on 6/14/2016.
+ *
+ * XML Getter/Setter class for Recipe object
  */
 public class XML_GS_Recipe extends XML_GettersSetters{
 
