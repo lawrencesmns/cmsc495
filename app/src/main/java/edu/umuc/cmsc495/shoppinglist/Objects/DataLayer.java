@@ -25,8 +25,7 @@ public class DataLayer{
     char[] INVALID_FILE_NAME_CHARS = {'?',':','\\','\"','\'','*','|','/','<','>',';'};
 
     private List<Recipe> recipes = new ArrayList<Recipe>();
-
-
+    private List<ShoppingList> shoppingLists = new ArrayList<ShoppingList>();
 
 
     protected boolean addRecipe(Recipe newRecipe){
@@ -49,18 +48,8 @@ public class DataLayer{
         return true;
     }
 
-    protected List<Recipe> getRecipeList(){
-        return this.recipes;
-    }
-
-    protected FileList getShoppingLists(){
-        return null;
-    }
-
-    protected Recipe getRecipe(){
-
-        return null;
-    }
+    protected List<Recipe> getRecipeList(){return this.recipes;}
+    protected List<ShoppingList> getShoppingLists(){return this.shoppingLists; }
 
     protected ShoppingList getShoppingList(){
         return null;
@@ -84,17 +73,21 @@ public class DataLayer{
             // get the recipes
             recipes = saxHandler.getXMLData();
 
+            is.close();
+
         } catch (Exception ex) {
             Log.d("XML Oops", ex.getMessage());
         }
 
         // appends recipes to end of list.
         this.recipes.addAll(recipes);
+
+
     }
 
     //Parses a shopping list file
     protected void parseList(InputStream is){
-        List<ShoppingList> lists = null;
+        List<ShoppingList> lists = new ArrayList<ShoppingList>();
 
         try {
             // create a XMLReader from SAXParser
@@ -108,13 +101,15 @@ public class DataLayer{
             xmlReader.parse(new InputSource(is));
 
             // get the recipes
-            lists = saxHandler.getXMLData();
+            lists.addAll(saxHandler.getXMLData());
+
+            is.close();
 
         } catch (Exception ex) {
             Log.d("XML Oops", ex.getMessage());
         }
 
         // appends recipes to end of list.
-        this.recipes.addAll(recipes);
+        this.shoppingLists.addAll(lists);
     }
 }

@@ -8,9 +8,9 @@ import java.util.*;
 public class ShoppingList {
 
     //Class Variables
-    String name;
+    String name = "";
     List<Ingredient> ingredientList = new ArrayList<Ingredient>();
-    String emailBody, emailSubject;
+    String emailBody = "", emailSubject = "";
 
 
     /**

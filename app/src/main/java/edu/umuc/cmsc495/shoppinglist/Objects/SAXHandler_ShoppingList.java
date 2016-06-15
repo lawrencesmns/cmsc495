@@ -30,11 +30,9 @@ public class SAXHandler_ShoppingList extends DefaultHandler{
 
         //reset
         elementValue = "";
-        Log.d("localName", localName);
-        Log.d("qName", qName);
-        if(qName.equalsIgnoreCase("Recipe")){
+        if(qName.equalsIgnoreCase("ShoppingList")){
             //new recipe
-            Log.i("Handler", "Creating new recipe object");
+            //Log.i("Handler", "Creating new recipe object");
             this.tempList = new ShoppingList();
         }
 
@@ -54,17 +52,16 @@ public class SAXHandler_ShoppingList extends DefaultHandler{
             ShoppingLists.add(tempList);
         } else if (qName.equalsIgnoreCase("Name")) {
             tempList.setName(elementValue);
-            Log.i("recipe name;", elementValue);
+            //Log.i("list name;", elementValue);
         } else if (qName.equalsIgnoreCase("Ingredient")) {
             tempList.addIngredient(elementValue);
-            Log.i("ingredient;", elementValue);
+            //Log.i("ingredient;", elementValue);
         } else if (qName.equalsIgnoreCase("emailBody")) {
             tempList.setEmailBody(elementValue);
-            Log.i("email body;", elementValue);
+            //Log.i("email body;", elementValue);
         } else if (qName.equalsIgnoreCase("emailSubject")) {
             tempList.setEmailSubject(elementValue);
-            Log.i("email subject;", elementValue);
+            //Log.i("email subject;", elementValue);
         }
-
     }
 }

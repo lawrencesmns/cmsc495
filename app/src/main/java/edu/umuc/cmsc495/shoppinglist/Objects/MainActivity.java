@@ -40,7 +40,10 @@ public class MainActivity extends AppCompatActivity {
     protected void loadData(){
         Context context = this;
         InputStream is = context.getResources().openRawResource(R.raw.r_grilled_chicken);
-        this.dataCore.parseFile(is);
+        this.dataCore.parseRecipe(is);
+
+        is = context.getResources().openRawResource(R.raw.sl_test_list);
+        this.dataCore.parseList(is);
 
         File sourceDir = context.getFilesDir();
         File[] appFiles = sourceDir.listFiles();
