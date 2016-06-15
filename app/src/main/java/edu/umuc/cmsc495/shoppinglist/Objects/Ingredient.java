@@ -5,12 +5,12 @@ package edu.umuc.cmsc495.shoppinglist.Objects;
  */
 public class Ingredient {
     protected String name, Measurement;
-    protected int Count;
+    protected Double Count;
     protected boolean isCrossedOut, isValid, usesMeasure, usesCount;
 
     //TODO: Determine how enum should be implemented on measure/count
 
-    Ingredient(String name, String Measurement, int Count){
+    Ingredient(String name, String Measurement, Double Count){
         this.name = name;
         this.Measurement = Measurement;
         this.Count = Count;
@@ -41,7 +41,7 @@ public class Ingredient {
     protected void editMeasurement(String Measurement){
         this.Measurement = Measurement;
     }
-    protected void editCount(int Count){
+    protected void editCount(Double Count){
         this.Count = Count;
     }
     protected void CrossOutItem(){
@@ -58,7 +58,7 @@ public class Ingredient {
     protected String getMeasurement(){
         return this.Measurement;
     }
-    protected int getCount(){
+    protected Double getCount(){
         return this.Count;
     }
     protected boolean getCrossed(){

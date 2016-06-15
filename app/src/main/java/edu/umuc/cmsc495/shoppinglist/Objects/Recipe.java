@@ -8,9 +8,7 @@ import java.util.*;
 public class Recipe {
     //Class Variable Declarations
     String recipeName, instructions, emailBody, emailSubject;
-    List<Ingredient> ingredientList;
-
-
+    List<Ingredient> ingredientList = new ArrayList<Ingredient>();
 
     //Adds an ingredient to the list
     protected boolean addIngredient(Ingredient newIngredient){
@@ -64,7 +62,7 @@ public class Recipe {
         List<String> inputSplit = Arrays.asList(input.split(","));
         String name = inputSplit.get(0);
         String measurement = inputSplit.get(1);
-        int count = Integer.parseInt(inputSplit.get(2));
+        Double count = Double.parseDouble(inputSplit.get(2));
         Ingredient tempIngredient = new Ingredient(name, measurement, count);
         this.ingredientList.add(tempIngredient);
     }

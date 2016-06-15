@@ -1,11 +1,13 @@
 package edu.umuc.cmsc495.shoppinglist.Objects;
 
+import android.content.Context;
 import android.util.Log;
 
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.parsers.SAXParser;
@@ -21,6 +23,11 @@ public class DataLayer{
     String RECIPE_FILE_PREFIX = "r_";
     String SHOPPINGLIST_FILE_PREFIX = "sl_";
     char[] INVALID_FILE_NAME_CHARS = {'?',':','\\','\"','\'','*','|','/','<','>',';'};
+
+    private List<Recipe> recipes = new ArrayList<Recipe>();
+
+
+
 
     protected boolean addRecipe(Recipe newRecipe){
 
@@ -60,8 +67,9 @@ public class DataLayer{
     }
 
     //Checks the file name and attempts to read it into this.
-    protected void parseFile(File target){
+    protected void parseFile(InputStream is){
         List<Recipe> recipes = null;
+
         try {
             // create a XMLReader from SAXParser
             XMLReader xmlReader = SAXParserFactory.newInstance().newSAXParser()
@@ -70,17 +78,17 @@ public class DataLayer{
             SAXHandler_Recipe saxHandler = new SAXHandler_Recipe();
             // store handler in XMLReader
             xmlReader.setContentHandler(saxHandler);
-            // the process starts
-            xmlReader.parse(new InputSource(new FileInputStream(target)));
-            Log.d("check:", "Reader built");
-            // get the `Employee list`
+            // parses
+            xmlReader.parse(new InputSource(is));
+
+            // get the recipes
             recipes = saxHandler.getXMLData();
 
         } catch (Exception ex) {
-            Log.d("XML", "SAXXMLParser: parse() failed");
+            Log.d("XML Oops", ex.getMessage());
         }
 
-        // return Employee list
-        //return recipes;
+        // appends recipes to end of list.
+        this.recipes.addAll(recipes);
     }
 }
