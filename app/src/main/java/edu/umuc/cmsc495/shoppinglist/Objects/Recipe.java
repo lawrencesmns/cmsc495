@@ -10,11 +10,7 @@ public class Recipe {
     String recipeName, instructions, emailBody, emailSubject;
     List<Ingredient> ingredientList;
 
-    //Constructor
-    Recipe(String recipeName){
-        this.recipeName = recipeName;
-        //TODO: Call to dataLayer for ingredients and fill list
-    }
+
 
     //Adds an ingredient to the list
     protected boolean addIngredient(Ingredient newIngredient){
@@ -58,12 +54,27 @@ public class Recipe {
     }
 
     //set Methods
-    protected void editName(String newRecipeName){
+    protected void setName(String newRecipeName){
         this.recipeName = newRecipeName;
     }
-    protected void editInstructions(String newInstructions){
+    protected void setInstructions(String newInstructions){
         this.instructions = newInstructions;
     }
+    protected void addIngredient(String input){
+        List<String> inputSplit = Arrays.asList(input.split(","));
+        String name = inputSplit.get(0);
+        String measurement = inputSplit.get(1);
+        int count = Integer.parseInt(inputSplit.get(2));
+        Ingredient tempIngredient = new Ingredient(name, measurement, count);
+        this.ingredientList.add(tempIngredient);
+    }
+    protected void setEmailBody(String body){
+        this.emailBody = body;
+    }
+    protected void setEmailSubject(String subject){
+        this.emailSubject = subject;
+    }
+
 
     //get Methods
     protected String getRecipeName(){
