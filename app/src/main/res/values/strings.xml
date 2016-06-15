@@ -6,6 +6,7 @@
     <string name="btn_manage_list">Manage Shopping List</string>
     <string name="btn_new_recipe">Create New Recipe</string>
     <string name="btn_manage_recipes">Manage Recipes</string>
+    <string name="title_activity_new_shopping_list">NewShoppingListActivity</string>
 
 
 </resources>

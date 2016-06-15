@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="edu.umuc.cmsc495.shoppinglist.UI.NewShoppingListFragment">
+    tools:context=".UI.NewShoppingListActivity">
 
     <ListView
         android:layout_width="match_parent"
@@ -18,5 +18,14 @@
         android:layout_margin="@dimen/fab_margin"
         android:tint="@android:color/white"
         android:src="@android:drawable/ic_input_add" />
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/new_shopping_list_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
 </FrameLayout>

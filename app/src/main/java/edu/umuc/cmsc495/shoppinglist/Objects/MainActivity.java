@@ -14,9 +14,9 @@ import android.view.View;
 import android.widget.Button;
 
 import edu.umuc.cmsc495.shoppinglist.R;
-import edu.umuc.cmsc495.shoppinglist.UI.NewShoppingListFragment;
+import edu.umuc.cmsc495.shoppinglist.UI.*;
 
-public class MainActivity extends AppCompatActivity implements NewShoppingListFragment.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +30,8 @@ public class MainActivity extends AppCompatActivity implements NewShoppingListFr
         Button btnNewShoppingList = (Button) findViewById(R.id.btn_new_list);
         btnNewShoppingList.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                launch(NewShoppingListFragment.class);
+                Intent intent = new Intent(v.getContext(), NewShoppingListActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -57,24 +58,6 @@ public class MainActivity extends AppCompatActivity implements NewShoppingListFr
 
     }
 
-    void launch(Class<?> cls){
-        if(cls.getClass().isInstance(Fragment.class)){
-            Fragment newFragment = null;
-            try {
-                newFragment = (Fragment) cls.newInstance();
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.main_activity_container, newFragment).commit();
-        }else if(cls.getClass().isInstance(Activity.class)) {
-            Intent intent = new Intent(this, cls);
-            startActivity(intent);
-        }
-    }
-
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.options_menu, menu);
@@ -94,11 +77,6 @@ public class MainActivity extends AppCompatActivity implements NewShoppingListFr
                 return true;
         }
         return super.onOptionsItemSelected(item);
-
-    }
-
-    @Override
-    public void onFragmentInteraction(Uri uri) {
 
     }
 }
