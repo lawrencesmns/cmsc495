@@ -12,6 +12,7 @@ import java.util.List;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
+import javax.xml.stream.*;
 
 /**
  * Created by James on 6/7/2016.
@@ -20,13 +21,18 @@ import javax.xml.parsers.SAXParserFactory;
 public class DataLayer{
 
     //Class Variables
-    String RECIPE_FILE_PREFIX = "r_";
-    String SHOPPINGLIST_FILE_PREFIX = "sl_";
-    char[] INVALID_FILE_NAME_CHARS = {'?',':','\\','\"','\'','*','|','/','<','>',';'};
+    private final String RECIPE_FILE_PREFIX = "r_";
+    private final String SHOPPINGLIST_FILE_PREFIX = "sl_";
+    private final String XML_HEADER = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>";
+    private final char[] INVALID_FILE_NAME_CHARS = {'?',':','\\','\"','\'','*','|','/','<','>',';'};
 
+    Context context;
     private List<Recipe> recipes = new ArrayList<Recipe>();
     private List<ShoppingList> shoppingLists = new ArrayList<ShoppingList>();
 
+    protected DataLayer(Context context){
+        this.context = context;
+    }
 
     protected boolean addRecipe(Recipe newRecipe){
 
@@ -51,8 +57,10 @@ public class DataLayer{
     protected List<Recipe> getRecipeList(){return this.recipes;}
     protected List<ShoppingList> getShoppingLists(){return this.shoppingLists; }
 
-    protected ShoppingList getShoppingList(){
-        return null;
+    //Writes a recipe to file
+    protected boolean writeRecipe(Recipe recipe){
+        XML_Stream_Handler xmlSH = new XML_Stream_Handler();
+        return xmlSH.writeRecipe(this.context, recipe);
     }
 
     //Parses a recipe file
@@ -81,8 +89,6 @@ public class DataLayer{
 
         // appends recipes to end of list.
         this.recipes.addAll(recipes);
-
-
     }
 
     //Parses a shopping list file

@@ -64,4 +64,9 @@ public class Ingredient {
     protected boolean getCrossed(){
         return this.isCrossedOut;
     }
+
+    @Override
+    public String toString(){
+        return this.name + "," + this.Measurement + "," + this.Count.toString();
+    }
 }
