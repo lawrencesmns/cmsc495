@@ -42,8 +42,11 @@ public class MainActivity extends AppCompatActivity {
         InputStream is = context.getResources().openRawResource(R.raw.r_grilled_chicken);
         this.dataCore.parseFile(is);
 
-        //Context context = this;
-        //File sourceDir = context.getFilesDir();
+        File sourceDir = context.getFilesDir();
+        File[] appFiles = sourceDir.listFiles();
+        for(File child: appFiles){
+
+        }
 
     }
 

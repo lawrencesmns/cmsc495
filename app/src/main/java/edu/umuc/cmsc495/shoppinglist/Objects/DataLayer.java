@@ -49,8 +49,8 @@ public class DataLayer{
         return true;
     }
 
-    protected FileList getRecipeList(){
-        return null;
+    protected List<Recipe> getRecipeList(){
+        return this.recipes;
     }
 
     protected FileList getShoppingLists(){
@@ -66,8 +66,8 @@ public class DataLayer{
         return null;
     }
 
-    //Checks the file name and attempts to read it into this.
-    protected void parseFile(InputStream is){
+    //Parses a recipe file
+    protected void parseRecipe(InputStream is){
         List<Recipe> recipes = null;
 
         try {
@@ -83,6 +83,32 @@ public class DataLayer{
 
             // get the recipes
             recipes = saxHandler.getXMLData();
+
+        } catch (Exception ex) {
+            Log.d("XML Oops", ex.getMessage());
+        }
+
+        // appends recipes to end of list.
+        this.recipes.addAll(recipes);
+    }
+
+    //Parses a shopping list file
+    protected void parseList(InputStream is){
+        List<ShoppingList> lists = null;
+
+        try {
+            // create a XMLReader from SAXParser
+            XMLReader xmlReader = SAXParserFactory.newInstance().newSAXParser()
+                    .getXMLReader();
+            // create a SAXXMLHandler
+            SAXHandler_ShoppingList saxHandler = new SAXHandler_ShoppingList();
+            // store handler in XMLReader
+            xmlReader.setContentHandler(saxHandler);
+            // parses
+            xmlReader.parse(new InputSource(is));
+
+            // get the recipes
+            lists = saxHandler.getXMLData();
 
         } catch (Exception ex) {
             Log.d("XML Oops", ex.getMessage());

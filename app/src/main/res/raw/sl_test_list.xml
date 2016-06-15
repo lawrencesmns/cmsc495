@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<ShoppingList>
+    <Name>Friday's Party</Name>
+    <Ingredient>Egg,Each,12</Ingredient>
+    <Ingredient>Raw Chicken Breast,Lb,4</Ingredient>
+    <Ingredient>Mama's Seasoning,Cup,.5</Ingredient>
+    <emailBody>TESTING THE TESTING THING</emailBody>
+    <emailSubject>TESTING THE SUBJECTIVELY TESTING THING</emailSubject>
+</ShoppingList>
