@@ -8,9 +8,10 @@ import java.util.*;
 public class ShoppingList {
 
     //Class Variables
-    String name;
-    List<Ingredient> Ingredients;
-    String emailBody, emailSubject;
+    String name = "";
+    List<Ingredient> ingredientList = new ArrayList<Ingredient>();
+    String emailBody = "", emailSubject = "";
+
 
     /**
      * Constructor for the shopping list. Fills the name and list objects.
@@ -18,9 +19,8 @@ public class ShoppingList {
      */
     ShoppingList(String name){
         this.name = name;
-        Ingredients = new ArrayList<Ingredient>();
     }
-
+    ShoppingList(){}
 
     //Methods to add items to the list from a given recipe
 
@@ -65,7 +65,7 @@ public class ShoppingList {
      * @return
      */
     private boolean isIngredientAlreadyPresent(Ingredient ingredient){
-        for(Ingredient currIngredient : Ingredients){
+        for(Ingredient currIngredient : this.ingredientList){
             if(currIngredient.getName().compareTo(ingredient.getName()) == 0){
                 return true;
             }
@@ -81,9 +81,9 @@ public class ShoppingList {
      * @return integer index of ingredient
      */
     private int getIndexOfName(Ingredient targetIngredient){
-        for(Ingredient ingredient: Ingredients){
+        for(Ingredient ingredient: this.ingredientList){
             if(ingredient.getName().compareTo(targetIngredient.getName()) == 0){
-                return Ingredients.indexOf(ingredient);
+                return this.ingredientList.indexOf(ingredient);
             }
         }
         return -1;
@@ -97,16 +97,17 @@ public class ShoppingList {
      * @param newIngredient
      */
     protected void addIngredient(Ingredient newIngredient){
-        Ingredients.add(newIngredient);
+        this.ingredientList.add(newIngredient);
         Save(); //Not implemented yet
     }
+
 
     /**
      * Attempts to remove an ingredient object if it exists in the list
      * @param newIngredient
      */
     protected void removeIngredient(Ingredient newIngredient){
-        Ingredients.remove(newIngredient);
+        this.ingredientList.remove(newIngredient);
         Save(); //Not implemented yet
     }
 
@@ -167,6 +168,25 @@ public class ShoppingList {
         //TODO: Implement call to DataLayer to erase file.
 
         return checkFlag;
+    }
+
+    //Set Add Methods
+    protected void addIngredient(String input){
+        List<String> inputSplit = Arrays.asList(input.split(","));
+        String name = inputSplit.get(0);
+        String measurement = inputSplit.get(1);
+        Double count = Double.parseDouble(inputSplit.get(2));
+        Ingredient tempIngredient = new Ingredient(name, measurement, count);
+        this.ingredientList.add(tempIngredient);
+    }
+    protected void setName(String newListName){
+        this.name = newListName;
+    }
+    protected void setEmailBody(String body){
+        this.emailBody = body;
+    }
+    protected void setEmailSubject(String subject){
+        this.emailSubject = subject;
     }
 
     //Get Methods

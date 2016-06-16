@@ -1,27 +1,83 @@
 package edu.umuc.cmsc495.shoppinglist.Objects;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import org.xmlpull.v1.XmlPullParser;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
 import edu.umuc.cmsc495.shoppinglist.R;
 import edu.umuc.cmsc495.shoppinglist.UI.*;
 
 public class MainActivity extends AppCompatActivity {
 
+    DataLayer dataCore;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        dataCore = new DataLayer(this);
+        loadData();     //Loads sample/test data
+        testWrite();    //Tests writing a recipe
         initialize();
+    }
+
+    /*Loads example files and any other files in the application directory.
+    */
+    protected void loadData(){
+        Context context = this;
+
+        //Sample/Test recipe
+        InputStream is = context.getResources().openRawResource(R.raw.r_grilled_chicken);
+        this.dataCore.parseRecipe(is);
+
+        //Sample/Test shopping list
+        is = context.getResources().openRawResource(R.raw.sl_test_list);
+        this.dataCore.parseList(is);
+
+        //Builds array of app files
+        File sourceDir = context.getFilesDir();
+        String dirPath = sourceDir.getAbsolutePath();
+        File[] appFiles = sourceDir.listFiles();
+
+        for(File child: appFiles){
+            if(child.getName().substring(0,1).equals("r_")){
+                try{
+                    is = new FileInputStream(child);
+                    this.dataCore.parseRecipe(is);
+                }catch(Exception e){
+                    Log.e("IO Error", "Couldn't open recipe "+ child.getName());
+                }
+            }else if(child.getName().substring(0,2).equals("sl_")){
+                try{
+                    is = new FileInputStream(child);
+                    this.dataCore.parseList(is);
+                }catch(Exception e){
+                    Log.e("IO Error", "Couldn't open shopping list "+ child.getName());
+                }
+            }
+        }
+    }
+
+    protected void testWrite(){
+        Recipe testRecipe = new Recipe();
     }
 
     /*This method initializes all UI elements for this activity.*/

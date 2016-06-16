@@ -28,9 +28,12 @@ public class SAXHandler_Recipe extends DefaultHandler{
 
         //reset
         elementValue = "";
+        Log.d("localName", localName);
+        Log.d("qName", qName);
         if(qName.equalsIgnoreCase("Recipe")){
             //new recipe
-            tempRecipe = new Recipe();
+            Log.i("Handler", "Creating new recipe object");
+            this.tempRecipe = new Recipe();
         }
 
     }
@@ -44,7 +47,7 @@ public class SAXHandler_Recipe extends DefaultHandler{
     @Override
     public void endElement(String uri, String localName, String qName)
             throws SAXException {
-        if (qName.equalsIgnoreCase("employee")) {
+        if (qName.equalsIgnoreCase("Recipe")) {
             // add it to the list
             recipes.add(tempRecipe);
         } else if (qName.equalsIgnoreCase("Name")) {
@@ -55,7 +58,7 @@ public class SAXHandler_Recipe extends DefaultHandler{
             Log.i("instructions;", elementValue);
         } else if (qName.equalsIgnoreCase("Ingredient")) {
             tempRecipe.addIngredient(elementValue);
-            Log.i("ingredient;", tempRecipe.ingredientList.get(tempRecipe.ingredientList.size() - 1).getName());
+            Log.i("ingredient;", elementValue);
         } else if (qName.equalsIgnoreCase("emailBody")) {
             tempRecipe.setEmailBody(elementValue);
             Log.i("email body;", elementValue);
