@@ -10,12 +10,13 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 /**
  * Created by James on 6/7/2016.
- * Last Modified by james on 6/7/2016.
+ *
+ * DataLayer functions as the data core of the app. It provides the containers of the recipes
+ * and shopping lists, and the methods to add to or remove these objects.
  */
 public class DataLayer{
 
@@ -24,37 +25,47 @@ public class DataLayer{
     private final String SHOPPINGLIST_FILE_PREFIX = "sl_";
     private final String XML_HEADER = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>";
     private final char[] INVALID_FILE_NAME_CHARS = {'?',':','\\','\"','\'','*','|','/','<','>',';'};
-
     Context context;
     private List<Recipe> recipes = new ArrayList<Recipe>();
     private List<ShoppingList> shoppingLists = new ArrayList<ShoppingList>();
 
+    //Constructor that stores the application context for file operations
     protected DataLayer(Context context){
         this.context = context;
     }
 
-    //Adds recipe to the list, then calls Save()
+    //************************************************
+    //RECIPE HANDLERS
+    //************************************************
+
+    /**
+     * Method to add a new recipe into the active memory, and also write it to file.
+     * @param newRecipe: Recipe to be added.
+     * @return boolean: true if the recipe was successfully loaded and written
+     */
     protected boolean addRecipe(Recipe newRecipe){
         this.recipes.add(newRecipe);
         return saveRecipe(newRecipe);
     }
+
+    //Private method to debug, and hands off to recipe writer.
     private boolean saveRecipe(Recipe recipe){
         String fileName = "r_"+recipe.getRecipeName()+".xml";
         Log.d("save Recipe","fileName");
-        if(writeRecipe(recipe)){
-            return true;        //File written
-        }else{
-            return false;       //Something apparently broke
-        }
+        return writeRecipe(recipe);
     }
 
-    //Call to remove the recipe from memory and the delete the file
+    /**
+     * Method to remove a target recipe from local emmory and delete it's file.
+     * @param targetRecipe: recipe to be deleted.
+     * @return boolean: true if the file was successfuly destroyed.
+     */
     protected boolean deleteRecipe(Recipe targetRecipe){
         removeRecipe(targetRecipe);
         return true;
     }
 
-    //Removes the recipe file
+    //Private method to remove the recipe from memory and also it's file.
     private boolean removeRecipe(Recipe recipe){
         String fileName = "r_"+recipe.getRecipeName()+".xml";
         Log.d("delete Recipe","fileName");
@@ -73,7 +84,7 @@ public class DataLayer{
         return false;
     }
 
-    //Removes recipe from active structures
+    //Private method to remove recipe from active structures
     private boolean removeFromMemory(Recipe recipe){
         for (Recipe r: this.recipes){
             if(r.getRecipeName().equals(recipe.getRecipeName())){
@@ -84,24 +95,37 @@ public class DataLayer{
         return false;
     }
 
-    //Adds shopping list to memory to structures, then write to file.
+    //************************************************
+    //SHOPPING LIST HANDLERS
+    //************************************************
+
+    /**
+     * Method to add a new shopping list into the active memory, and also write it to file.
+     * @param shoppingList
+     * @return boolean: true if the file was remvoed and deleted successfully.
+     */
     protected boolean addShoppingList(ShoppingList shoppingList){
         this.shoppingLists.add(shoppingList);
         return writeList(shoppingList);
     }
+
+    //Private method to remove the recipe from memory and also it's file.
     private boolean saveShoppingList(ShoppingList shoppingList){
         String fileName = "sl_"+shoppingList.getName()+".xml";
         Log.d("save List","fileName");
-        if(writeList(shoppingList)){
-            return true;        //File written
-        }else{
-            return false;       //Something apparently broke
-        }
+        return writeList(shoppingList);
     }
 
+    /**
+     * Method to remove a target shopping list from local memory and delete it's file.
+     * @param targetShoppingList
+     * @return
+     */
     protected boolean deleteShoppingList(ShoppingList targetShoppingList){
         return removeList(targetShoppingList);
     }
+
+    //Private method to remove the list from file
     private boolean removeList(ShoppingList shoppingList){
         String fileName = "r_"+shoppingList.getName()+".xml";
         Log.d("delete List","fileName");
