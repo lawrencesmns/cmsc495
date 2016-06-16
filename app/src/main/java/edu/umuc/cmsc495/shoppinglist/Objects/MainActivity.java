@@ -34,9 +34,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         dataCore = new DataLayer(this);
-        /*Commented out because app crashes due to no chicken xml recipe*/
+        /*Commented out because app crashes due to no chicken xml recipe
         loadData();     //Loads sample/test data
-        testWrite();    //Tests writing a recipe
+        testWrite();    //Tests writing a recipe */
         initializeUI();
     }
 
