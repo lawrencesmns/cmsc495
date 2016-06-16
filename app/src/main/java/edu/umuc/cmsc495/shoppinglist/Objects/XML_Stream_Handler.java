@@ -84,6 +84,7 @@ public class XML_Stream_Handler{
 
             //root element
             Element rootElement = doc.createElement("ShoppingList");
+            doc.appendChild(rootElement);
 
             //Name Element
             Element listName = doc.createElement("Name");
