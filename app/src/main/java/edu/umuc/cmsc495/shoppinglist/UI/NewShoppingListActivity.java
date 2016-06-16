@@ -3,15 +3,12 @@ package edu.umuc.cmsc495.shoppinglist.UI;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,6 +17,30 @@ import java.util.List;
 import edu.umuc.cmsc495.shoppinglist.R;
 
 public class NewShoppingListActivity extends AppCompatActivity {
+
+    private ArrayAdapter<String> mRecipeAdapter;
+
+    private DragSortListView.DropListener onDrop =
+            new DragSortListView.DropListener() {
+                @Override
+                public void drop(int from, int to) {
+                    String item = mRecipeAdapter.getItem(from);
+
+                    mRecipeAdapter.remove(item);
+                    mRecipeAdapter.insert(item, to);
+                }
+            };
+
+    private DragSortListView.RemoveListener onRemove =
+            new DragSortListView.RemoveListener() {
+                @Override
+                public void remove(int which) {
+                    mRecipeAdapter.remove(mRecipeAdapter.getItem(which));
+                }
+            };
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +55,15 @@ public class NewShoppingListActivity extends AppCompatActivity {
         };
 
         List<String> dummyRecipes = new ArrayList(Arrays.asList(dummyRecipesArray));
-        ArrayAdapter<String> mRecipeAdapter = new ArrayAdapter(this,
+       mRecipeAdapter = new ArrayAdapter(this,
                 R.layout.list_item_new_shopping, R.id.list_item_recipename_textview, dummyRecipes);
 
-
-        // Inflate the layout for this fragment
-        ((ListView) findViewById(R.id.listview_recipesnew)).setAdapter(mRecipeAdapter);
+        DragSortListView draggableList = (DragSortListView) findViewById(R.id.listview_recipesnew);
+        draggableList.setDropListener(onDrop);
+        draggableList.setRemoveListener(onRemove);
+        draggableList.setDivider(null);
+        draggableList.setSelector(R.drawable.ic_menu_black_24dp);
+        draggableList.setAdapter(mRecipeAdapter);
 
     }
 

@@ -34,8 +34,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         dataCore = new DataLayer(this);
+        /*Commented out because app crashes due to no chicken xml recipe
         loadData();     //Loads sample/test data
-        testWrite();    //Tests writing a recipe
+        testWrite();    //Tests writing a recipe */
         initialize();
     }
 
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         Context context = this;
 
         //Sample/Test recipe
-        InputStream is = context.getResources().openRawResource(R.raw.r_grilled_chicken);
+        InputStream is = context.getResources().openRawResource(R.raw.sl_test_list);
         this.dataCore.parseRecipe(is);
 
         //Sample/Test shopping list
