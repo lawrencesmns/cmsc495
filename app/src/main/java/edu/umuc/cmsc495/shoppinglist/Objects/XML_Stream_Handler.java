@@ -59,6 +59,14 @@ public class XML_Stream_Handler{
             StreamResult result = new StreamResult((new File(filePathToCreate)));
             transformer.transform(source, result);
 
+            if(result.getOutputStream() != null){
+                try{
+                    result.getOutputStream().close();
+                }catch(Exception e){}
+                result.setOutputStream(null);
+            }
+
+
             return true;
         }catch (Exception e){
             return false;
