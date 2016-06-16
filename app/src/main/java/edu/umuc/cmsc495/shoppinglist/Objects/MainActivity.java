@@ -1,14 +1,11 @@
 package edu.umuc.cmsc495.shoppinglist.Objects;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.net.Uri;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,11 +13,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-import org.xmlpull.v1.XmlPullParser;
-
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 
 import edu.umuc.cmsc495.shoppinglist.R;
@@ -128,9 +122,16 @@ public class MainActivity extends AppCompatActivity {
         Button btnManageRecipe = (Button) findViewById(R.id.btn_manage_recipes);
         btnManageRecipe.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // launch(edu.umuc.cmsc495.shoppinglist.UI.ManageRecipe.class);
+                Intent intent = new Intent(v.getContext(),ManageRecipes.class);
+                startActivity(intent);
             }
         });
+
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        setSupportActionBar(myToolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        setTitle(R.string.app_name);
 
     }
 

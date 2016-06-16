@@ -4,21 +4,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Objects.MainActivity"
     android:orientation="vertical"
     android:id="@+id/main_activity_container">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/main_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:title="@string/app_name"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+    </android.support.v7.widget.Toolbar>
+
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="3"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp">
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -51,29 +62,28 @@
         </FrameLayout>
     </LinearLayout>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:paddingBottom="20dp">
 
         <View
             android:id="@+id/horzontal_seperator"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/horizontalSeperator"
             android:background="#b7b7b8"
-            android:layout_gravity="center_vertical" />
-    </FrameLayout>
+            android:layout_gravity="center"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"/>
+
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="3"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp">
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -86,7 +96,7 @@
                 android:text="@string/btn_new_recipe"
                 android:id="@+id/btn_new_recipe"
                 android:background="@drawable/custom_button"
-                android:layout_gravity="center_horizontal"
+                android:layout_gravity="center"
                 style="@style/Buttons" />
         </FrameLayout>
 
@@ -101,7 +111,7 @@
                 android:text="@string/btn_manage_recipes"
                 android:background="@drawable/custom_button"
                 android:id="@+id/btn_manage_recipes"
-                android:layout_gravity="center_horizontal"
+                android:layout_gravity="center"
                 style="@style/Buttons" />
         </FrameLayout>
     </LinearLayout>
