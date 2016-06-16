@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         /*Commented out because app crashes due to no chicken xml recipe
         loadData();     //Loads sample/test data
         testWrite();    //Tests writing a recipe */
-        initialize();
+        initializeUI();
     }
 
     /*Loads example files and any other files in the application directory.
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /*This method initializes all UI elements for this activity.*/
-    void initialize(){
+    void initializeUI(){
         setContentView(R.layout.activity_main);
         Button btnNewShoppingList = (Button) findViewById(R.id.btn_new_list);
         btnNewShoppingList.setOnClickListener(new View.OnClickListener() {
@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
                 ActionBar actionBar = getSupportActionBar();
                 actionBar.setTitle(R.string.app_name);
                 actionBar.setDisplayHomeAsUpEnabled(false);
-                initialize();
+                initializeUI();
                 return true;
         }
         return super.onOptionsItemSelected(item);

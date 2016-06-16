@@ -45,7 +45,7 @@ public class NewShoppingListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initialize();
+        initializeUI();
 
         //this is dummy data!
         String[] dummyRecipesArray = {
@@ -74,7 +74,7 @@ public class NewShoppingListActivity extends AppCompatActivity {
         return true;
     }
 
-    private void initialize(){
+    private void initializeUI(){
 
         setContentView(R.layout.activity_new_shopping_list);
         Toolbar mToolbar = (Toolbar) findViewById(R.id.new_shopping_list_toolbar);
