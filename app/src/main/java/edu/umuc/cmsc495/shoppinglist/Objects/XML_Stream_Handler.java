@@ -29,6 +29,7 @@ public class XML_Stream_Handler{
 
             //root element
             Element rootElement = doc.createElement("Recipe");
+            doc.appendChild(rootElement);
 
             //Name Element
             Element recipeName = doc.createElement("Name");
