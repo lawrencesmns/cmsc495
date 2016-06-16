@@ -100,7 +100,7 @@ public class XML_Stream_Handler{
 
             //Builds file path to write to
             String fileLocationPath = context.getFilesDir().getAbsolutePath();
-            String newFileName = "sl_" + list.getName();
+            String newFileName = "sl_" + list.getName()+".xml";
             String filePathToCreate = fileLocationPath + "/" + newFileName;
 
             //Writes to XML file
@@ -110,7 +110,7 @@ public class XML_Stream_Handler{
             StreamResult result = new StreamResult((new File(filePathToCreate)));
             transformer.transform(source, result);
 
-            StreamResult localResult = new StreamResult(new File("C:/example.xml"));
+            StreamResult localResult = new StreamResult(new File(filePathToCreate));
             transformer.transform(source, localResult);
 
             if(result.getOutputStream() != null){

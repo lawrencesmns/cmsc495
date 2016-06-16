@@ -33,28 +33,123 @@ public class DataLayer{
         this.context = context;
     }
 
+    //Adds recipe to the list, then calls Save()
     protected boolean addRecipe(Recipe newRecipe){
-
-        return  true;
+        this.recipes.add(newRecipe);
+        return saveRecipe(newRecipe);
+    }
+    private boolean saveRecipe(Recipe recipe){
+        String fileName = "r_"+recipe.getRecipeName()+".xml";
+        Log.d("save Recipe","fileName");
+        if(writeRecipe(recipe)){
+            return true;        //File written
+        }else{
+            return false;       //Something apparently broke
+        }
     }
 
-    protected boolean addShoppingList(ShoppingList shoppingList){
-
-        return true;
-    }
-
+    //Call to remove the recipe from memory and the delete the file
     protected boolean deleteRecipe(Recipe targetRecipe){
-
+        removeRecipe(targetRecipe);
         return true;
+    }
+
+    //Removes the recipe file
+    private boolean removeRecipe(Recipe recipe){
+        String fileName = "r_"+recipe.getRecipeName()+".xml";
+        Log.d("delete Recipe","fileName");
+
+        if(isFilePresent(fileName)){
+            File fileSrc = context.getFilesDir();
+            File[] allSrcFiles = fileSrc.listFiles();
+
+            for(File child: allSrcFiles){
+                if(child.getName().equals(fileName)){
+                    child.delete();
+                    return removeFromMemory(recipe);
+                }
+            }
+        }
+        return false;
+    }
+
+    //Removes recipe from active structures
+    private boolean removeFromMemory(Recipe recipe){
+        for (Recipe r: this.recipes){
+            if(r.getRecipeName().equals(recipe.getRecipeName())){
+                this.recipes.remove(r);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //Adds shopping list to memory to structures, then write to file.
+    protected boolean addShoppingList(ShoppingList shoppingList){
+        this.shoppingLists.add(shoppingList);
+        return writeList(shoppingList);
+    }
+    private boolean saveShoppingList(ShoppingList shoppingList){
+        String fileName = "sl_"+shoppingList.getName()+".xml";
+        Log.d("save List","fileName");
+        if(writeList(shoppingList)){
+            return true;        //File written
+        }else{
+            return false;       //Something apparently broke
+        }
     }
 
     protected boolean deleteShoppingList(ShoppingList targetShoppingList){
+        return removeList(targetShoppingList);
+    }
+    private boolean removeList(ShoppingList shoppingList){
+        String fileName = "r_"+shoppingList.getName()+".xml";
+        Log.d("delete List","fileName");
 
-        return true;
+        if(isFilePresent(fileName)){
+            File fileSrc = context.getFilesDir();
+            File[] allSrcFiles = fileSrc.listFiles();
+
+            for(File child: allSrcFiles){
+                if(child.getName().equals(fileName)){
+                    child.delete();
+                    return removeFromMemory(shoppingList);
+                }
+            }
+        }
+        return false;
+    }
+    //Removes recipe from active structures
+    private boolean removeFromMemory(ShoppingList shoppingList){
+        for (ShoppingList l: this.shoppingLists){
+            if(l.getName().equals(l.getName())){
+                this.shoppingLists.remove(l);
+                return true;
+            }
+        }
+        return false;
     }
 
-    protected List<Recipe> getRecipeList(){return this.recipes;}
-    protected List<ShoppingList> getShoppingLists(){return this.shoppingLists; }
+
+    //Checks if String fileName is already present
+    private boolean isFilePresent(String fileName){
+        File fileSrc = context.getFilesDir();
+        File[] allSrcFiles = fileSrc.listFiles();
+
+        for(File child: allSrcFiles){
+            if(child.getName().equals(fileName)){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
+
+
+
+
 
     //Writes a recipe to file
     protected boolean writeRecipe(Recipe recipe){
@@ -123,4 +218,7 @@ public class DataLayer{
         // appends recipes to end of list.
         this.shoppingLists.addAll(lists);
     }
+
+    protected List<Recipe> getRecipeList(){return this.recipes;}
+    protected List<ShoppingList> getShoppingLists(){return this.shoppingLists; }
 }
