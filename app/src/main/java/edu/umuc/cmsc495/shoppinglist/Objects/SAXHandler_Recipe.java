@@ -15,7 +15,7 @@ public class SAXHandler_Recipe extends DefaultHandler{
     //DataLayer data;
     String elementValue = null;
     Boolean elementOn = false;
-    Recipe tempRecipe;
+    Recipe tempRecipe = new Recipe();
 
     public static List<Recipe> recipes = new ArrayList<Recipe>();
         public static List<Recipe> getXMLData(){ return recipes; }
@@ -32,7 +32,7 @@ public class SAXHandler_Recipe extends DefaultHandler{
         //Log.d("qName", qName);
         if(qName.equalsIgnoreCase("Recipe")){
             //new recipe
-            //Log.i("Handler", "Creating new recipe object");
+            Log.i("Handler", "Creating new recipe object");
             this.tempRecipe = new Recipe();
         }
 
@@ -53,19 +53,19 @@ public class SAXHandler_Recipe extends DefaultHandler{
             Log.d("Recipe loaded", tempRecipe.getRecipeName());
         } else if (qName.equalsIgnoreCase("Name")) {
             tempRecipe.setName(elementValue);
-            //Log.i("recipe name;", elementValue);
+            Log.i("recipe name;", elementValue);
         } else if (qName.equalsIgnoreCase("Instructions")) {
             tempRecipe.setInstructions(elementValue);
-            //Log.i("instructions;", elementValue);
+            Log.i("instructions;", elementValue);
         } else if (qName.equalsIgnoreCase("Ingredient")) {
             tempRecipe.addIngredient(elementValue);
-            //Log.i("ingredient;", elementValue);
+            Log.i("ingredient;", elementValue);
         } else if (qName.equalsIgnoreCase("emailBody")) {
             tempRecipe.setEmailBody(elementValue);
-            //Log.i("email body;", elementValue);
+            Log.i("email body;", elementValue);
         } else if (qName.equalsIgnoreCase("emailSubject")) {
             tempRecipe.setEmailSubject(elementValue);
-            //Log.i("email subject;", elementValue);
+            Log.i("email subject;", elementValue);
         }
 
     }

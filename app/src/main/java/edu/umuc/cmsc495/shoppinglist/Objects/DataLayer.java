@@ -70,7 +70,7 @@ public class DataLayer{
 
     //Parses a recipe file
     protected void parseRecipe(InputStream is){
-        List<Recipe> recipes = null;
+        List<Recipe> recipes = new ArrayList<Recipe>();
 
         try {
             // create a XMLReader from SAXParser
@@ -84,7 +84,7 @@ public class DataLayer{
             xmlReader.parse(new InputSource(is));
 
             // get the recipes
-            recipes = saxHandler.getXMLData();
+            recipes.addAll(saxHandler.getXMLData());
 
             is.close();
 
