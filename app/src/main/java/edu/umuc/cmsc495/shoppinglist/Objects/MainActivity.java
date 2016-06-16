@@ -38,7 +38,8 @@ public class MainActivity extends AppCompatActivity {
         Button btnManageShoppingList = (Button) findViewById(R.id.btn_manage_list);
         btnManageShoppingList.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // launch(edu.umuc.cmsc495.shoppinglist.UI.ManageShoppingList.class);
+                Intent intent = new Intent(v.getContext(),ManageShoppingLists.class);
+                startActivity(intent);
             }
         });
 

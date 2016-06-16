@@ -7,4 +7,5 @@
     <!-- Dimensions for main screen buttons -->
     <dimen name="button_width">260dp</dimen>
     <dimen name="button_height">46dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
 </resources>
