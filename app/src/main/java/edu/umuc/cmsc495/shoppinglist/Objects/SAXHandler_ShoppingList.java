@@ -50,6 +50,7 @@ public class SAXHandler_ShoppingList extends DefaultHandler{
         if (qName.equalsIgnoreCase("ShoppingList")) {
             // add it to the list
             ShoppingLists.add(tempList);
+            Log.d("List added", tempList.getName());
         } else if (qName.equalsIgnoreCase("Name")) {
             tempList.setName(elementValue);
             //Log.i("list name;", elementValue);

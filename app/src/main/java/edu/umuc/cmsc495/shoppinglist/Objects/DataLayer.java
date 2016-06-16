@@ -12,7 +12,6 @@ import java.util.List;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
-import javax.xml.stream.*;
 
 /**
  * Created by James on 6/7/2016.
@@ -61,6 +60,12 @@ public class DataLayer{
     protected boolean writeRecipe(Recipe recipe){
         XML_Stream_Handler xmlSH = new XML_Stream_Handler();
         return xmlSH.writeRecipe(this.context, recipe);
+    }
+
+    //Writes a recipe to file
+    protected boolean writeList(ShoppingList list){
+        XML_Stream_Handler xmlSH = new XML_Stream_Handler();
+        return xmlSH.writeShoppingList(this.context, list);
     }
 
     //Parses a recipe file

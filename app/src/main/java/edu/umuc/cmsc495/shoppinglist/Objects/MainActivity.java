@@ -58,14 +58,17 @@ public class MainActivity extends AppCompatActivity {
         File[] appFiles = sourceDir.listFiles();
 
         for(File child: appFiles){
-            if(child.getName().substring(0,1).equals("r_")){
+            Log.d("child prefix", child.getName().substring(0, 2));
+            if(child.getName().substring(0,2).equals("r_")){
+                Log.d("App Files", child.getName());
                 try{
                     is = new FileInputStream(child);
                     this.dataCore.parseRecipe(is);
                 }catch(Exception e){
                     Log.e("IO Error", "Couldn't open recipe "+ child.getName());
                 }
-            }else if(child.getName().substring(0,2).equals("sl_")){
+            }else if(child.getName().substring(0,3).equals("sl_")){
+                Log.d("App Files", child.getName());
                 try{
                     is = new FileInputStream(child);
                     this.dataCore.parseList(is);
@@ -77,7 +80,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected void testWrite(){
+
         Recipe testRecipe = new Recipe();
+        testRecipe.setName("test_recipe");
+        testRecipe.setInstructions("Testy Testerman Testsing Us!");
+        testRecipe.addIngredient("Eggs,Each,2");
+
+        this.dataCore.writeRecipe(testRecipe);
+
+        ShoppingList testList = new ShoppingList();
+        testList.setName("Test_List_1");
+        testList.addIngredient("Eggs,Each,3");
+        testList.addIngredient("Cookies,Pack,1");
+        testList.addIngredient("Cheerios,Box,1");
+
+        this.dataCore.writeList(testList);
     }
 
     /*This method initializes all UI elements for this activity.*/

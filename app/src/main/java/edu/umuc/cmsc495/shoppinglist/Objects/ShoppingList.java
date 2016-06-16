@@ -190,6 +190,7 @@ public class ShoppingList {
     }
 
     //Get Methods
+    protected List<Ingredient> getIngredientList(){return this.ingredientList;}
     protected String getName(){ return this.name; }
     protected String getEmailBody(){
         return this.emailBody;
