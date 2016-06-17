@@ -19,27 +19,7 @@ import edu.umuc.cmsc495.shoppinglist.R;
 public class NewShoppingListActivity extends AppCompatActivity {
 
     private ArrayAdapter<String> mRecipeAdapter;
-
-    private DragSortListView.DropListener onDrop =
-            new DragSortListView.DropListener() {
-                @Override
-                public void drop(int from, int to) {
-                    String item = mRecipeAdapter.getItem(from);
-
-                    mRecipeAdapter.remove(item);
-                    mRecipeAdapter.insert(item, to);
-                }
-            };
-
-    private DragSortListView.RemoveListener onRemove =
-            new DragSortListView.RemoveListener() {
-                @Override
-                public void remove(int which) {
-                    mRecipeAdapter.remove(mRecipeAdapter.getItem(which));
-                }
-            };
-
-
+    private DragSortListView draggableList;
 
 
     @Override
@@ -58,11 +38,7 @@ public class NewShoppingListActivity extends AppCompatActivity {
        mRecipeAdapter = new ArrayAdapter(this,
                 R.layout.list_item_added_ingredient, R.id.list_item_ingredient_textview, dummyRecipes);
 
-        DragSortListView draggableList = (DragSortListView) findViewById(R.id.listview_added_ingredient);
-        draggableList.setDropListener(onDrop);
-        draggableList.setRemoveListener(onRemove);
-        draggableList.setDivider(null);
-        draggableList.setSelector(R.drawable.ic_menu_black_24dp);
+        draggableList = (DragSortListView) findViewById(R.id.listview_added_ingredient);
         draggableList.setAdapter(mRecipeAdapter);
 
     }
@@ -77,6 +53,47 @@ public class NewShoppingListActivity extends AppCompatActivity {
     private void initializeUI(){
 
         setContentView(R.layout.activity_new_shopping_list);
+
+
+
+        DragSortListView.DropListener onDrop =
+                new DragSortListView.DropListener() {
+                    @Override
+                    public void drop(int from, int to) {
+                        String item = mRecipeAdapter.getItem(from);
+
+                        mRecipeAdapter.remove(item);
+                        mRecipeAdapter.insert(item, to);
+                    }
+                };
+
+        DragSortListView.RemoveListener onRemove =
+                new DragSortListView.RemoveListener() {
+                    @Override
+                    public void remove(int which) {
+                        mRecipeAdapter.remove(mRecipeAdapter.getItem(which));
+                    }
+                };
+
+        DragSortListView.DragScrollProfile ssProfile =
+                new DragSortListView.DragScrollProfile() {
+                    @Override
+                    public float getSpeed(float w, long t) {
+                        if (w > 0.8f) {
+                            // Traverse all views in a 10 milliseconds
+                            return ((float) mRecipeAdapter.getCount()) / 0.01f;
+                        } else {
+                            return 10.0f * w;
+                        }
+                    }
+                };
+
+        draggableList = (DragSortListView) findViewById(R.id.listview_added_ingredient);
+        draggableList.setDropListener(onDrop);
+        draggableList.setRemoveListener(onRemove);
+        draggableList.setDivider(null);
+        draggableList.setDragScrollProfile(ssProfile);
+
         Toolbar mToolbar = (Toolbar) findViewById(R.id.new_shopping_list_toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
