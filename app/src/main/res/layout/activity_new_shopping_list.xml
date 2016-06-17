@@ -8,7 +8,7 @@
     <edu.umuc.cmsc495.shoppinglist.UI.DragSortListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/listview_recipesnew" />
+        android:id="@+id/listview_added_ingredient" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

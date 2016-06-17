@@ -56,9 +56,9 @@ public class NewShoppingListActivity extends AppCompatActivity {
 
         List<String> dummyRecipes = new ArrayList(Arrays.asList(dummyRecipesArray));
        mRecipeAdapter = new ArrayAdapter(this,
-                R.layout.list_item_new_shopping, R.id.list_item_recipename_textview, dummyRecipes);
+                R.layout.list_item_added_ingredient, R.id.list_item_ingredient_textview, dummyRecipes);
 
-        DragSortListView draggableList = (DragSortListView) findViewById(R.id.listview_recipesnew);
+        DragSortListView draggableList = (DragSortListView) findViewById(R.id.listview_added_ingredient);
         draggableList.setDropListener(onDrop);
         draggableList.setRemoveListener(onRemove);
         draggableList.setDivider(null);
@@ -80,6 +80,7 @@ public class NewShoppingListActivity extends AppCompatActivity {
         Toolbar mToolbar = (Toolbar) findViewById(R.id.new_shopping_list_toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //TODO: Prompt user to save unfinished lists
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
