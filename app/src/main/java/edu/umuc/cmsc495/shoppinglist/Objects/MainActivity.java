@@ -50,7 +50,8 @@ public class MainActivity extends AppCompatActivity {
         Button btnNewRecipe = (Button) findViewById(R.id.btn_new_recipe);
         btnNewRecipe.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // launch(edu.umuc.cmsc495.shoppinglist.UI.NewRecipe.class);
+                Intent intent = new Intent(v.getContext(),RecipesList.class);
+                startActivity(intent);
             }
         });
 
