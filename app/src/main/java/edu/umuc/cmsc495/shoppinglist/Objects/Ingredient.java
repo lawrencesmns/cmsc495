@@ -1,22 +1,24 @@
 package edu.umuc.cmsc495.shoppinglist.Objects;
 
+import java.io.Serializable;
+
 /**
  * Created by James on 6/6/2016.
  */
-public class Ingredient {
-    protected String name, Measurement;
-    protected Double Count;
-    protected boolean isCrossedOut, isValid, usesMeasure, usesCount;
+public class Ingredient implements Serializable {
+    private String name, measurement, countFull, countPartial;
 
-    //TODO: Determine how enum should be implemented on measure/count
+    private boolean isCrossedOut;
 
-    Ingredient(String name, String Measurement, Double Count){
+    public Ingredient(String name, String measurement, String countFull, String countPartial){
         this.name = name;
-        this.Measurement = Measurement;
-        this.Count = Count;
+        this.measurement = measurement;
+        this.countFull = countFull;
+        this.countPartial = countPartial;
         this.isCrossedOut = false;
-
     }
+
+    public Ingredient(){}
 
     /**
      * comapreTo compares the names of the current ingredient to the given ingredient
@@ -34,15 +36,20 @@ public class Ingredient {
         }else{return false;}
     }
 
+
+
     //Set Methods
-    protected void editName(String name){
+    protected void setName(String name){
         this.name = name;
     }
-    protected void editMeasurement(String Measurement){
-        this.Measurement = Measurement;
+    protected void setMeasurement(String Measurement){
+        this.measurement = Measurement;
     }
-    protected void editCount(Double Count){
-        this.Count = Count;
+    protected void setCountFull(String countFull){
+        this.countFull = countFull;
+    }
+    protected void setCountPartial(String Count){
+        this.countPartial = countPartial;
     }
     protected void CrossOutItem(){
         this.isCrossedOut = true;
@@ -56,10 +63,18 @@ public class Ingredient {
         return this.name;
     }
     protected String getMeasurement(){
-        return this.Measurement;
+        return this.measurement;
     }
-    protected Double getCount(){
-        return this.Count;
+    protected String getCountFullString(){
+        return this.countFull;
+    }
+    protected String getCountPartialString(){
+        return this.countFull;
+    }
+    protected Float getCountFloat(){
+        Float full = Float.parseFloat(this.countFull );
+        Float partial = UiUtils.getDecimalFromFraction(this.countPartial);
+        return UiUtils.round(full + partial,3);
     }
     protected boolean getCrossed(){
         return this.isCrossedOut;
@@ -67,6 +82,6 @@ public class Ingredient {
 
     @Override
     public String toString(){
-        return this.name + "," + this.Measurement + "," + this.Count.toString();
+        return this.getCountFullString() + " " + this.getCountPartialString() + "  " + this.measurement + "    " + this.name;
     }
 }

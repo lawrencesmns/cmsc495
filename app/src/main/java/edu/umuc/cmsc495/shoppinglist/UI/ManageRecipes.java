@@ -12,8 +12,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import edu.umuc.cmsc495.shoppinglist.Objects.DataLayer;
-import edu.umuc.cmsc495.shoppinglist.Objects.MainActivity;
+import java.util.ArrayList;
+import java.util.List;
+
+import edu.umuc.cmsc495.shoppinglist.Objects.FileList;
+import edu.umuc.cmsc495.shoppinglist.Objects.FileListItem;
 import edu.umuc.cmsc495.shoppinglist.R;
 
 public class ManageRecipes extends AppCompatActivity {
@@ -25,7 +28,24 @@ public class ManageRecipes extends AppCompatActivity {
         setContentView(R.layout.activity_manage_recipes);
 
         ListView listView = (ListView) findViewById(R.id.shopping_lists);
-        String[] stringArray={"Item1","item2","item3"};
+
+        ////////////martin added - to fit with rest of code, likely a better way//////////////
+
+        FileList f = new FileList(this);
+        List<String> recipes = new ArrayList<String>();
+
+        for(FileListItem fi:f.recipes){
+            recipes.add(fi.getName());
+        }
+        String[] stringArray = new String[recipes.size()];
+        stringArray = recipes.toArray(stringArray);
+
+        //////////////////////////////////////
+
+
+        //String[] stringArray={"Item1","item2","item3"};
+
+
         ArrayAdapter<String> shoppingListAdaptor = new ArrayAdapter<>(this,R.layout.recipe_list_item,R.id.list_name,stringArray);
         listView.setAdapter(shoppingListAdaptor);
 

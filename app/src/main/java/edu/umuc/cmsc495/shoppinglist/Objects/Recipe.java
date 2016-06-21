@@ -1,48 +1,129 @@
 package edu.umuc.cmsc495.shoppinglist.Objects;
 
+import java.io.Serializable;
 import java.util.*;
-
 /**
  * Created by James on 6/7/2016.
  */
-public class Recipe {
+public class Recipe implements Serializable {
     //Class Variable Declarations
-    String recipeName, instructions, emailBody, emailSubject;
-    List<Ingredient> ingredientList = new ArrayList<Ingredient>();
+    private String name, instructions, createdOn, lastModifiedOn;
+    private ArrayList<Ingredient> ingredientList = new ArrayList<>();
+
+    //Constructors
+    public Recipe(){
+        this.createdOn = UiUtils.getDateTimeNow();
+        this.lastModifiedOn = UiUtils.getDateTimeNow();
+    }
+
+
+
+    public static Recipe loadRecipe(String name){ //probably not the cleanest
+        return DataLayer.parseRecipe(name);
+    }
+
+    //region get Methods
+    protected String getName(){
+        return this.name;
+    }
+    protected String getInstructions(){
+        return this.instructions;
+    }
+    protected List<Ingredient> getIngredientList(){
+        return this.ingredientList;
+    }
+    protected String getLastModifiedOn(){return this.lastModifiedOn;}
+    protected String getCreatedOn(){return this.createdOn;}
+
+    protected String getEmailSubject(){
+        return UiUtils.getAppName() + "   Recipe: " + this.name;
+    }
+
+    protected String getEmailBody(){
+        String output = this.name + ": " + UiUtils.emailNewLine()+ UiUtils.emailNewLine()+ UiUtils.emailNewLine();
+        output += "Ingredients:" + UiUtils.emailNewLine();
+        for(Ingredient i:this.ingredientList){
+            output += i.toString() + UiUtils.emailNewLine();
+        }
+        output += UiUtils.emailNewLine() + UiUtils.emailNewLine();
+        output += "Instructions:" + UiUtils.emailNewLine();
+        output += this.instructions;
+        return output;
+    }
+    //endregion
+
+    //for the set methods, call to save for every set
+    //region set Methods
+    protected void setName(String newRecipeName){
+        delete();
+        for(char c:DataLayer.INVALID_FILE_NAME_CHARS){
+            newRecipeName = newRecipeName.replace(c, ' ');
+        }
+        this.name = newRecipeName;
+        save();
+    }
+    protected void setInstructions(String newInstructions){
+        this.instructions = newInstructions;
+    }
+    protected void setCreatedOn(String newCreatedOn){
+        this.createdOn = newCreatedOn;
+    }
+    protected void setLastModifiedOn(String newLastModifiedOn){this.lastModifiedOn = newLastModifiedOn;
+    }
+    //endregion
+
+    //Saves the recipe
+    private boolean save(){
+        boolean checkValue = true;
+        //TODO: check if it can eb saved, like enough free space
+
+        checkValue = DataLayer.deleteRecipe(this);
+
+        lastModifiedOn = UiUtils.formatDate(new Date());
+
+        if(checkValue){
+            checkValue = DataLayer.saveRecipe(this);
+        }
+
+        return checkValue;
+    }
+    private boolean delete(){
+        return DataLayer.deleteRecipe(this);
+    }
+
+
 
     //Adds an ingredient to the list
-    protected boolean addIngredient(Ingredient newIngredient){
-        if(checkIngredientName(newIngredient)){
+    protected void addIngredient(Ingredient newIngredient){
+        if(!isExistingIngredientByName(newIngredient)){
             ingredientList.add(newIngredient);
-            return true;
+            save();
         }else{
-            System.out.println("Ingredient is already present! Edit the quantity!");
-            return false;
+            throw new IllegalArgumentException("This ingredient is already here, please modify the existing one.");
         }
     }
 
     //Removes an ingredient
-    protected void removeIngredient(String ingredientName){
+    protected void removeIngredient(Ingredient ingredient){
         for (Ingredient i: ingredientList) {
-            if(i.getName().compareTo(ingredientName) == 0){
+            if(i.getName().compareTo(ingredient.getName()) == 0){
                 ingredientList.remove(i);
-                System.out.println("Ingredient removed from recipe!");
+                //System.out.println("Ingredient removed from recipe!");
+                save();
                 break;
             }
         }
     }
 
-    //Saves the recipe
-    protected boolean Save(){
-        boolean checkValue = true;
-
-        //TODO: check if it can eb saved, then call the dataLayer to write.
-
-        return checkValue;
+    protected void changeIngredient(Ingredient revisedIngredient, Ingredient originalIngredient){
+        removeIngredient(originalIngredient);
+        addIngredient(revisedIngredient);
+        save();
     }
 
+
     //Checks if the ingredient name is already present
-    private boolean checkIngredientName(Ingredient check){
+    private boolean isExistingIngredientByName(Ingredient check){
         for (Ingredient i : ingredientList) {
             if(i.getName().compareTo(check.getName()) == 0){
                 return true;    //matching ingredient name found
@@ -51,43 +132,17 @@ public class Recipe {
         return false;   //No matching ingredient name
     }
 
-    //set Methods
-    protected void setName(String newRecipeName){
-        this.recipeName = newRecipeName;
-    }
-    protected void setInstructions(String newInstructions){
-        this.instructions = newInstructions;
-    }
-    protected void addIngredient(String input){
-        List<String> inputSplit = Arrays.asList(input.split(","));
-        String name = inputSplit.get(0);
-        String measurement = inputSplit.get(1);
-        Double count = Double.parseDouble(inputSplit.get(2));
-        Ingredient tempIngredient = new Ingredient(name, measurement, count);
-        this.ingredientList.add(tempIngredient);
-    }
-    protected void setEmailBody(String body){
-        this.emailBody = body;
-    }
-    protected void setEmailSubject(String subject){
-        this.emailSubject = subject;
-    }
 
 
-    //get Methods
-    protected String getRecipeName(){
-        return this.recipeName;
-    }
-    protected String getInstructions(){
-        return this.instructions;
-    }
-    protected List<Ingredient> getIngredientList(){
-        return this.ingredientList;
-    }
-    protected String getEmailBody(){
-        return this.emailBody;
-    }
-    protected String getEmailSubject(){
-        return this.emailSubject;
-    }
+
+   // protected void addIngredient(String input){
+   //     List<String> inputSplit = Arrays.asList(input.split(","));
+   //     String name = inputSplit.get(0);
+    //    String measurement = inputSplit.get(1);
+    //    Double count = Double.parseDouble(inputSplit.get(2));
+    //    Ingredient tempIngredient = new Ingredient(name, measurement, count);
+    //    this.ingredientList.add(tempIngredient);
+   // }
+
+
 }

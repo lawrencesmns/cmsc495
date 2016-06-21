@@ -1,32 +1,46 @@
 package edu.umuc.cmsc495.shoppinglist.Objects;
 
+import java.io.File;
 import java.util.*;
 
+import android.content.Context;
+import android.content.res.AssetManager;
 /**
  * Created by Alex on 6/6/16.
- * FileList is the backend's interface to the GUI.
+ * FileList is the backend's interface to the GUI's list of recipes and shopping list
  */
+
+
+
 public class FileList {
 
+    Context context;
+
     //Global Variables
-    protected List<FileListItem> lists;
+    public static final List<FileListItem> recipes = new ArrayList<>();
+    public static final List<FileListItem> shoppingLists = new ArrayList<>();
 
-    /**
-     * getLists() provides the method to call from the FileList object in order
-     * access the shopping list files.
-     */
-    protected List<FileListItem> getLists(){
-
-        //TODO: Change return type once method is built.
-        return null;
+    public FileList(Context context){
+        this.context = context;
+        List<FileListItem> files = new ArrayList<>();
+        fillRecipesAndShoppingLists();
     }
 
-    /**
-     * populateList() provides the function of each list to populate into a
-     * list object for the program
-     */
-    //TODO: Implement this method
-    private void populateList(){
-
+    private void fillRecipesAndShoppingLists(){
+        File[] appFiles = context.getFilesDir().listFiles();
+        Date d;
+        String name;
+        String shoppingListPrefix = DataLayer.SHOPPING_LIST_FILE_PREFIX;
+        String recipePrefix = DataLayer.RECIPE_FILE_PREFIX;
+        for(File f:appFiles){
+            d = new Date(f.lastModified());
+            if(f.getName().startsWith(shoppingListPrefix)){
+                name = f.getName().substring(shoppingListPrefix.length());
+                shoppingLists.add(new FileListItem(name, UiUtils.formatDate(d)));
+            } else if(f.getName().startsWith(recipePrefix)){
+                name = f.getName().substring(recipePrefix.length());
+                recipes.add(new FileListItem(name, UiUtils.formatDate(d)));
+            }
+        }
     }
 }

@@ -15,14 +15,12 @@ import java.util.List;
 public class SAXHandler_ShoppingList extends DefaultHandler{
 
     //DataLayer data;
-    String elementValue = null;
-    Boolean elementOn = false;
-    ShoppingList tempList;
+    private String elementValue = null;
 
-    public static List<ShoppingList> ShoppingLists = new ArrayList<ShoppingList>();
-        public static List<ShoppingList> getXMLData(){ return ShoppingLists; }
-        public static void setXMLData(List<ShoppingList> data){ SAXHandler_ShoppingList.ShoppingLists = data; }
+    private ShoppingList tempList = new ShoppingList();
+    Ingredient  tempIngredient = new Ingredient();
 
+    public ShoppingList getShoppingList(){return tempList;}
 
     @Override
     public void startElement(String uri, String localName, String qName,
@@ -30,12 +28,6 @@ public class SAXHandler_ShoppingList extends DefaultHandler{
 
         //reset
         elementValue = "";
-        if(qName.equalsIgnoreCase("ShoppingList")){
-            //new recipe
-            //Log.i("Handler", "Creating new recipe object");
-            this.tempList = new ShoppingList();
-        }
-
     }
 
     @Override
@@ -49,20 +41,25 @@ public class SAXHandler_ShoppingList extends DefaultHandler{
             throws SAXException {
         if (qName.equalsIgnoreCase("ShoppingList")) {
             // add it to the list
-            ShoppingLists.add(tempList);
-            Log.d("List added", tempList.getName());
+           Log.d("List added", tempList.getName());
         } else if (qName.equalsIgnoreCase("Name")) {
             tempList.setName(elementValue);
             //Log.i("list name;", elementValue);
         } else if (qName.equalsIgnoreCase("Ingredient")) {
-            tempList.addIngredient(elementValue);
-            //Log.i("ingredient;", elementValue);
-        } else if (qName.equalsIgnoreCase("emailBody")) {
-            tempList.setEmailBody(elementValue);
-            //Log.i("email body;", elementValue);
-        } else if (qName.equalsIgnoreCase("emailSubject")) {
-            tempList.setEmailSubject(elementValue);
-            //Log.i("email subject;", elementValue);
+            tempIngredient = new Ingredient();
+            Log.i("new ingredient;", elementValue);
+        } else if (qName.equalsIgnoreCase("IngName")) {
+            tempIngredient.setName(elementValue);
+            Log.i("ingredient name;", elementValue);
+        } else if (qName.equalsIgnoreCase("Measurement")) {
+            tempIngredient.setMeasurement(elementValue);
+            Log.i("ingredient measurement;", elementValue);
+        } else if (qName.equalsIgnoreCase("CountFull")) {
+            tempIngredient.setCountFull(elementValue);
+            Log.i("count full;", elementValue);
+        } else if (qName.equalsIgnoreCase("CountPart")) {
+            tempIngredient.setCountPartial(elementValue);
+            Log.i("ingredientCountPartial;", elementValue);
         }
     }
 }

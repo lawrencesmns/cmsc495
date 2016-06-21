@@ -1,7 +1,6 @@
 package edu.umuc.cmsc495.shoppinglist.Objects;
 
 import android.content.Context;
-import android.provider.DocumentsContract;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -19,8 +18,8 @@ import javax.xml.transform.stream.StreamResult;
  * Created by James on 6/15/2016.
  */
 public class XML_Stream_Handler{
-
-    protected boolean writeRecipe(Context context, Recipe recipe){
+   // private final static String XML_HEADER = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>";
+    protected static boolean writeRecipe(Context context, Recipe recipe){
 
         try{
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -33,24 +32,55 @@ public class XML_Stream_Handler{
 
             //Name Element
             Element recipeName = doc.createElement("Name");
-            recipeName.appendChild(doc.createTextNode(recipe.getRecipeName()));
+            recipeName.appendChild(doc.createTextNode(recipe.getName()));
             rootElement.appendChild(recipeName);
+
+            //Created On Element
+            Element createdOn = doc.createElement("CreatedOn");
+            recipeName.appendChild(doc.createTextNode(recipe.getCreatedOn()));
+            rootElement.appendChild(createdOn);
+
+            //Last Modified On Element
+            Element lastModifiedOn = doc.createElement("LastModifiedOn");
+            recipeName.appendChild(doc.createTextNode(recipe.getLastModifiedOn()));
+            rootElement.appendChild(createdOn);
 
             //Instructions Element
             Element recipeInstructions = doc.createElement("Instructions");
             recipeInstructions.appendChild(doc.createTextNode(recipe.getInstructions()));
             rootElement.appendChild(recipeInstructions);
 
+            Element ingredients = doc.createElement("Ingredients");
+
             //Loops to add all ingredients
+
             for(Ingredient ing: recipe.getIngredientList()){
                 Element ingredient = doc.createElement("Ingredient");
-                ingredient.appendChild(doc.createTextNode(ing.toString()));
-                rootElement.appendChild(ingredient);
+
+                Element ingName = doc.createElement("IngName");
+                ingName.appendChild(doc.createTextNode(ing.getName()));
+                ingredient.appendChild(ingName);
+
+                Element measurement = doc.createElement("Measurement");
+                ingName.appendChild(doc.createTextNode(ing.getMeasurement()));
+                ingredient.appendChild(measurement);
+
+                Element countFull = doc.createElement("CountFull");
+                ingName.appendChild(doc.createTextNode(ing.getCountFullString()));
+                ingredient.appendChild(countFull);
+
+                Element countPartial = doc.createElement("CountPartial");
+                ingName.appendChild(doc.createTextNode(ing.getCountPartialString()));
+                ingredient.appendChild(countPartial);
+
+                ingredients.appendChild(ingredient);
             }
+
+            rootElement.appendChild(ingredients);
 
             //Builds file path to write to
             String fileLocationPath = context.getFilesDir().getAbsolutePath();
-            String newFileName = "r_" + recipe.getRecipeName();
+            String newFileName = DataLayer.RECIPE_FILE_PREFIX + recipe.getName() + DataLayer.FILE_EXTENSION;
             String filePathToCreate = fileLocationPath + "/" + newFileName;
 
             //Writes to XML file
@@ -75,7 +105,7 @@ public class XML_Stream_Handler{
 
     }
 
-    protected boolean writeShoppingList(Context context, ShoppingList list){
+    protected static boolean writeShoppingList(Context context, ShoppingList list){
 
         try{
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -100,7 +130,7 @@ public class XML_Stream_Handler{
 
             //Builds file path to write to
             String fileLocationPath = context.getFilesDir().getAbsolutePath();
-            String newFileName = "sl_" + list.getName()+".xml";
+            String newFileName = DataLayer.SHOPPING_LIST_FILE_PREFIX + list.getName()+ DataLayer.FILE_EXTENSION;
             String filePathToCreate = fileLocationPath + "/" + newFileName;
 
             //Writes to XML file
