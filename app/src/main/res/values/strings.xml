@@ -16,4 +16,5 @@
     <string name="z_a">Z-A</string>
     <string name="a_z">A-Z</string>
     <string name="recipes">Recipes</string>
+    <string name="title_activity_new_recipe">NewRecipe</string>
 </resources>

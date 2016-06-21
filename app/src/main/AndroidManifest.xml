@@ -15,35 +15,40 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".UI.NewShoppingListActivity"
-            android:parentActivityName=".Objects.MainActivity" >
-
-            <!-- Parent activity meta-data to support 4.0 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Objects.MainActivity" />
-        </activity>
-
-        <activity android:name=".UI.ManageShoppingLists"
             android:parentActivityName=".Objects.MainActivity">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Objects.MainActivity" />
-
         </activity>
+        <activity
+            android:name=".UI.ManageShoppingLists"
+            android:parentActivityName=".Objects.MainActivity">
 
-        <activity android:name=".UI.ManageRecipes"
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Objects.MainActivity" />
+        </activity>
+        <activity
+            android:name=".UI.ManageRecipes"
+            android:parentActivityName=".Objects.MainActivity">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Objects.MainActivity" />
+        </activity>
+        <activity android:name=".UI.RecipesList"
             android:parentActivityName=".Objects.MainActivity">
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Objects.MainActivity" />
         </activity>
-
     </application>
 
 </manifest>
