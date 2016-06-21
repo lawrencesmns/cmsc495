@@ -17,4 +17,8 @@
     <string name="a_z">A-Z</string>
     <string name="recipes">Recipes</string>
     <string name="title_activity_new_recipe">NewRecipe</string>
+    <string name="ingredient_detail">Ingredient Detail</string>
+    <string name="save">Save</string>
+    <string name="ingredient_name">Ingredient Name</string>
+    <string name="recipe_instructions">Recipe Instructions</string>
 </resources>
