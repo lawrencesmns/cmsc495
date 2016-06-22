@@ -69,7 +69,7 @@ public class XML_Stream_Handler{
                 ingName.appendChild(doc.createTextNode(ing.getCountFullString()));
                 ingredient.appendChild(countFull);
 
-                Element countPartial = doc.createElement("CountPartial");
+                Element countPartial = doc.createElement("CountPart");
                 ingName.appendChild(doc.createTextNode(ing.getCountPartialString()));
                 ingredient.appendChild(countPartial);
 
