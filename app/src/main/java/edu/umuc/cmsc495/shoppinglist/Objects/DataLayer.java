@@ -115,7 +115,11 @@ public class DataLayer{
     //region File Handlers
     //Private method to remove the recipe from memory and also it's file.
     private boolean removeFile(String fileName){
-        return context.deleteFile(fileName);
+        try {
+            return context.deleteFile(fileName);
+        }catch (Exception e){
+            return false;
+        }
     }
 
     //Checks if String fileName is already present

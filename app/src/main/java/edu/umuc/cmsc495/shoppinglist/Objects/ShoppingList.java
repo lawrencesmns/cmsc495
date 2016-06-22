@@ -12,7 +12,7 @@ import java.util.*;
 public class ShoppingList implements Serializable{
 
     //Class Variables
-    private String name, createdOn, lastModifiedOn ;
+    private String name = "", createdOn = "", lastModifiedOn = "";
     private List<Ingredient> ingredientList = new ArrayList<Ingredient>();
     private List<String> recipeIngredients = new ArrayList<>();
     private static Context context;
@@ -145,21 +145,25 @@ public class ShoppingList implements Serializable{
     protected boolean save(){
         boolean checkValue = true;
         //TODO: check if it can eb saved, like enough free space
-        DataLayer d = new DataLayer(context);
-        checkValue = d.deleteShoppingList(this);
+        if(context != null){
+            DataLayer d = new DataLayer(context);
+            checkValue = d.deleteShoppingList(this);
 
-        this.lastModifiedOn = UiUtils.formatDate(new Date());
+            this.lastModifiedOn = UiUtils.formatDate(new Date());
 
-        if(checkValue){
-            checkValue = d.saveShoppingList(this);
-        }
-
+            if(checkValue){
+                checkValue = d.saveShoppingList(this);
+            }
+        } else{checkValue = false;}
         return checkValue;
     }
 
     protected boolean delete(){
-        DataLayer d = new DataLayer(context);
-        return d.deleteShoppingList(this);
+        if(context != null){
+            DataLayer d = new DataLayer(context);
+            return d.deleteShoppingList(this);
+        }
+        else{return false;}
     }
 }
 

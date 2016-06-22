@@ -9,7 +9,7 @@ import java.util.*;
  */
 public class Recipe implements Serializable {
     //Class Variable Declarations
-    private String name, instructions, createdOn, lastModifiedOn;
+    private String name = "", instructions = "", createdOn = "", lastModifiedOn = "";
     private ArrayList<Ingredient> ingredientList = new ArrayList<>();
     private static Context context;
 
@@ -84,20 +84,24 @@ public class Recipe implements Serializable {
     private boolean save(){
         boolean checkValue = true;
         //TODO: check if it can eb saved, like enough free space
-        DataLayer d = new DataLayer(context);
-        checkValue = d.deleteRecipe(this);
+        if(context != null){
+            DataLayer d = new DataLayer(context);
 
-        lastModifiedOn = UiUtils.formatDate(new Date());
+            checkValue = d.deleteRecipe(this);
 
-        if(checkValue){
+            lastModifiedOn = UiUtils.formatDate(new Date());
+
             checkValue = d.saveRecipe(this);
-        }
+
+        }else{checkValue = false;}
 
         return checkValue;
     }
     private boolean delete(){
-        DataLayer d = new DataLayer(context);
-        return d.deleteRecipe(this);
+        if(context != null) {
+            DataLayer d = new DataLayer(context);
+            return d.deleteRecipe(this);
+        }else{return false;}
     }
 
 

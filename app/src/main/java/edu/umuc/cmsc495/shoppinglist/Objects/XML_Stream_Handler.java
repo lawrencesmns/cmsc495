@@ -6,6 +6,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.StringWriter;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -28,7 +30,7 @@ public class XML_Stream_Handler{
 
             //root element
             Element rootElement = doc.createElement("Recipe");
-            doc.appendChild(rootElement);
+
 
             //Name Element
             Element recipeName = doc.createElement("Name");
@@ -43,7 +45,7 @@ public class XML_Stream_Handler{
             //Last Modified On Element
             Element lastModifiedOn = doc.createElement("LastModifiedOn");
             recipeName.appendChild(doc.createTextNode(recipe.getLastModifiedOn()));
-            rootElement.appendChild(createdOn);
+            rootElement.appendChild(lastModifiedOn);
 
             //Instructions Element
             Element recipeInstructions = doc.createElement("Instructions");
@@ -77,17 +79,19 @@ public class XML_Stream_Handler{
             }
 
             rootElement.appendChild(ingredients);
+            doc.appendChild(rootElement);
 
             //Builds file path to write to
-            String fileLocationPath = context.getFilesDir().getAbsolutePath();
+            //String fileLocationPath = context.getFilesDir().getAbsolutePath();
             String newFileName = DataLayer.RECIPE_FILE_PREFIX + recipe.getName() + DataLayer.FILE_EXTENSION;
-            String filePathToCreate = fileLocationPath + "/" + newFileName;
+            //String filePathToCreate = fileLocationPath + "/" + newFileName;
 
             //Writes to XML file
+            FileOutputStream fileos = context.openFileOutput(newFileName ,context.MODE_PRIVATE);
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource source = new DOMSource(doc);
-            StreamResult result = new StreamResult((new File(filePathToCreate)));
+            StreamResult result = new StreamResult(fileos);
             transformer.transform(source, result);
 
             if(result.getOutputStream() != null){
@@ -114,7 +118,7 @@ public class XML_Stream_Handler{
 
             //root element
             Element rootElement = doc.createElement("ShoppingList");
-            doc.appendChild(rootElement);
+
 
             //Name Element
             Element listName = doc.createElement("Name");
@@ -129,7 +133,7 @@ public class XML_Stream_Handler{
             //Last Modified On Element
             Element lastModifiedOn = doc.createElement("LastModifiedOn");
             listName.appendChild(doc.createTextNode(list.getLastModifiedOn()));
-            rootElement.appendChild(createdOn);
+            rootElement.appendChild(lastModifiedOn);
 
             Element ingredients = doc.createElement("Ingredients");
 
@@ -163,25 +167,24 @@ public class XML_Stream_Handler{
 
             rootElement.appendChild(ingredients);
 
+            doc.appendChild(rootElement);
+
             //Builds file path to write to
-            String fileLocationPath = context.getFilesDir().getAbsolutePath();
+           // String fileLocationPath = context.getFilesDir().getAbsolutePath();
             String newFileName = DataLayer.SHOPPING_LIST_FILE_PREFIX + list.getName()+ DataLayer.FILE_EXTENSION;
-            String filePathToCreate = fileLocationPath + "/" + newFileName;
+            //String filePathToCreate = fileLocationPath + "/" + newFileName;
 
             //Writes to XML file
+            FileOutputStream fileos = context.openFileOutput(newFileName ,context.MODE_PRIVATE);
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             DOMSource source = new DOMSource(doc);
-            StreamResult result = new StreamResult((new File(filePathToCreate)));
+            StreamResult result = new StreamResult(fileos);
             transformer.transform(source, result);
-
-            StreamResult localResult = new StreamResult(new File(filePathToCreate));
-            transformer.transform(source, localResult);
 
             if(result.getOutputStream() != null){
                 try{
                     result.getOutputStream().close();
-                    localResult.getOutputStream().close();
                 }catch(Exception e){}
                 result.setOutputStream(null);
             }
