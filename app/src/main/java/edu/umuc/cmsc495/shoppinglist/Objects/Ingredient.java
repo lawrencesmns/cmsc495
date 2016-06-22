@@ -76,7 +76,7 @@ public class Ingredient implements Serializable {
         Float partial = UiUtils.getDecimalFromFraction(this.countPartial);
         return UiUtils.round(full + partial,3);
     }
-    protected boolean getCrossed(){
+    protected Boolean getCrossed(){
         return this.isCrossedOut;
     }
 

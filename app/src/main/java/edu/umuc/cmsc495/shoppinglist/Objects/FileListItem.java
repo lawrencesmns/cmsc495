@@ -22,9 +22,8 @@ public class FileListItem{
         this.name = name;
         this.lastModifiedOn = lastModifiedOn;
         //Set created and last modified date
-      //  this.createdOn = new Date();
-      //  updateModifiedOn();
-
+        //  this.createdOn = new Date();
+        //  updateModifiedOn();
     }
 
     //Modifies the date to current

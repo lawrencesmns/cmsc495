@@ -16,22 +16,31 @@ public class UiUtils {
         bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
         return bd.floatValue();
     }
-        public static final String emailNewLine(){
-            return "\n";
-        }
-        public static final String getAppName(){
-            return "Grocery Butler";
-        }
-        public static String getDateTimeNow(){
-            return SimpleDateFormat.getDateTimeInstance(
-                    DateFormat.MEDIUM, DateFormat.SHORT).format(new Date());
-        }
-        public static String formatDate(Date in){
-            return SimpleDateFormat.getDateTimeInstance(
-                    DateFormat.MEDIUM, DateFormat.SHORT).format(in);
-        }
+    public static final String emailNewLine(){
+        return "\n";
+    }
+    public static final String getAppName(){
+        return "Grocery Butler";
+    }
+    public static String getDateTimeNow(){
+        return SimpleDateFormat.getDateTimeInstance(
+                DateFormat.MEDIUM, DateFormat.SHORT).format(new Date());
+    }
+    public static String formatDate(Date in){
+        return SimpleDateFormat.getDateTimeInstance(
+                DateFormat.MEDIUM, DateFormat.SHORT).format(in);
+    }
 
-        public static final ArrayList<String> getPartialQuantities() {
+    public static final ArrayList<String> getCountFull(){
+        ArrayList<String> spinnerArray =  new ArrayList<>();
+        for(Integer i=1; i<=20; i++){
+            spinnerArray.add(i.toString());
+        }
+        return spinnerArray;
+    }
+
+
+    public static final ArrayList<String> getCountPartial() {
             ArrayList<String> spinnerArray =  new ArrayList<>();
             spinnerArray.add("1/8");
             spinnerArray.add("1/4");

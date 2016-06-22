@@ -39,7 +39,7 @@ public class DataLayer{
         return XML_Stream_Handler.writeRecipe(context, recipe);
     }
 
-    protected static boolean deleteRecipe(Recipe recipe){
+    protected  boolean deleteRecipe(Recipe recipe){
         String fileName = RECIPE_FILE_PREFIX + recipe.getName() + FILE_EXTENSION;
         return removeFile(fileName);
     }
@@ -74,11 +74,11 @@ public class DataLayer{
 
     //region Shopping List Handlers
     //Writes a shopping list to file
-    protected static boolean saveShoppingList(ShoppingList shoppingList){
+    protected  boolean saveShoppingList(ShoppingList shoppingList){
         return XML_Stream_Handler.writeShoppingList(context, shoppingList);
     }
 
-    protected static boolean deleteShoppingList(ShoppingList shoppingList){
+    protected boolean deleteShoppingList(ShoppingList shoppingList){
         String fileName = SHOPPING_LIST_FILE_PREFIX + shoppingList.getName() + FILE_EXTENSION;
         return removeFile(fileName);
     }
@@ -114,7 +114,7 @@ public class DataLayer{
 
     //region File Handlers
     //Private method to remove the recipe from memory and also it's file.
-    private static boolean removeFile(String fileName){
+    private boolean removeFile(String fileName){
         return context.deleteFile(fileName);
     }
 
@@ -138,6 +138,7 @@ public class DataLayer{
         try {
           is = new FileInputStream(file);
         } catch (FileNotFoundException e) {
+            throw new IllegalArgumentException("Sorry, that file doesn't exist.");
         }
         return is;
     }

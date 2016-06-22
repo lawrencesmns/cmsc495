@@ -27,7 +27,7 @@ public class ShoppingList implements Serializable{
         return UiUtils.getAppName() + "   Shopping List: " + this.name;
     }
 
-    protected String getEmailBody(){
+    protected String getEmailBodyText(){
         String output = this.name + ": " + UiUtils.emailNewLine()+ UiUtils.emailNewLine()+ UiUtils.emailNewLine();
         output += "Items:" + UiUtils.emailNewLine();
         for(Ingredient i:this.ingredientList){
@@ -41,12 +41,19 @@ public class ShoppingList implements Serializable{
     protected void addShoppingListItem(Ingredient ingredient){
         ingredientList.add(ingredient);
     }
+    protected void setCreatedOn(String newCreatedOn){
+        this.createdOn = newCreatedOn;
+    }
+    protected void setLastModifiedOn(String newLastModifiedOn){this.lastModifiedOn = newLastModifiedOn;}
     protected void setName(String newListName){
         delete();
         for(char c:DataLayer.INVALID_FILE_NAME_CHARS){
             newListName = newListName.replace(c, ' ');
         }
         this.name = newListName;
+    }
+    protected void setCreatedOn(){
+
     }
 
     //endregion

@@ -14,7 +14,7 @@ import android.content.res.AssetManager;
 
 public class FileList {
 
-    Context context;
+    private Context context;
 
     //Global Variables
     public static final List<FileListItem> recipes = new ArrayList<>();

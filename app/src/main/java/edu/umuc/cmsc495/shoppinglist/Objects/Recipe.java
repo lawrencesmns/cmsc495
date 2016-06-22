@@ -1,5 +1,7 @@
 package edu.umuc.cmsc495.shoppinglist.Objects;
 
+import android.content.Context;
+
 import java.io.Serializable;
 import java.util.*;
 /**
@@ -9,9 +11,10 @@ public class Recipe implements Serializable {
     //Class Variable Declarations
     private String name, instructions, createdOn, lastModifiedOn;
     private ArrayList<Ingredient> ingredientList = new ArrayList<>();
+    private static Context context;
 
     //Constructors
-    public Recipe(){
+    public Recipe(Context context){
         this.createdOn = UiUtils.getDateTimeNow();
         this.lastModifiedOn = UiUtils.getDateTimeNow();
     }
@@ -39,7 +42,7 @@ public class Recipe implements Serializable {
         return UiUtils.getAppName() + "   Recipe: " + this.name;
     }
 
-    protected String getEmailBody(){
+    protected String getEmailBodyText(){
         String output = this.name + ": " + UiUtils.emailNewLine()+ UiUtils.emailNewLine()+ UiUtils.emailNewLine();
         output += "Ingredients:" + UiUtils.emailNewLine();
         for(Ingredient i:this.ingredientList){
@@ -64,6 +67,7 @@ public class Recipe implements Serializable {
     }
     protected void setInstructions(String newInstructions){
         this.instructions = newInstructions;
+        save();
     }
     protected void setCreatedOn(String newCreatedOn){
         this.createdOn = newCreatedOn;
@@ -76,8 +80,8 @@ public class Recipe implements Serializable {
     private boolean save(){
         boolean checkValue = true;
         //TODO: check if it can eb saved, like enough free space
-
-        checkValue = DataLayer.deleteRecipe(this);
+        DataLayer d = new DataLayer(context);
+        checkValue = d.deleteRecipe(this);
 
         lastModifiedOn = UiUtils.formatDate(new Date());
 
@@ -88,7 +92,8 @@ public class Recipe implements Serializable {
         return checkValue;
     }
     private boolean delete(){
-        return DataLayer.deleteRecipe(this);
+        DataLayer d = new DataLayer(context);
+        return d.deleteRecipe(this);
     }
 
 

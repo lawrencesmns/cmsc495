@@ -45,6 +45,8 @@ public class SAXHandler_ShoppingList extends DefaultHandler{
         } else if (qName.equalsIgnoreCase("Name")) {
             tempList.setName(elementValue);
             //Log.i("list name;", elementValue);
+        } else if (qName.equalsIgnoreCase("CreatedOn")) {
+            tempList.setCreatedOn(elementValue);
         } else if (qName.equalsIgnoreCase("Ingredient")) {
             tempIngredient = new Ingredient();
             Log.i("new ingredient;", elementValue);
