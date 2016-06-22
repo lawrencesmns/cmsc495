@@ -51,8 +51,8 @@ public class ShoppingList implements Serializable{
 
     //endregion
 
-  /* not yet implemented
-    protected boolean addRecipe(Recipe newRecipe){
+   //not yet implemented
+   /* protected boolean addRecipe(Recipe newRecipe){
         List<Ingredient> recipeIngredients = newRecipe.getIngredientList();
 
         for(Ingredient newIngredient: recipeIngredients){
