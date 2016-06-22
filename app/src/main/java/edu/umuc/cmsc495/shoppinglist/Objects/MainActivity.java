@@ -45,12 +45,12 @@ public class MainActivity extends AppCompatActivity {
         ShoppingList sl = new ShoppingList(this);
         sl.setName("testShoppingList1");
 
-        Ingredient i = new Ingredient();
-        i.setName("testIngredient");
-        i.setMeasurement("Tbsp"); //from spinner or modal
-        i.setCountFull("2"); //from spinner or modal
-        i.setCountPartial("1/8"); //from spinner or modal
-        sl.addIngredient(i);
+        Ingredient j = new Ingredient();
+        j.setName("testIngredient");
+        j.setMeasurement("Tbsp"); //from spinner or modal
+        j.setCountFull("2"); //from spinner or modal
+        j.setCountPartial("1/8"); //from spinner or modal
+        sl.addIngredient(j);
         */
     }
 
