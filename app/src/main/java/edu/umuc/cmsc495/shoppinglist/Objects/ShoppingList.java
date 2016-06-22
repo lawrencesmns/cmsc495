@@ -151,9 +151,9 @@ public class ShoppingList implements Serializable{
 
             this.lastModifiedOn = UiUtils.formatDate(new Date());
 
-            if(checkValue){
-                checkValue = d.saveShoppingList(this);
-            }
+
+            checkValue = d.saveShoppingList(this);
+
         } else{checkValue = false;}
         return checkValue;
     }

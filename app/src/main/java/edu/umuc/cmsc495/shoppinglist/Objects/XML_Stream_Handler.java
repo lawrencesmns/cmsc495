@@ -44,12 +44,12 @@ public class XML_Stream_Handler{
 
             //Created On Element
             Element createdOn = doc.createElement("CreatedOn");
-            recipeName.appendChild(doc.createTextNode(recipe.getCreatedOn()));
+            createdOn.appendChild(doc.createTextNode(recipe.getCreatedOn()));
             rootElement.appendChild(createdOn);
 
             //Last Modified On Element
             Element lastModifiedOn = doc.createElement("LastModifiedOn");
-            recipeName.appendChild(doc.createTextNode(recipe.getLastModifiedOn()));
+            lastModifiedOn.appendChild(doc.createTextNode(recipe.getLastModifiedOn()));
             rootElement.appendChild(lastModifiedOn);
 
             //Instructions Element
@@ -134,12 +134,12 @@ public class XML_Stream_Handler{
 
             //Created On Element
             Element createdOn = doc.createElement("CreatedOn");
-            listName.appendChild(doc.createTextNode(list.getCreatedOn()));
+            createdOn.appendChild(doc.createTextNode(list.getCreatedOn()));
             rootElement.appendChild(createdOn);
 
             //Last Modified On Element
             Element lastModifiedOn = doc.createElement("LastModifiedOn");
-            listName.appendChild(doc.createTextNode(list.getLastModifiedOn()));
+            lastModifiedOn.appendChild(doc.createTextNode(list.getLastModifiedOn()));
             rootElement.appendChild(lastModifiedOn);
 
             Element ingredients = doc.createElement("Ingredients");

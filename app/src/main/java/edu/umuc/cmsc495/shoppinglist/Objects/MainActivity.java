@@ -40,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
         i.setCountPartial("1/8"); //from spinner or modal
         recipe.addIngredient(i);
 */
+
+        /*
         ShoppingList sl = new ShoppingList(this);
         sl.setName("testShoppingList1");
 
@@ -49,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         i.setCountFull("2"); //from spinner or modal
         i.setCountPartial("1/8"); //from spinner or modal
         sl.addIngredient(i);
-
+        */
     }
 
     /*This method initializes all UI elements for this activity.*/

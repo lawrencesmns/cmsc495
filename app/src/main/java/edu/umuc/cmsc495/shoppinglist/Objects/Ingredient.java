@@ -50,7 +50,7 @@ public class Ingredient implements Serializable {
     protected void setCountFull(String countFull){
         this.countFull = countFull;
     }
-    protected void setCountPartial(String Count){
+    protected void setCountPartial(String countPartial){
         this.countPartial = countPartial;
     }
     protected void CrossOutItem(){
@@ -71,7 +71,7 @@ public class Ingredient implements Serializable {
         return this.countFull;
     }
     protected String getCountPartialString(){
-        return this.countFull;
+        return this.countPartial;
     }
     protected Float getCountFloat(){
         Float full = Float.parseFloat(this.countFull );
