@@ -97,6 +97,7 @@ public class Recipe implements Serializable {
     protected void addIngredient(Ingredient newIngredient){
         if(!isExistingIngredientByName(newIngredient)){
             ingredientList.add(newIngredient);
+            sortIngredientsAscending();
             save();
         }else{
             throw new IllegalArgumentException("This ingredient is already here, please modify the existing one.");
@@ -132,6 +133,31 @@ public class Recipe implements Serializable {
         return false;   //No matching ingredient name
     }
 
+    //Sorts the Ingredients in the list by name in alphanumeric order
+    protected void sortIngredientsAscending(){
+        ArrayList<Ingredient> sortedList = new ArrayList<Ingredient>();
+        sortedList.addAll(this.ingredientList);
+
+        boolean sortFlag = false;
+        while(sortFlag){
+            sortFlag = true;
+
+            for(int i = 0; i < sortedList.size() - 1; i++){
+                Ingredient tempIng1 = sortedList.get(i);
+                Ingredient tempIng2 = sortedList.get(i + 1);
+
+                if(tempIng1.getName().compareTo(tempIng2.getName()) > 0){
+                    sortedList.set(i, tempIng1);
+                    sortedList.set(i+1, tempIng2);
+                    sortFlag = false;
+                }
+            }
+        }
+
+        //Assigns sorted list to class var
+        this.ingredientList = sortedList;
+
+    }
 
 
 
