@@ -4,12 +4,12 @@
     <!-- "Mark Favorite", should appear as action button if possible -->
     <item
         android:id="@+id/action_email"
-        android:icon="@drawable/ic_mail_black_24dp"
+        android:icon="@drawable/ic_email_white_24px"
         android:title="test"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_addRecipe"
-        android:icon="@drawable/ic_receipt_black_24dp"
+        android:icon="@drawable/ic_receipt_white_24px"
         android:title="test"
         app:showAsAction="ifRoom"/>
 

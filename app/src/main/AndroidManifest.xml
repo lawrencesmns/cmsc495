@@ -35,7 +35,8 @@
         </activity>
         <activity
             android:name=".UI.ManageRecipes"
-            android:parentActivityName=".Objects.MainActivity">
+            android:parentActivityName=".Objects.MainActivity"
+            >
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
@@ -51,7 +52,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Objects.MainActivity" />
         </activity>
-        <activity android:name=".UI.NewIngredient"></activity>
+        <activity android:name=".UI.NewIngredient" />
+        <activity android:name=".UI.NewListItem"></activity>
     </application>
 
 </manifest>

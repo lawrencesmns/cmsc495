@@ -21,4 +21,6 @@
     <string name="save">Save</string>
     <string name="ingredient_name">Ingredient Name</string>
     <string name="recipe_instructions">Recipe Instructions</string>
+    <string name="quantity">Quantity</string>
+    <string name="measurement">Measurement</string>
 </resources>
