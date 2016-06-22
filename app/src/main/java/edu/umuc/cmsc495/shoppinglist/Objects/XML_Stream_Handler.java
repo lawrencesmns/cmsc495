@@ -62,15 +62,15 @@ public class XML_Stream_Handler{
                 ingredient.appendChild(ingName);
 
                 Element measurement = doc.createElement("Measurement");
-                ingName.appendChild(doc.createTextNode(ing.getMeasurement()));
+                measurement.appendChild(doc.createTextNode(ing.getMeasurement()));
                 ingredient.appendChild(measurement);
 
                 Element countFull = doc.createElement("CountFull");
-                ingName.appendChild(doc.createTextNode(ing.getCountFullString()));
+                countFull.appendChild(doc.createTextNode(ing.getCountFullString()));
                 ingredient.appendChild(countFull);
 
                 Element countPartial = doc.createElement("CountPart");
-                ingName.appendChild(doc.createTextNode(ing.getCountPartialString()));
+                countPartial.appendChild(doc.createTextNode(ing.getCountPartialString()));
                 ingredient.appendChild(countPartial);
 
                 ingredients.appendChild(ingredient);
@@ -143,16 +143,20 @@ public class XML_Stream_Handler{
                 ingredient.appendChild(ingName);
 
                 Element measurement = doc.createElement("Measurement");
-                ingName.appendChild(doc.createTextNode(ing.getMeasurement()));
+                measurement.appendChild(doc.createTextNode(ing.getMeasurement()));
                 ingredient.appendChild(measurement);
 
                 Element countFull = doc.createElement("CountFull");
-                ingName.appendChild(doc.createTextNode(ing.getCountFullString()));
+                countFull.appendChild(doc.createTextNode(ing.getCountFullString()));
                 ingredient.appendChild(countFull);
 
                 Element countPartial = doc.createElement("CountPart");
-                ingName.appendChild(doc.createTextNode(ing.getCountPartialString()));
+                countPartial.appendChild(doc.createTextNode(ing.getCountPartialString()));
                 ingredient.appendChild(countPartial);
+
+                Element isCrossedOut = doc.createElement("IsCrossedOut");
+                isCrossedOut.appendChild(doc.createTextNode(ing.getCrossed().toString()));
+                ingredient.appendChild(isCrossedOut);
 
                 ingredients.appendChild(ingredient);
             }
