@@ -35,7 +35,7 @@ public class DataLayer{
     }
 
    //region Recipe Handlers
-    protected static boolean saveRecipe(Recipe recipe){
+    protected boolean saveRecipe(Recipe recipe){
         return XML_Stream_Handler.writeRecipe(context, recipe);
     }
 

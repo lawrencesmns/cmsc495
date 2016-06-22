@@ -17,6 +17,10 @@ public class Recipe implements Serializable {
     public Recipe(Context context){
         this.createdOn = UiUtils.getDateTimeNow();
         this.lastModifiedOn = UiUtils.getDateTimeNow();
+        this.context = context;
+    }
+    public Recipe(){
+        this.createdOn = UiUtils.getDateTimeNow();
     }
 
 
@@ -86,7 +90,7 @@ public class Recipe implements Serializable {
         lastModifiedOn = UiUtils.formatDate(new Date());
 
         if(checkValue){
-            checkValue = DataLayer.saveRecipe(this);
+            checkValue = d.saveRecipe(this);
         }
 
         return checkValue;

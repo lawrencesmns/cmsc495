@@ -1,5 +1,8 @@
 package edu.umuc.cmsc495.shoppinglist.Objects;
 
+import android.content.Context;
+import android.provider.ContactsContract;
+
 import java.io.Serializable;
 import java.util.*;
 /**
@@ -12,8 +15,12 @@ public class ShoppingList implements Serializable{
     private String name, createdOn, lastModifiedOn ;
     private List<Ingredient> ingredientList = new ArrayList<Ingredient>();
     private List<String> recipeIngredients = new ArrayList<>();
+    private static Context context;
 
-
+    public ShoppingList(Context context){
+        this.createdOn = UiUtils.getDateTimeNow();
+        this.context = context;
+    }
     public ShoppingList(){
         this.createdOn = UiUtils.getDateTimeNow();
     }
@@ -138,20 +145,21 @@ public class ShoppingList implements Serializable{
     protected boolean save(){
         boolean checkValue = true;
         //TODO: check if it can eb saved, like enough free space
-
-        checkValue = DataLayer.deleteShoppingList(this);
+        DataLayer d = new DataLayer(context);
+        checkValue = d.deleteShoppingList(this);
 
         this.lastModifiedOn = UiUtils.formatDate(new Date());
 
         if(checkValue){
-            checkValue = DataLayer.saveShoppingList(this);
+            checkValue = d.saveShoppingList(this);
         }
 
         return checkValue;
     }
 
     protected boolean delete(){
-        return DataLayer.deleteShoppingList(this);
+        DataLayer d = new DataLayer(context);
+        return d.deleteShoppingList(this);
     }
 }
 

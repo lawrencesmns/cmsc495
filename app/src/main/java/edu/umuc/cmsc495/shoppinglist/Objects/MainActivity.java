@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         initializeUI();
 
-        Recipe recipe = new Recipe();
+        Recipe recipe = new Recipe(this);
         recipe.setName("testRecipe1");
         recipe.setInstructions("these are the instructions");
 
