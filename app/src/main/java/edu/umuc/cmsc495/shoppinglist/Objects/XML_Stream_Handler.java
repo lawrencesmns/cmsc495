@@ -121,12 +121,43 @@ public class XML_Stream_Handler{
             listName.appendChild(doc.createTextNode(list.getName()));
             rootElement.appendChild(listName);
 
+            //Created On Element
+            Element createdOn = doc.createElement("CreatedOn");
+            listName.appendChild(doc.createTextNode(list.getCreatedOn()));
+            rootElement.appendChild(createdOn);
+
+            //Last Modified On Element
+            Element lastModifiedOn = doc.createElement("LastModifiedOn");
+            listName.appendChild(doc.createTextNode(list.getLastModifiedOn()));
+            rootElement.appendChild(createdOn);
+
+            Element ingredients = doc.createElement("Ingredients");
+
             //Loops to add all ingredients
+
             for(Ingredient ing: list.getIngredientList()){
                 Element ingredient = doc.createElement("Ingredient");
-                ingredient.appendChild(doc.createTextNode(ing.toString()));
-                rootElement.appendChild(ingredient);
+
+                Element ingName = doc.createElement("IngName");
+                ingName.appendChild(doc.createTextNode(ing.getName()));
+                ingredient.appendChild(ingName);
+
+                Element measurement = doc.createElement("Measurement");
+                ingName.appendChild(doc.createTextNode(ing.getMeasurement()));
+                ingredient.appendChild(measurement);
+
+                Element countFull = doc.createElement("CountFull");
+                ingName.appendChild(doc.createTextNode(ing.getCountFullString()));
+                ingredient.appendChild(countFull);
+
+                Element countPartial = doc.createElement("CountPart");
+                ingName.appendChild(doc.createTextNode(ing.getCountPartialString()));
+                ingredient.appendChild(countPartial);
+
+                ingredients.appendChild(ingredient);
             }
+
+            rootElement.appendChild(ingredients);
 
             //Builds file path to write to
             String fileLocationPath = context.getFilesDir().getAbsolutePath();
