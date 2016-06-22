@@ -6,19 +6,21 @@ import java.io.Serializable;
  * Created by James on 6/6/2016.
  */
 public class Ingredient implements Serializable {
-    private String name, measurement, countFull, countPartial;
+    private String name = "", measurement = "", countFull = "", countPartial = "";
 
-    private boolean isCrossedOut;
+    private boolean isCrossedOut = false;
 
-    public Ingredient(String name, String measurement, String countFull, String countPartial){
+    public Ingredient(String name, String measurement, String countFull, String countPartial, boolean isCrossedOut){
         this.name = name;
         this.measurement = measurement;
         this.countFull = countFull;
         this.countPartial = countPartial;
-        this.isCrossedOut = false;
+        this.isCrossedOut = isCrossedOut;
     }
 
-    public Ingredient(){}
+    public Ingredient(){
+
+    }
 
     /**
      * comapreTo compares the names of the current ingredient to the given ingredient

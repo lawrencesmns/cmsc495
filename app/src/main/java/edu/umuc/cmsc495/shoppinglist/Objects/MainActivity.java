@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initializeUI();
+/*
+        //usage:
 
         Recipe recipe = new Recipe(this);
         recipe.setName("testRecipe1");
@@ -37,8 +39,16 @@ public class MainActivity extends AppCompatActivity {
         i.setCountFull("2"); //from spinner or modal
         i.setCountPartial("1/8"); //from spinner or modal
         recipe.addIngredient(i);
+*/
+        ShoppingList sl = new ShoppingList(this);
+        sl.setName("testShoppingList1");
 
-
+        Ingredient i = new Ingredient();
+        i.setName("testIngredient");
+        i.setMeasurement("Tbsp"); //from spinner or modal
+        i.setCountFull("2"); //from spinner or modal
+        i.setCountPartial("1/8"); //from spinner or modal
+        sl.addIngredient(i);
 
     }
 
