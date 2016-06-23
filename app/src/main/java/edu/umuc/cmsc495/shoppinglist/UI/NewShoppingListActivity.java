@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import edu.umuc.cmsc495.shoppinglist.Objects.Ingredient;
 import edu.umuc.cmsc495.shoppinglist.R;
 
 public class NewShoppingListActivity extends AppCompatActivity {
@@ -21,17 +22,21 @@ public class NewShoppingListActivity extends AppCompatActivity {
     private ArrayAdapter<String> mRecipeAdapter;
     private DragSortListView draggableList;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initializeUI();
 
-        //this is dummy data!
+        Intent intent = getIntent();
+        String itemTest = intent.getStringExtra("Incoming ingredient");
+
+        if(itemTest != null){
+            itemTest = itemTest.toString().split(",")[3];
+        }else itemTest = "No message!";
+
+        //for some reason nothing shows up with just one item?!?!?!
         String[] dummyRecipesArray = {
-                "Ice cream", "Apple juice", "Elephant", "Candy", "Beer", "Vodka", "Bread", "Chips",
-                "Mozzarella", "New York Strip Steak", "Oatmeal Raisin Cookies", "Chicken", "Radishes",
-                "Onions"
+                "", itemTest
         };
 
         List<String> dummyRecipes = new ArrayList(Arrays.asList(dummyRecipesArray));
@@ -41,6 +46,8 @@ public class NewShoppingListActivity extends AppCompatActivity {
         draggableList = (DragSortListView) findViewById(R.id.listview_added_ingredient);
         draggableList.setAdapter(mRecipeAdapter);
 
+        //TODO: Save contents of adapter whenever this activity closes. Use a preference file, perhaps?
+
     }
 
     @Override
@@ -48,6 +55,10 @@ public class NewShoppingListActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.new_shopping_list_actions, menu);
         return true;
+    }
+
+    private void saveShoppingList(){
+
     }
 
     private void initializeUI(){
