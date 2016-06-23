@@ -139,6 +139,7 @@
             android:layout_marginBottom="16dp"
             android:layout_marginRight="16dp"
             android:layout_gravity="right|bottom"
-            android:background="@drawable/ic_delete_black_24dp"/>
+            android:background="@drawable/ic_delete_black_24dp"
+            android:id="@+id/edit_ingredient_delete" />
     </FrameLayout>
 </LinearLayout>

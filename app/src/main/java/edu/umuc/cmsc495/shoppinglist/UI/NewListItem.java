@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 
 import edu.umuc.cmsc495.shoppinglist.Objects.Ingredient;
@@ -33,20 +34,36 @@ public class NewListItem extends AppCompatActivity {
         measurements.setAdapter(measurementsAd);
 
         Button btnSave = (Button) findViewById(R.id.save);
+        Button btnCancel = (Button) findViewById(R.id.cancel);
+        ImageButton btnDelete = (ImageButton) findViewById(R.id.edit_ingredient_delete);
         btnSave.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View v) {
-                String name, countPartial, countFull, measurement;
-                name = ((EditText)findViewById(R.id.new_ingredient_name)).getText().toString();
-                countPartial = ((Spinner)findViewById(R.id.partial_qty_item)).getSelectedItem().toString();
-                countFull = ((Spinner)findViewById(R.id.whole_qty_item)).getSelectedItem().toString();
-                measurement = ((Spinner)findViewById(R.id.measurements_item)).getSelectedItem().toString();
-                Ingredient newItem = new Ingredient(name, measurement, countFull, countPartial, false);
+                String sendingString;
+                sendingString = ((EditText)findViewById(R.id.new_ingredient_name)).getText().toString() + ",";
+                sendingString += ((Spinner)findViewById(R.id.partial_qty_item)).getSelectedItem().toString() + ",";
+                sendingString += ((Spinner)findViewById(R.id.whole_qty_item)).getSelectedItem().toString() + ",";
+                sendingString += ((Spinner)findViewById(R.id.measurements_item)).getSelectedItem().toString();
 
                 Intent intent = new Intent(v.getContext(),NewShoppingListActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("Incoming ingredient", newItem.toString());
+                intent.putExtra("Incoming ingredient", sendingString);
                 startActivity(intent);
+            }
+        });
+
+        btnCancel.setOnClickListener(new Button.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        btnDelete.setOnClickListener(new ImageButton.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                //TODO: Add stuff that will remove this ingredient from its parent's list (recipie or shopping list)
+                finish();
             }
         });
     }

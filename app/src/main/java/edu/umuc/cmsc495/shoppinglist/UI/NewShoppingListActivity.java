@@ -31,7 +31,8 @@ public class NewShoppingListActivity extends AppCompatActivity {
         String itemTest = intent.getStringExtra("Incoming ingredient");
 
         if(itemTest != null){
-            itemTest = itemTest.toString().split(",")[3];
+            //Array format: name, partialQty, wholeQty, measurement
+            itemTest = itemTest.toString().split(",")[0];
         }else itemTest = "No message!";
 
         //for some reason nothing shows up with just one item?!?!?!

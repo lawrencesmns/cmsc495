@@ -84,7 +84,6 @@ public class Ingredient implements Serializable {
 
     @Override
     public String toString(){
-        //From Lawrence: I changed this to make it easier to split
-        return this.getCountFullString() + "," + this.getCountPartialString() + "," + this.measurement + "," + this.name;
+        return this.getCountFullString() + " " + this.getCountPartialString() + "  " + this.measurement + "    " + this.name;
     }
 }
