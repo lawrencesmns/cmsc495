@@ -63,15 +63,14 @@ public class NewShoppingListActivity extends AppCompatActivity {
         Ingredient dummyIngredient = new Ingredient("","","","",true);
         ingredients.add(dummyIngredient);
 
-        /*Restore saved adapter
+        //Restore saved adapter
         ShoppingList shoppingList;
-        shoppingList = loadShoppingList(WORKING_LIST_NAME);
-        List<Ingredients> shoppingList.getIngredients();
+        shoppingList = shoppingList.loadShoppingList(WORKING_LIST_NAME);
+        List<Ingredient> shoppingList.getIngredients();
         if(ingredient != null)
             shoppingList.addIngredient(incoming);
-         */
 
-        //TODO: Delete this and uncomment above once the loadShoppingList method is working
+
         ingredients.add(new Ingredient("a", "2", "2", "2", false));
         ingredients.add(new Ingredient("b", "2", "2", "2", false));
 
