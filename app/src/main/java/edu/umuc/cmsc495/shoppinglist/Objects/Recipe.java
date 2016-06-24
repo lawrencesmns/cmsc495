@@ -26,7 +26,13 @@ public class Recipe extends GbList implements Serializable {
     }
 
     public static Recipe loadRecipe(String name){ //probably not the cleanest
-        return DataLayer.parseRecipe(name);
+        if(context !=null){
+            return DataLayer.parseRecipe(name);
+        } else{
+            return new Recipe();
+        }
+
+
     }
 
 

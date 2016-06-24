@@ -23,7 +23,11 @@ public class ShoppingList extends GbList implements Serializable{
     }
 
     public static ShoppingList loadShoppingList(String name){ //probably not the cleanest
-        return DataLayer.parseList(name);
+        if(context !=null){
+            return DataLayer.parseList(name);
+        } else{
+            return new ShoppingList();
+        }
     }
 
 
