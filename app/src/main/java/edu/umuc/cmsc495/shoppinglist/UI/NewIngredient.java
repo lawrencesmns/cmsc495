@@ -49,6 +49,7 @@ public class NewIngredient extends AppCompatActivity {
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("Incoming ingredient", sending);
                 startActivity(intent);
+                finish();
             }
         });
 

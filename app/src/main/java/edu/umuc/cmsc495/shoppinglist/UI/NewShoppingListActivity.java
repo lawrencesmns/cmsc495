@@ -64,15 +64,13 @@ public class NewShoppingListActivity extends AppCompatActivity {
         ingredients.add(dummyIngredient);
 
         //Restore saved adapter
-        ShoppingList shoppingList;
+        ShoppingList shoppingList = new ShoppingList();
         shoppingList = shoppingList.loadShoppingList(WORKING_LIST_NAME);
-        List<Ingredient> shoppingList.getIngredients();
-        if(ingredient != null)
-            shoppingList.addIngredient(incoming);
 
 
-        ingredients.add(new Ingredient("a", "2", "2", "2", false));
-        ingredients.add(new Ingredient("b", "2", "2", "2", false));
+        for(Ingredient i : shoppingList.getIngredientList()){
+            ingredients.add(i);
+        }
 
         //Get new ingredient if there is any
         Intent intent = getIntent();
@@ -97,6 +95,7 @@ public class NewShoppingListActivity extends AppCompatActivity {
         ShoppingList shoppingList = new ShoppingList();
         shoppingList.setName(title);
 
+        ingredients.remove(0);
         for(Ingredient i : ingredients){
             shoppingList.addIngredient(i);
         }
