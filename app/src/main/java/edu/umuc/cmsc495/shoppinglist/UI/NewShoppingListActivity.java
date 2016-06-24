@@ -7,9 +7,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -24,6 +26,17 @@ public class NewShoppingListActivity extends AppCompatActivity {
     private DragSortListView draggableList;
     List<Ingredient> ingredients = new LinkedList<Ingredient>();
     private final String WORKING_LIST_NAME = "_____temp shopping list";
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.action_addRecipe:
+                saveList();
+                break;
+        }
+
+        return true;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +55,10 @@ public class NewShoppingListActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
+
+        ingredients.remove(0);
         //Save current adapter as a temporary shopping list
-        ShoppingList shoppingList = new ShoppingList();
+        ShoppingList shoppingList = new ShoppingList(this);
         for(Ingredient i : ingredients)
                 shoppingList.addIngredient(i);
         shoppingList.setName(WORKING_LIST_NAME);
@@ -64,8 +79,12 @@ public class NewShoppingListActivity extends AppCompatActivity {
         ingredients.add(dummyIngredient);
 
         //Restore saved adapter
-        ShoppingList shoppingList = new ShoppingList();
-        shoppingList = shoppingList.loadShoppingList(WORKING_LIST_NAME);
+        ShoppingList shoppingList = new ShoppingList(this);
+        try {
+            shoppingList = shoppingList.loadShoppingList(WORKING_LIST_NAME);
+        }catch(NullPointerException e){
+                e.printStackTrace();
+            }
 
 
         for(Ingredient i : shoppingList.getIngredientList()){
@@ -101,6 +120,9 @@ public class NewShoppingListActivity extends AppCompatActivity {
         }
 
         shoppingList.save();
+        Toast toast = Toast.makeText(this, "List saved!", Toast.LENGTH_SHORT);
+        toast.show();
+        finish();
     }
 
     private void initializeUI(){
@@ -162,6 +184,8 @@ public class NewShoppingListActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
     }
 
 
