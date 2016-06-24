@@ -9,45 +9,25 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import edu.umuc.cmsc495.shoppinglist.Objects.Ingredient;
+import edu.umuc.cmsc495.shoppinglist.Objects.ShoppingList;
 import edu.umuc.cmsc495.shoppinglist.R;
 
 public class NewShoppingListActivity extends AppCompatActivity {
 
-    private ArrayAdapter<String> mRecipeAdapter;
+    private ArrayAdapter<Ingredient> mRecipeAdapter;
     private DragSortListView draggableList;
+    List<Ingredient> ingredients;
+    private final String WORKING_LIST_NAME = "_____temp shopping list";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initializeUI();
-
-        Intent intent = getIntent();
-        String itemTest = intent.getStringExtra("Incoming ingredient");
-
-        if(itemTest != null){
-            //Array format: name, partialQty, wholeQty, measurement
-            itemTest = itemTest.toString().split(",")[0];
-        }else itemTest = "No message!";
-
-        //for some reason nothing shows up with just one item?!?!?!
-        String[] dummyRecipesArray = {
-                "", itemTest
-        };
-
-        List<String> dummyRecipes = new ArrayList(Arrays.asList(dummyRecipesArray));
-       mRecipeAdapter = new ArrayAdapter(this,
-                R.layout.list_item_added_ingredient, R.id.list_item_ingredient_textview, dummyRecipes);
-
-        draggableList = (DragSortListView) findViewById(R.id.listview_added_ingredient);
-        draggableList.setAdapter(mRecipeAdapter);
-
-        //TODO: Save contents of adapter whenever this activity closes. Use a preference file, perhaps?
 
     }
 
@@ -58,8 +38,55 @@ public class NewShoppingListActivity extends AppCompatActivity {
         return true;
     }
 
-    private void saveShoppingList(){
+    @Override
+    protected void onStop() {
+        super.onStop();
+        //Save current adapter as a temporary shopping list
+        ShoppingList shoppingList = new ShoppingList();
+        for(Ingredient i : ingredients)
+                shoppingList.addIngredient(i);
+        shoppingList.setName(WORKING_LIST_NAME);
 
+        Boolean isSaved = shoppingList.save(); //Does this overrwrite existing list?
+        if(!isSaved){
+            //TODO: create a dialog saying there isn't enough space and the list will be lost
+        }
+
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+
+        //Get new ingredient if there is any
+        Intent intent = getIntent();
+        Ingredient incoming = intent.getParcelableExtra("Incoming ingredient");
+
+        /*Restore saved adapter
+        ShoppingList shoppingList;
+        shoppingList = loadShoppingList(WORKING_LIST_NAME);
+        List<Ingredients> shoppingList.getIngredients();
+        if(ingredient != null)
+            shoppingList.addIngredient(incoming);
+         */
+
+        mRecipeAdapter = new ArrayAdapter(this,
+                R.layout.list_item_added_ingredient, R.id.list_item_ingredient_textview, ingredients);
+
+        draggableList = (DragSortListView) findViewById(R.id.listview_added_ingredient);
+        draggableList.setAdapter(mRecipeAdapter);
+    }
+
+    private void saveList(){
+        String title = ((EditText) findViewById(R.id.shopping_list_title)).getText().toString();
+        ShoppingList shoppingList = new ShoppingList();
+        shoppingList.setName(title);
+
+        for(Ingredient i : ingredients){
+            shoppingList.addIngredient(i);
+        }
+
+        shoppingList.save();
     }
 
     private void initializeUI(){
@@ -67,12 +94,11 @@ public class NewShoppingListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_shopping_list);
 
 
-
         DragSortListView.DropListener onDrop =
                 new DragSortListView.DropListener() {
                     @Override
                     public void drop(int from, int to) {
-                        String item = mRecipeAdapter.getItem(from);
+                        Ingredient item = mRecipeAdapter.getItem(from);
 
                         mRecipeAdapter.remove(item);
                         mRecipeAdapter.insert(item, to);
@@ -92,7 +118,7 @@ public class NewShoppingListActivity extends AppCompatActivity {
                     @Override
                     public float getSpeed(float w, long t) {
                         if (w > 0.8f) {
-                            // Traverse all views in a 10 milliseconds
+                            // Traverse all views in 10 milliseconds
                             return ((float) mRecipeAdapter.getCount()) / 0.01f;
                         } else {
                             return 10.0f * w;
