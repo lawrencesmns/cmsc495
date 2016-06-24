@@ -26,9 +26,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initializeUI();
-/*
-        //usage:
 
+        //usage:  all setters and add... and remove... persist to datastorage immediately.
+/*
         Recipe recipe = new Recipe(this);
         recipe.setName("testRecipe1");
         recipe.setInstructions("these are the instructions");
@@ -39,9 +39,10 @@ public class MainActivity extends AppCompatActivity {
         i.setCountFull("2"); //from spinner or modal
         i.setCountPartial("1/8"); //from spinner or modal
         recipe.addIngredient(i);
+        recipe.removeIngredient(i);
+        recipe.setInstructions("these are the new instructions");
 */
-
-        /*
+/*
         ShoppingList sl = new ShoppingList(this);
         sl.setName("testShoppingList1");
 
@@ -51,7 +52,26 @@ public class MainActivity extends AppCompatActivity {
         j.setCountFull("2"); //from spinner or modal
         j.setCountPartial("1/8"); //from spinner or modal
         sl.addIngredient(j);
-        */
+        //sl.removeIngredient(j); //uncomment to remove this ingredient
+
+        Ingredient k = new Ingredient();
+        k.setName("testIngredient1");
+        k.setMeasurement("Tsp"); //from spinner or modal
+        k.setCountFull("1"); //from spinner or modal
+        k.setCountPartial("1/4"); //from spinner or modal
+        sl.addIngredient(k);
+
+
+        ShoppingList sl1 = new ShoppingList(this);
+        sl1.loadShoppingList("testShoppingList1");
+        String name = sl1.getName();
+        for(Ingredient i:sl1.getIngredientList()){
+           String tostr = i.toString();
+        }
+        String created = sl1.getCreatedOn();
+        String lastMod = sl1.getLastModifiedOn();
+*/
+
     }
 
     /*This method initializes all UI elements for this activity.*/

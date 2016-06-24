@@ -46,7 +46,7 @@ public class DataLayer{
 
     //Parses a recipe file
     protected static Recipe parseRecipe(String name){
-        InputStream is = getFile(name);
+        InputStream is = getFile(name, RECIPE_FILE_PREFIX);
 
         SAXHandler_Recipe saxHandler = new SAXHandler_Recipe();
         try {
@@ -86,7 +86,7 @@ public class DataLayer{
 
     //Parses a shopping list file
     protected static ShoppingList parseList(String name){
-        InputStream is = getFile(name);
+        InputStream is = getFile(name, SHOPPING_LIST_FILE_PREFIX);
 
         // create a SAXXMLHandler
         SAXHandler_ShoppingList saxHandler = new SAXHandler_ShoppingList();
@@ -136,8 +136,8 @@ public class DataLayer{
         return false;
     }
 
-    private static InputStream getFile(String name){
-        File file = new File(context.getFilesDir() + "/" + name);
+    private static InputStream getFile(String name, String FileNamePrefix){
+        File file = new File(context.getFilesDir() + "/" + FileNamePrefix + name + DataLayer.FILE_EXTENSION);
         InputStream is = null;
         try {
           is = new FileInputStream(file);

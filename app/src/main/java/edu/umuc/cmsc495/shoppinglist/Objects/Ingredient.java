@@ -53,11 +53,8 @@ public class Ingredient implements Serializable {
     protected void setCountPartial(String countPartial){
         this.countPartial = countPartial;
     }
-    protected void CrossOutItem(){
-        this.isCrossedOut = true;
-    }
-    protected void UncrossItem(){
-        this.isCrossedOut = false;
+    protected void setCrossedOut(Boolean crossedOut){
+        this.isCrossedOut = crossedOut;
     }
 
     //Get Methods
