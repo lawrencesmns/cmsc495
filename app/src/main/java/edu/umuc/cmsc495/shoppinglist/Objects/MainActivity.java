@@ -27,7 +27,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         initializeUI();
 
-        //usage:  all setters and add... and remove... persist to datastorage immediately.
+        //usage:  Recipe and shoppingList methods setName, setInstructions(recipe only), addIngredient,
+        //        changeIngredient, and removeIngredient all persist to datastorage immediately.
 /*
         Recipe recipe = new Recipe(this);
         recipe.setName("testRecipe1");
@@ -38,22 +39,22 @@ public class MainActivity extends AppCompatActivity {
         i.setMeasurement("Tbsp"); //from spinner or modal
         i.setCountFull("2"); //from spinner or modal
         i.setCountPartial("1/8"); //from spinner or modal
-        recipe.addIngredient(i);
-        recipe.removeIngredient(i);
-        recipe.setInstructions("these are the new instructions");
+        recipe.addIngredient(i); //add the ingredient to the object which persists to database
+        recipe.removeIngredient(i); //remove the ingredient
+        recipe.setInstructions("these are the new instructions"); //change the instructions
 */
 /*
-        ShoppingList sl = new ShoppingList(this);
-        sl.setName("testShoppingList1");
-
+        ShoppingList sl = new ShoppingList(this); //creates a new list with db pernanence via this.
+        sl.setName("testShoppingList1"); //sets the name of the list
+        //create a new ingredient
         Ingredient j = new Ingredient();
-        j.setName("testIngredient");
+        j.setName("testIngredient"); //sets ingredient name
         j.setMeasurement("Tbsp"); //from spinner or modal
         j.setCountFull("2"); //from spinner or modal
         j.setCountPartial("1/8"); //from spinner or modal
         sl.addIngredient(j);
         //sl.removeIngredient(j); //uncomment to remove this ingredient
-
+        //adds a second ingredient
         Ingredient k = new Ingredient();
         k.setName("testIngredient1");
         k.setMeasurement("Tsp"); //from spinner or modal
@@ -61,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         k.setCountPartial("1/4"); //from spinner or modal
         sl.addIngredient(k);
 
-
+        //create a shopping list by name and iterate through ingredients, get some other properties
         ShoppingList sl1 = new ShoppingList(this);
         sl1.loadShoppingList("testShoppingList1");
         String name = sl1.getName();
@@ -70,6 +71,13 @@ public class MainActivity extends AppCompatActivity {
         }
         String created = sl1.getCreatedOn();
         String lastMod = sl1.getLastModifiedOn();
+*/
+
+        /*
+        //demonstrate auto increment naming
+        ShoppingList sl2 = new ShoppingList(this);
+        sl2.createNewList(); //auto increments the name
+        String defaultName = sl2.getName();
 */
 
     }
