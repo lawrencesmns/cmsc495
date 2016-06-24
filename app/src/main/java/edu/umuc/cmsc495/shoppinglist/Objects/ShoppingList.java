@@ -52,7 +52,7 @@ public class ShoppingList implements Serializable{
         this.createdOn = newCreatedOn;
     }
     protected void setLastModifiedOn(String newLastModifiedOn){this.lastModifiedOn = newLastModifiedOn;}
-    protected void setName(String newListName){
+    public void setName(String newListName){
         delete();
         for(char c:DataLayer.INVALID_FILE_NAME_CHARS){
             newListName = newListName.replace(c, ' ');
@@ -105,7 +105,7 @@ public class ShoppingList implements Serializable{
     //List Operations
 
 
-    protected void addIngredient(Ingredient newIngredient){
+    public void addIngredient(Ingredient newIngredient){
         this.ingredientList.add(newIngredient);
         save();
     }
@@ -142,7 +142,7 @@ public class ShoppingList implements Serializable{
 
 
 
-    protected boolean save(){
+    public boolean save(){
         boolean checkValue = true;
         //TODO: check if it can eb saved, like enough free space
         if(context != null){

@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import edu.umuc.cmsc495.shoppinglist.Objects.Ingredient;
@@ -21,7 +22,7 @@ public class NewShoppingListActivity extends AppCompatActivity {
 
     private ArrayAdapter<Ingredient> mRecipeAdapter;
     private DragSortListView draggableList;
-    List<Ingredient> ingredients;
+    List<Ingredient> ingredients = new LinkedList<Ingredient>();
     private final String WORKING_LIST_NAME = "_____temp shopping list";
 
     @Override
@@ -58,9 +59,9 @@ public class NewShoppingListActivity extends AppCompatActivity {
     protected void onPostResume() {
         super.onPostResume();
 
-        //Get new ingredient if there is any
-        Intent intent = getIntent();
-        Ingredient incoming = intent.getParcelableExtra("Incoming ingredient");
+        //Crappy hack because the draggableListView doesnt show the first item in list
+        Ingredient dummyIngredient = new Ingredient("","","","",true);
+        ingredients.add(dummyIngredient);
 
         /*Restore saved adapter
         ShoppingList shoppingList;
@@ -69,6 +70,21 @@ public class NewShoppingListActivity extends AppCompatActivity {
         if(ingredient != null)
             shoppingList.addIngredient(incoming);
          */
+
+        //TODO: Delete this and uncomment above once the loadShoppingList method is working
+        ingredients.add(new Ingredient("a", "2", "2", "2", false));
+        ingredients.add(new Ingredient("b", "2", "2", "2", false));
+
+        //Get new ingredient if there is any
+        Intent intent = getIntent();
+        String incoming = intent.getStringExtra("Incoming ingredient");
+
+        if(incoming != null){
+            String[] incomingSplit = incoming.split(",");
+            Ingredient incomingIngredient = new Ingredient(incomingSplit[0], incomingSplit[1],
+                    incomingSplit[2], incomingSplit[3], false);
+            ingredients.add(incomingIngredient);
+        }
 
         mRecipeAdapter = new ArrayAdapter(this,
                 R.layout.list_item_added_ingredient, R.id.list_item_ingredient_textview, ingredients);
@@ -144,7 +160,7 @@ public class NewShoppingListActivity extends AppCompatActivity {
             public void onClick(View view) {
                // Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                //         .setAction("Action", null).show();
-                Intent intent = new Intent(view.getContext(),NewListItem.class);
+                Intent intent = new Intent(view.getContext(),NewIngredient.class);
                 startActivity(intent);
             }
         });
