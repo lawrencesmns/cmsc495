@@ -29,6 +29,13 @@ public class ShoppingList extends GbList implements Serializable{
             return new ShoppingList();
         }
     }
+    public ShoppingList createNewList(){
+        DataLayer d = new DataLayer(this.context);
+        this.name = d.createEmptyShoppingList();
+        save();
+        return this;
+    }
+
 
 
     //region Get Methods
@@ -111,7 +118,7 @@ public class ShoppingList extends GbList implements Serializable{
 
 
 
-    public boolean save(){
+    private boolean save(){
         boolean checkValue = true;
         //TODO: check if it can eb saved, like enough free space
         if(context != null){
@@ -127,7 +134,7 @@ public class ShoppingList extends GbList implements Serializable{
         return checkValue;
     }
 
-    public boolean delete(){
+    private boolean delete(){
         if(context != null){
             DataLayer d = new DataLayer(context);
             return d.deleteShoppingList(this);

@@ -56,17 +56,22 @@ public class NewShoppingListActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
 
-        ingredients.remove(0);
+        ingredients.remove(0); //is there one added?  check out mainActivity.java for recipe and shopping list object usage.  the sequences presented there work as expected.
         //Save current adapter as a temporary shopping list
         ShoppingList shoppingList = new ShoppingList(this);
         for(Ingredient i : ingredients)
-                shoppingList.addIngredient(i);
-        shoppingList.setName(WORKING_LIST_NAME);
+                shoppingList.addIngredient(i); //list saves automatically on the following method calls: setName, addIngredient, changeIngredient, removeIngredient.  you don't need to call save from the UI.
+        try {
+            shoppingList.setName(WORKING_LIST_NAME); //saves automatically behind the scenes
+        }catch(Exception e){
+            //show popup box with e.getMessage();  friendly exception messages will be passed up the stack.  If they aren't friednly let me know.  -Martin
 
-        Boolean isSaved = shoppingList.save(); //Does this overrwrite existing list?
-        if(!isSaved){
-            //TODO: create a dialog saying there isn't enough space and the list will be lost
         }
+
+      //  Boolean isSaved = shoppingList.save(); //Does this overrwrite existing list?
+      //  if(!isSaved){
+            //TODO: create a dialog saying there isn't enough space and the list will be lost
+      //  }
 
     }
 
@@ -75,8 +80,8 @@ public class NewShoppingListActivity extends AppCompatActivity {
         super.onPostResume();
 
         //Crappy hack because the draggableListView doesnt show the first item in list
-        Ingredient dummyIngredient = new Ingredient("","","","",true);
-        ingredients.add(dummyIngredient);
+        Ingredient dummyIngredient = new Ingredient("","","","",true); //not needed?  Not sure what this code is trying to do - martin
+        ingredients.add(dummyIngredient); //not needed?  Not sure what this code is trying to do - martin
 
         //Restore saved adapter
         ShoppingList shoppingList = new ShoppingList(this);
@@ -109,17 +114,17 @@ public class NewShoppingListActivity extends AppCompatActivity {
         draggableList.setAdapter(mRecipeAdapter);
     }
 
-    private void saveList(){
+    private void saveList(){ //list saves automatically on the following method calls: setName, addIngredient, changeIngredient, removeIngredient.  you don't need to call save from the UI.
         String title = ((EditText) findViewById(R.id.shopping_list_title)).getText().toString();
-        ShoppingList shoppingList = new ShoppingList();
-        shoppingList.setName(title);
+        ShoppingList shoppingList = new ShoppingList(); //should use a class level var and the new ShoppingList(this); constructor?
+        shoppingList.setName(title); //if using class level var and the user changed the name, this would be set?
 
-        ingredients.remove(0);
-        for(Ingredient i : ingredients){
-            shoppingList.addIngredient(i);
+        ingredients.remove(0); //ingredients here is a class var not a reference to the object?
+        for(Ingredient i : ingredients){ //should be for(Ingredient i : shoppingList.getIngredients())
+            shoppingList.addIngredient(i); //should happen on an event when a user adds an ingredient?
         }
 
-        shoppingList.save();
+        //shoppingList.save(); //not needed - martin
         Toast toast = Toast.makeText(this, "List saved!", Toast.LENGTH_SHORT);
         toast.show();
         finish();

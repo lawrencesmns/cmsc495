@@ -18,34 +18,35 @@ import javax.xml.parsers.SAXParserFactory;
  * DataLayer functions as the data core of the app. It provides the containers of the recipes
  * and shopping lists, and the methods to add to or remove these objects.
  */
-public class DataLayer{
+public class DataLayer {
 
     //Class Variables
     //Consts
-    public final static char[] INVALID_FILE_NAME_CHARS = {'?',':','\\','\"','\'','*','|','/','<','>',';'};
+    public final static char[] INVALID_FILE_NAME_CHARS = {'?', ':', '\\', '\"', '\'', '*', '|', '/', '<', '>', ';'};
     public final static String RECIPE_FILE_PREFIX = "r_";
     public final static String SHOPPING_LIST_FILE_PREFIX = "sl_";
     public final static String FILE_EXTENSION = ".xml";
+    public final static String DEFAULT_SHOPPING_LIST_NAME_WITHOUT_INCREMEMNTER = "Untitled Shopping List - ";
 
     static Context context;
 
     //Constructor that stores the application context for file operations
-    public DataLayer(Context context){
+    public DataLayer(Context context) {
         this.context = context;
     }
 
-   //region Recipe Handlers
-    public boolean saveRecipe(Recipe recipe){
+    //region Recipe Handlers
+    public boolean saveRecipe(Recipe recipe) {
         return XML_Stream_Handler.writeRecipe(context, recipe);
     }
 
-    public  boolean deleteRecipe(Recipe recipe){
+    public boolean deleteRecipe(Recipe recipe) {
         String fileName = RECIPE_FILE_PREFIX + recipe.getName() + FILE_EXTENSION;
         return removeFile(fileName);
     }
 
     //Parses a recipe file
-    public static Recipe parseRecipe(String name){
+    public static Recipe parseRecipe(String name) {
         InputStream is = getFile(name, RECIPE_FILE_PREFIX);
 
         SAXHandler_Recipe saxHandler = new SAXHandler_Recipe();
@@ -62,10 +63,11 @@ public class DataLayer{
 
         } catch (Exception ex) {
             Log.d("XML Oops", ex.getMessage());
-        } finally{
-            try{
+        } finally {
+            try {
                 is.close();
-            }catch(Exception ex){}
+            } catch (Exception ex) {
+            }
         }
         return saxHandler.getRecipe();
     }
@@ -74,9 +76,21 @@ public class DataLayer{
 
     //region Shopping List Handlers
     //Writes a shopping list to file
-    public  boolean saveShoppingList(ShoppingList shoppingList){
+    public boolean saveShoppingList(ShoppingList shoppingList) {
         return XML_Stream_Handler.writeShoppingList(context, shoppingList);
     }
+
+    public String createEmptyShoppingList() {
+        String fileName = "";
+        int incrementer = 0;
+        boolean fileFound = false;
+        do{
+            incrementer +=1;
+            fileName = SHOPPING_LIST_FILE_PREFIX + DEFAULT_SHOPPING_LIST_NAME_WITHOUT_INCREMEMNTER + incrementer + FILE_EXTENSION;
+            fileFound = isFilePresent(fileName);
+        }while(fileFound == true);
+        return DEFAULT_SHOPPING_LIST_NAME_WITHOUT_INCREMEMNTER + incrementer;
+}
 
     public boolean deleteShoppingList(ShoppingList shoppingList){
         String fileName = SHOPPING_LIST_FILE_PREFIX + shoppingList.getName() + FILE_EXTENSION;

@@ -178,7 +178,8 @@ public class XML_Stream_Handler{
 
             //Builds file path to write to
            // String fileLocationPath = context.getFilesDir().getAbsolutePath();
-            String newFileName = DataLayer.SHOPPING_LIST_FILE_PREFIX + list.getName()+ DataLayer.FILE_EXTENSION;
+            //String newFileName = DataLayer.SHOPPING_LIST_FILE_PREFIX + list.getName()+ DataLayer.FILE_EXTENSION;
+            String newFileName = DataLayer.SHOPPING_LIST_FILE_PREFIX + list.getName() + DataLayer.FILE_EXTENSION;
             //String filePathToCreate = fileLocationPath + "/" + newFileName;
 
             //Writes to XML file
