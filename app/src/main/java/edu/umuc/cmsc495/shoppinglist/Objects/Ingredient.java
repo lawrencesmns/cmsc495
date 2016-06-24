@@ -27,7 +27,7 @@ public class Ingredient implements Serializable {
      * @param i
      * @return int
      */
-    protected int compareTo(Ingredient i){
+    public int compareTo(Ingredient i){
         return this.name.compareTo(i.getName());
     }
 
@@ -41,41 +41,41 @@ public class Ingredient implements Serializable {
 
 
     //Set Methods
-    protected void setName(String name){
+    public void setName(String name){
         this.name = name;
     }
-    protected void setMeasurement(String Measurement){
+    public void setMeasurement(String Measurement){
         this.measurement = Measurement;
     }
-    protected void setCountFull(String countFull){
+    public void setCountFull(String countFull){
         this.countFull = countFull;
     }
-    protected void setCountPartial(String countPartial){
+    public void setCountPartial(String countPartial){
         this.countPartial = countPartial;
     }
-    protected void setCrossedOut(Boolean crossedOut){
+    public void setCrossedOut(Boolean crossedOut){
         this.isCrossedOut = crossedOut;
     }
 
     //Get Methods
-    protected String getName(){
+    public String getName(){
         return this.name;
     }
-    protected String getMeasurement(){
+    public String getMeasurement(){
         return this.measurement;
     }
-    protected String getCountFullString(){
+    public String getCountFullString(){
         return this.countFull;
     }
-    protected String getCountPartialString(){
+    public String getCountPartialString(){
         return this.countPartial;
     }
-    protected Float getCountFloat(){
+    public Float getCountFloat(){
         Float full = Float.parseFloat(this.countFull );
         Float partial = UiUtils.getDecimalFromFraction(this.countPartial);
         return UiUtils.round(full + partial,3);
     }
-    protected Boolean getCrossed(){
+    public Boolean getCrossed(){
         return this.isCrossedOut;
     }
 

@@ -12,7 +12,7 @@ public class FileListItem{
 
     //region Get Methods
     public String getName(){return name;}
-    //protected Date getCreatedDate(){return createdOn;}
+    //public Date getCreatedDate(){return createdOn;}
     public String getModifiedOn(){return lastModifiedOn;}
     //endregion
 
@@ -27,13 +27,13 @@ public class FileListItem{
     }
 
     //Modifies the date to current
-  //  protected void updateModifiedOn(){
+  //  public void updateModifiedOn(){
    //     lastModifiedOn = new Date();
    // }
 
     //DEBUG::: Remove or Comment out if not needed
     //Reverts modified date to previous date in event of rollback.
-  //  protected void revertModifiedDate(){
+  //  public void revertModifiedDate(){
   //      if(prevModifiedDate != null) {
    //         lastModifiedOn = prevModifiedDate;
   //      }

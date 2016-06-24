@@ -10,32 +10,32 @@ import java.util.List;
  * Created by martin on 6/23/2016.
  */
 public class GbList implements Serializable {
-    protected String name = "", createdOn = "", lastModifiedOn = "";
-    protected List<Ingredient> ingredientList = new ArrayList<>();
+    public String name = "", createdOn = "", lastModifiedOn = "";
+    public List<Ingredient> ingredientList = new ArrayList<>();
    // private static Context context;
 
     //region get Methods
-    protected String getName() {
+    public String getName() {
         return this.name;
     }
 
-    protected List<Ingredient> getIngredientList() {
+    public List<Ingredient> getIngredientList() {
         return this.ingredientList;
     }
 
-    protected String getLastModifiedOn() {
+    public String getLastModifiedOn() {
         return this.lastModifiedOn;
     }
 
-    protected String getCreatedOn() {
+    public String getCreatedOn() {
         return this.createdOn;
     }
 
-    protected String getEmailSubject(String type){
+    public String getEmailSubject(String type){
         return UiUtils.getAppName() + "   " + type + ": " + this.name;
     }
 
-    protected String clearInvalidChars(String name){
+    public String clearInvalidChars(String name){
         String output = "";
         for (char c : DataLayer.INVALID_FILE_NAME_CHARS) {
             output = name.replace(c, ' ');
@@ -43,16 +43,16 @@ public class GbList implements Serializable {
             return output;
     }
 
-    protected void setCreatedOn(String newCreatedOn) {
+    public void setCreatedOn(String newCreatedOn) {
         this.createdOn = newCreatedOn;
     }
 
-    protected void setLastModifiedOn(String newLastModifiedOn) {
+    public void setLastModifiedOn(String newLastModifiedOn) {
         this.lastModifiedOn = newLastModifiedOn;
     }
 
     //Adds an ingredient to the list
-    protected void addIngredient(Ingredient newIngredient) {
+    public void addIngredient(Ingredient newIngredient) {
         if (!isExistingIngredientByName(newIngredient)) {
             if (newIngredient.getName().length() == 0) {
                 throw new IllegalArgumentException("Please enter a name for the ingredient");
@@ -64,7 +64,7 @@ public class GbList implements Serializable {
         }
     }
 
-    protected void changeIngredient(Ingredient revisedIngredient, Ingredient originalIngredient) {
+    public void changeIngredient(Ingredient revisedIngredient, Ingredient originalIngredient) {
         removeIngredient(originalIngredient);
         addIngredient(revisedIngredient);
     }
@@ -81,7 +81,7 @@ public class GbList implements Serializable {
 
 
     //Sorts the Ingredients in the list by name in alphanumeric order
-    protected void sortIngredientsAscending() {
+    public void sortIngredientsAscending() {
         ArrayList<Ingredient> sortedList = new ArrayList<Ingredient>();
         sortedList.addAll(this.ingredientList);
 
@@ -105,7 +105,7 @@ public class GbList implements Serializable {
         this.ingredientList = sortedList;
     }
 
-    protected void removeIngredient(Ingredient ingredient){
+    public void removeIngredient(Ingredient ingredient){
         boolean found = false;
         for (Ingredient i: ingredientList) {
             if(i.getName().compareTo(ingredient.getName()) == 0){

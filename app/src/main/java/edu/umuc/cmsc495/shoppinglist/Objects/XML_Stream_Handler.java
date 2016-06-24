@@ -26,7 +26,7 @@ import javax.xml.transform.stream.StreamResult;
 public class XML_Stream_Handler{
    // private final static String XML_HEADER = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>";
     private static Context context;
-    protected static boolean writeRecipe(Context context, Recipe recipe){
+    public static boolean writeRecipe(Context context, Recipe recipe){
 
         try{
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -116,7 +116,7 @@ public class XML_Stream_Handler{
 
     }
 
-    protected static boolean writeShoppingList(Context context, ShoppingList list){
+    public static boolean writeShoppingList(Context context, ShoppingList list){
 
         try{
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();

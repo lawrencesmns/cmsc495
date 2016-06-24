@@ -30,17 +30,17 @@ public class Recipe extends GbList implements Serializable {
     }
 
 
-    protected String getInstructions(){
+    public String getInstructions(){
         return this.instructions;
     }
 
 
 
-    protected String getEmailSubject(){
+    public String getEmailSubject(){
         return super.getEmailSubject("Recipe");
     }
 
-    protected String getEmailBodyText(){
+    public String getEmailBodyText(){
         String output = this.name + ": " + UiUtils.emailNewLine()+ UiUtils.emailNewLine()+ UiUtils.emailNewLine();
         output += "Ingredients:" + UiUtils.emailNewLine();
         for(Ingredient i:this.ingredientList){
@@ -56,26 +56,26 @@ public class Recipe extends GbList implements Serializable {
     //for the set methods, call to save for every set
     //region set Methods
 
-    protected void setInstructions(String newInstructions){
+    public void setInstructions(String newInstructions){
         this.instructions = newInstructions;
         save();
     }
-    protected void setName(String newRecipeName) {
+    public void setName(String newRecipeName) {
         delete();
         this.name = clearInvalidChars(newRecipeName);
         save();
     }
-    protected void addIngredient(Ingredient newIngredient){
+    public void addIngredient(Ingredient newIngredient){
         super.addIngredient(newIngredient);
         save();
     }
 
-    protected void removeIngredient(Ingredient ingredient){
+    public void removeIngredient(Ingredient ingredient){
         super.removeIngredient(ingredient);
         save();
     }
 
-    protected void changeIngredient(Ingredient revisedIngredient, Ingredient originalIngredient) {
+    public void changeIngredient(Ingredient revisedIngredient, Ingredient originalIngredient) {
         super.changeIngredient(revisedIngredient, originalIngredient);
         save();
     }

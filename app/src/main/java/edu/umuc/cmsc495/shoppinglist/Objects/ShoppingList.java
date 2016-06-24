@@ -28,7 +28,7 @@ public class ShoppingList extends GbList implements Serializable{
 
 
     //region Get Methods
-    protected String getEmailBodyText(){
+    public String getEmailBodyText(){
         String output = this.name + ": " + UiUtils.emailNewLine()+ UiUtils.emailNewLine()+ UiUtils.emailNewLine();
         output += "Items:" + UiUtils.emailNewLine();
         for(Ingredient i:this.ingredientList){
@@ -36,13 +36,13 @@ public class ShoppingList extends GbList implements Serializable{
         }
         return output;
     }
-    protected String getEmailSubject(){
+    public String getEmailSubject(){
         return super.getEmailSubject("Shopping List");
     }
     //endregion
 
     //region Set Methods
-    protected void setName(String newListName){
+    public void setName(String newListName){
         delete();
         this.name = clearInvalidChars(newListName);
         save();
@@ -51,7 +51,7 @@ public class ShoppingList extends GbList implements Serializable{
     //endregion
 
     //not yet implemented
-   /* protected boolean addRecipe(Recipe newRecipe){
+   /* public boolean addRecipe(Recipe newRecipe){
         List<Ingredient> recipeIngredients = newRecipe.getIngredientList();
 
         for(Ingredient newIngredient: recipeIngredients){
@@ -82,19 +82,19 @@ public class ShoppingList extends GbList implements Serializable{
 
     //List Operations
 
-    protected void addIngredient(Ingredient newIngredient){
+    public void addIngredient(Ingredient newIngredient){
         super.addIngredient(newIngredient);
         save();
     }
 
 
-    protected void removeIngredient(Ingredient ingredient){
+    public void removeIngredient(Ingredient ingredient){
         super.removeIngredient(ingredient);
         save();
 
     }
 
-    protected void changeIngredient(Ingredient revisedIngredient, Ingredient originalIngredient){
+    public void changeIngredient(Ingredient revisedIngredient, Ingredient originalIngredient){
         super.changeIngredient(revisedIngredient, originalIngredient);
         save();
     }
@@ -107,7 +107,7 @@ public class ShoppingList extends GbList implements Serializable{
 
 
 
-    protected boolean save(){
+    public boolean save(){
         boolean checkValue = true;
         //TODO: check if it can eb saved, like enough free space
         if(context != null){
@@ -123,7 +123,7 @@ public class ShoppingList extends GbList implements Serializable{
         return checkValue;
     }
 
-    protected boolean delete(){
+    public boolean delete(){
         if(context != null){
             DataLayer d = new DataLayer(context);
             return d.deleteShoppingList(this);
@@ -131,7 +131,7 @@ public class ShoppingList extends GbList implements Serializable{
         else{return false;}
     }
 
-    protected boolean doesShoppingListExistInStorage(String listName){
+    public boolean doesShoppingListExistInStorage(String listName){
         boolean checkFlag = false;
 
         //TODO: Add call to DataLayer to look for shoppinglist name
@@ -193,7 +193,7 @@ public class ShoppingList extends GbList implements Serializable{
 //}
 
 //Set Add Methods
-//   protected void addIngredient(String input){
+//   public void addIngredient(String input){
 //       List<String> inputSplit = Arrays.asList(input.split(","));
 //      String name = inputSplit.get(0);
 //      String measurement = inputSplit.get(1);

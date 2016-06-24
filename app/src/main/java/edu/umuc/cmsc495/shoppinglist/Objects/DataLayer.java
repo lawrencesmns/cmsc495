@@ -30,22 +30,22 @@ public class DataLayer{
     static Context context;
 
     //Constructor that stores the application context for file operations
-    protected DataLayer(Context context){
+    public DataLayer(Context context){
         this.context = context;
     }
 
    //region Recipe Handlers
-    protected boolean saveRecipe(Recipe recipe){
+    public boolean saveRecipe(Recipe recipe){
         return XML_Stream_Handler.writeRecipe(context, recipe);
     }
 
-    protected  boolean deleteRecipe(Recipe recipe){
+    public  boolean deleteRecipe(Recipe recipe){
         String fileName = RECIPE_FILE_PREFIX + recipe.getName() + FILE_EXTENSION;
         return removeFile(fileName);
     }
 
     //Parses a recipe file
-    protected static Recipe parseRecipe(String name){
+    public static Recipe parseRecipe(String name){
         InputStream is = getFile(name, RECIPE_FILE_PREFIX);
 
         SAXHandler_Recipe saxHandler = new SAXHandler_Recipe();
@@ -74,18 +74,18 @@ public class DataLayer{
 
     //region Shopping List Handlers
     //Writes a shopping list to file
-    protected  boolean saveShoppingList(ShoppingList shoppingList){
+    public  boolean saveShoppingList(ShoppingList shoppingList){
         return XML_Stream_Handler.writeShoppingList(context, shoppingList);
     }
 
-    protected boolean deleteShoppingList(ShoppingList shoppingList){
+    public boolean deleteShoppingList(ShoppingList shoppingList){
         String fileName = SHOPPING_LIST_FILE_PREFIX + shoppingList.getName() + FILE_EXTENSION;
         return removeFile(fileName);
     }
 
 
     //Parses a shopping list file
-    protected static ShoppingList parseList(String name){
+    public static ShoppingList parseList(String name){
         InputStream is = getFile(name, SHOPPING_LIST_FILE_PREFIX);
 
         // create a SAXXMLHandler
@@ -183,7 +183,7 @@ public class DataLayer{
      * @param shoppingList
      * @return boolean: true if the file was remvoed and deleted successfully.
      */
-    // protected boolean addShoppingList(ShoppingList shoppingList){
+    // public boolean addShoppingList(ShoppingList shoppingList){
     //   this.shoppingLists.add(shoppingList);
     //    return writeList(shoppingList);
     // }
@@ -221,8 +221,8 @@ public class DataLayer{
 
 
 
-    // protected List<Recipe> getRecipeList(){return this.recipes;}
-   // protected List<ShoppingList> getShoppingLists(){return this.shoppingLists; }
+    // public List<Recipe> getRecipeList(){return this.recipes;}
+   // public List<ShoppingList> getShoppingLists(){return this.shoppingLists; }
 }
 
 /**
@@ -230,7 +230,7 @@ public class DataLayer{
  //* @param newRecipe: Recipe to be added.
  * @return boolean: true if the recipe was successfully loaded and written
  */
-//protected boolean addRecipe(Recipe newRecipe){
+//public boolean addRecipe(Recipe newRecipe){
 // this.recipes.add(newRecipe);
 //    return saveRecipe(newRecipe);
 // }
