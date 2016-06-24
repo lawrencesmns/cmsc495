@@ -52,8 +52,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Objects.MainActivity" />
         </activity>
-        <activity android:name=".UI.NewIngredient" />
-        <activity android:name=".UI.NewListItem"></activity>
+        <activity android:name=".UI.NewIngredient"></activity>
     </application>
 
 </manifest>
