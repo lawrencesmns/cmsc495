@@ -39,15 +39,14 @@ public class NewListItem extends AppCompatActivity {
         btnSave.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View v) {
-                String sendingString;
-                sendingString = ((EditText)findViewById(R.id.new_ingredient_name)).getText().toString() + ",";
-                sendingString += ((Spinner)findViewById(R.id.partial_qty_item)).getSelectedItem().toString() + ",";
-                sendingString += ((Spinner)findViewById(R.id.whole_qty_item)).getSelectedItem().toString() + ",";
-                sendingString += ((Spinner)findViewById(R.id.measurements_item)).getSelectedItem().toString();
+                String name = ((EditText)findViewById(R.id.new_ingredient_name)).getText().toString() + ",";
+                String partialQty = ((Spinner)findViewById(R.id.partial_qty_item)).getSelectedItem().toString() + ",";
+                String wholeQty = ((Spinner)findViewById(R.id.whole_qty_item)).getSelectedItem().toString() + ",";
+                String measurements = ((Spinner)findViewById(R.id.measurements_item)).getSelectedItem().toString();
 
                 Intent intent = new Intent(v.getContext(),NewShoppingListActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("Incoming ingredient", sendingString);
+                intent.putExtra("Incoming ingredient", new Ingredient(name,partialQty,wholeQty,measurements,false));
                 startActivity(intent);
             }
         });
@@ -62,7 +61,7 @@ public class NewListItem extends AppCompatActivity {
         btnDelete.setOnClickListener(new ImageButton.OnClickListener(){
             @Override
             public void onClick(View v) {
-                //TODO: Add stuff that will remove this ingredient from its parent's list (recipie or shopping list)
+                //TODO: Add stuff that will remove this ingredient from its parent's list (recipe or shopping list)
                 finish();
             }
         });
