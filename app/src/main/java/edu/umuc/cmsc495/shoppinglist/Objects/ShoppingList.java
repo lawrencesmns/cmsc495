@@ -9,11 +9,8 @@ import java.util.*;
  * Created by James on 6/7/2016.
  * Last Edited by James on 6/7/2016.
  */
-public class ShoppingList implements Serializable{
-
+public class ShoppingList extends GbList implements Serializable{
     //Class Variables
-    private String name = "", createdOn = "", lastModifiedOn = "";
-    private List<Ingredient> ingredientList = new ArrayList<Ingredient>();
     private List<String> recipeIngredients = new ArrayList<>();
     private static Context context;
 
@@ -25,15 +22,12 @@ public class ShoppingList implements Serializable{
         this.createdOn = UiUtils.getDateTimeNow();
     }
 
-    //region Get Methods
-    protected List<Ingredient> getIngredientList(){return this.ingredientList;}
-    protected String getName(){ return this.name; }
-    protected String getLastModifiedOn(){return this.lastModifiedOn;}
-    protected String getCreatedOn(){return this.createdOn;}
-    protected String getEmailSubject(){
-        return UiUtils.getAppName() + "   Shopping List: " + this.name;
+    public static ShoppingList loadShoppingList(String name){ //probably not the cleanest
+        return DataLayer.parseList(name);
     }
 
+
+    //region Get Methods
     protected String getEmailBodyText(){
         String output = this.name + ": " + UiUtils.emailNewLine()+ UiUtils.emailNewLine()+ UiUtils.emailNewLine();
         output += "Items:" + UiUtils.emailNewLine();
@@ -42,30 +36,21 @@ public class ShoppingList implements Serializable{
         }
         return output;
     }
+    protected String getEmailSubject(){
+        return super.getEmailSubject("Shopping List");
+    }
     //endregion
 
     //region Set Methods
-    protected void addShoppingListItem(Ingredient ingredient){
-        ingredientList.add(ingredient);
-    }
-    protected void setCreatedOn(String newCreatedOn){
-        this.createdOn = newCreatedOn;
-    }
-    protected void setLastModifiedOn(String newLastModifiedOn){this.lastModifiedOn = newLastModifiedOn;}
-    public void setName(String newListName){
+    protected void setName(String newListName){
         delete();
-        for(char c:DataLayer.INVALID_FILE_NAME_CHARS){
-            newListName = newListName.replace(c, ' ');
-        }
-        this.name = newListName;
-    }
-    protected void setCreatedOn(){
-
+        this.name = clearInvalidChars(newListName);
+        save();
     }
 
     //endregion
 
-   //not yet implemented
+    //not yet implemented
    /* protected boolean addRecipe(Recipe newRecipe){
         List<Ingredient> recipeIngredients = newRecipe.getIngredientList();
 
@@ -83,16 +68,9 @@ public class ShoppingList implements Serializable{
     }
 */
 
-    private boolean isIngredientAlreadyPresent(Ingredient ingredient){
-        for(Ingredient currIngredient : this.ingredientList){
-            if(currIngredient.getName().compareTo(ingredient.getName()) == 0){
-                return true;
-            }
-        }
-        return false;
-    }
 
-    private int getIndexOfName(Ingredient targetIngredient){
+
+    /* private int getIndexOfName(Ingredient targetIngredient){
         for(Ingredient ingredient: this.ingredientList){
             if(ingredient.getName().compareTo(targetIngredient.getName()) == 0){
                 return this.ingredientList.indexOf(ingredient);
@@ -100,49 +78,36 @@ public class ShoppingList implements Serializable{
         }
         return -1;
     }
-
+*/
 
     //List Operations
 
-
-    public void addIngredient(Ingredient newIngredient){
-        this.ingredientList.add(newIngredient);
+    protected void addIngredient(Ingredient newIngredient){
+        super.addIngredient(newIngredient);
         save();
     }
 
 
     protected void removeIngredient(Ingredient ingredient){
-        for (Ingredient i: ingredientList) {
-            if(i.getName().compareTo(ingredient.getName()) == 0){
-                ingredientList.remove(i);
-                //System.out.println("Ingredient removed from recipe!");
-                save();
-                break;
-            }
-        }
+        super.removeIngredient(ingredient);
+        save();
+
     }
 
     protected void changeIngredient(Ingredient revisedIngredient, Ingredient originalIngredient){
-        removeIngredient(originalIngredient);
-        addIngredient(revisedIngredient);
+        super.changeIngredient(revisedIngredient, originalIngredient);
         save();
     }
 
 
 
 
-    protected boolean doesShoppingListExistInStorage(String listName){
-        boolean checkFlag = false;
-
-        //TODO: Add call to DataLayer to look for shoppinglist name
-
-        return checkFlag;
-    }
 
 
 
 
-    public boolean save(){
+
+    protected boolean save(){
         boolean checkValue = true;
         //TODO: check if it can eb saved, like enough free space
         if(context != null){
@@ -164,6 +129,14 @@ public class ShoppingList implements Serializable{
             return d.deleteShoppingList(this);
         }
         else{return false;}
+    }
+
+    protected boolean doesShoppingListExistInStorage(String listName){
+        boolean checkFlag = false;
+
+        //TODO: Add call to DataLayer to look for shoppinglist name
+
+        return checkFlag;
     }
 }
 

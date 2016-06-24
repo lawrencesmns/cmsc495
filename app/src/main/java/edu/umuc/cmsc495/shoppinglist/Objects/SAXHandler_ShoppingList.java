@@ -48,6 +48,7 @@ public class SAXHandler_ShoppingList extends DefaultHandler{
         } else if (qName.equalsIgnoreCase("CreatedOn")) {
             tempList.setCreatedOn(elementValue);
         } else if (qName.equalsIgnoreCase("Ingredient")) {
+
             tempIngredient = new Ingredient();
             Log.i("new ingredient;", elementValue);
         } else if (qName.equalsIgnoreCase("IngName")) {
@@ -62,6 +63,11 @@ public class SAXHandler_ShoppingList extends DefaultHandler{
         } else if (qName.equalsIgnoreCase("CountPart")) {
             tempIngredient.setCountPartial(elementValue);
             Log.i("ingredientCountPartial;", elementValue);
-        }
+        } else if (qName.equalsIgnoreCase("IsCrossedOut")) {
+            tempIngredient.setCrossedOut(Boolean.parseBoolean(elementValue));
+            tempList.addIngredient(tempIngredient);
+            Log.i("ingredientCrossedOut;", elementValue);
+    }
+
     }
 }
