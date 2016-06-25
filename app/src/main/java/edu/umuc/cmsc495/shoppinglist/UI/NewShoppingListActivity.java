@@ -116,10 +116,11 @@ public class NewShoppingListActivity extends AppCompatActivity {
 
     private void saveList(){ //list saves automatically on the following method calls: setName, addIngredient, changeIngredient, removeIngredient.  you don't need to call save from the UI.
         String title = ((EditText) findViewById(R.id.shopping_list_title)).getText().toString();
-        ShoppingList shoppingList = new ShoppingList(); //should use a class level var and the new ShoppingList(this); constructor?
+        //ShoppingList shoppingList = new ShoppingList(); //should use a class level var and the new ShoppingList(this); constructor?
+        ShoppingList shoppingList = new ShoppingList(this); //modified the empty ShoppingList constructor to protected access to avoid confusion for UI guys.  Business and datalayer need an empty constuctor.
         shoppingList.setName(title); //if using class level var and the user changed the name, this would be set?
 
-        ingredients.remove(0); //ingredients here is a class var not a reference to the object?
+        ingredients.remove(0); //ingredients here is a class var not a reference to the shoppingList object?
         for(Ingredient i : ingredients){ //should be for(Ingredient i : shoppingList.getIngredients())
             shoppingList.addIngredient(i); //should happen on an event when a user adds an ingredient?
         }

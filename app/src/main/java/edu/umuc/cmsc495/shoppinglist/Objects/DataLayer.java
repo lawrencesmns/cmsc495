@@ -27,6 +27,7 @@ public class DataLayer {
     public final static String SHOPPING_LIST_FILE_PREFIX = "sl_";
     public final static String FILE_EXTENSION = ".xml";
     public final static String DEFAULT_SHOPPING_LIST_NAME_WITHOUT_INCREMEMNTER = "Untitled Shopping List - ";
+    public final static String DEFAULT_RECIPE_NAME_WITHOUT_INCREMEMNTER = "Untitled Recipe - ";
 
     static Context context;
 
@@ -72,6 +73,19 @@ public class DataLayer {
         return saxHandler.getRecipe();
     }
 
+    public String createEmptyRecipe(){
+        String fileName = "";
+        int incrementer = 0;
+        boolean fileFound = false;
+        do{
+            incrementer +=1;
+            fileName = RECIPE_FILE_PREFIX + DEFAULT_RECIPE_NAME_WITHOUT_INCREMEMNTER + incrementer + FILE_EXTENSION;
+            fileFound = isFilePresent(fileName);
+        }while(fileFound);
+        return  DEFAULT_RECIPE_NAME_WITHOUT_INCREMEMNTER  + incrementer;
+        }
+
+
     //endregion
 
     //region Shopping List Handlers
@@ -79,6 +93,7 @@ public class DataLayer {
     public boolean saveShoppingList(ShoppingList shoppingList) {
         return XML_Stream_Handler.writeShoppingList(context, shoppingList);
     }
+
 
     public String createEmptyShoppingList() {
         String fileName = "";
@@ -88,7 +103,7 @@ public class DataLayer {
             incrementer +=1;
             fileName = SHOPPING_LIST_FILE_PREFIX + DEFAULT_SHOPPING_LIST_NAME_WITHOUT_INCREMEMNTER + incrementer + FILE_EXTENSION;
             fileFound = isFilePresent(fileName);
-        }while(fileFound == true);
+        }while(fileFound);
         return DEFAULT_SHOPPING_LIST_NAME_WITHOUT_INCREMEMNTER + incrementer;
 }
 
@@ -137,7 +152,24 @@ public class DataLayer {
     }
 
     //Checks if String fileName is already present
-    private boolean isFilePresent(String fileName){
+    private boolean isFilePresent(String fileName) {
+        boolean out = false;
+        FileInputStream fs = null;
+        try {
+            fs = context.openFileInput(fileName);
+            out = true;
+        } catch (FileNotFoundException e) {
+            return false;
+        } finally {
+            try {
+                if (fs != null)
+                    fs.close();
+            } catch (Exception e) {
+            }
+        }
+    return out;
+    }
+    /* private boolean isFilePresent(String fileName){
         File fileSrc = context.getFilesDir();
         File[] allSrcFiles = fileSrc.listFiles();
 
@@ -149,6 +181,8 @@ public class DataLayer {
 
         return false;
     }
+*/
+
 
     private static InputStream getFile(String name, String FileNamePrefix){
         File file = new File(context.getFilesDir() + "/" + FileNamePrefix + name + DataLayer.FILE_EXTENSION);

@@ -34,6 +34,13 @@ public class GbList implements Serializable {
     public String getEmailSubject(String type){
         return UiUtils.getAppName() + "   " + type + ": " + this.name;
     }
+    public String getIngredientsForEmailBody(){
+        String output = "";
+        for(Ingredient i:this.ingredientList){
+            output += i.getCountFullString() + " " + i.getCountPartialString() + "   " + i.getMeasurement() + "      " + i.getName() + UiUtils.emailNewLine();
+        }
+        return output;
+    }
 
     public String clearInvalidChars(String name){
         String output = "";

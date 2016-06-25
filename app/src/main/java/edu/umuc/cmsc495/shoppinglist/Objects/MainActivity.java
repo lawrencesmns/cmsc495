@@ -74,12 +74,17 @@ public class MainActivity extends AppCompatActivity {
 */
 
         /*
-        //demonstrate auto increment naming
+        //demonstrate auto increment naming for ShoppingList
         ShoppingList sl2 = new ShoppingList(this);
         sl2.createNewList(); //auto increments the name
         String defaultName = sl2.getName();
 */
 
+/*        //demonstrate auto increment naming for Recipe
+        Recipe r2 = new Recipe(this);
+        r2.createNewList(); //auto increments the name
+        String defaultName = r2.getName();
+*/
     }
 
     /*This method initializes all UI elements for this activity.*/

@@ -18,7 +18,7 @@ public class ShoppingList extends GbList implements Serializable{
         this.createdOn = UiUtils.getDateTimeNow();
         this.context = context;
     }
-    public ShoppingList(){
+    protected ShoppingList(){
         this.createdOn = UiUtils.getDateTimeNow();
     }
 
@@ -42,9 +42,7 @@ public class ShoppingList extends GbList implements Serializable{
     public String getEmailBodyText(){
         String output = this.name + ": " + UiUtils.emailNewLine()+ UiUtils.emailNewLine()+ UiUtils.emailNewLine();
         output += "Items:" + UiUtils.emailNewLine();
-        for(Ingredient i:this.ingredientList){
-            output += i.toString() + UiUtils.emailNewLine();
-        }
+        output += getIngredientsForEmailBody();
         return output;
     }
     public String getEmailSubject(){
@@ -110,14 +108,6 @@ public class ShoppingList extends GbList implements Serializable{
         save();
     }
 
-
-
-
-
-
-
-
-
     private boolean save(){
         boolean checkValue = true;
         //TODO: check if it can eb saved, like enough free space
@@ -126,7 +116,6 @@ public class ShoppingList extends GbList implements Serializable{
             checkValue = d.deleteShoppingList(this);
 
             this.lastModifiedOn = UiUtils.formatDate(new Date());
-
 
             checkValue = d.saveShoppingList(this);
 

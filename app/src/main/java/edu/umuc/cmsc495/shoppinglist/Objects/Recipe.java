@@ -21,7 +21,7 @@ public class Recipe extends GbList implements Serializable {
         this.lastModifiedOn = UiUtils.getDateTimeNow();
         this.context = context;
     }
-    public Recipe(){
+    protected Recipe(){
         this.createdOn = UiUtils.getDateTimeNow();
     }
 
@@ -35,6 +35,12 @@ public class Recipe extends GbList implements Serializable {
 
     }
 
+    public Recipe createNewList(){
+        DataLayer d = new DataLayer(this.context);
+        this.name = d.createEmptyRecipe();
+        save();
+        return this;
+    }
 
     public String getInstructions(){
         return this.instructions;
@@ -49,9 +55,7 @@ public class Recipe extends GbList implements Serializable {
     public String getEmailBodyText(){
         String output = this.name + ": " + UiUtils.emailNewLine()+ UiUtils.emailNewLine()+ UiUtils.emailNewLine();
         output += "Ingredients:" + UiUtils.emailNewLine();
-        for(Ingredient i:this.ingredientList){
-            output += i.toString() + UiUtils.emailNewLine();
-        }
+        output += getIngredientsForEmailBody();
         output += UiUtils.emailNewLine() + UiUtils.emailNewLine();
         output += "Instructions:" + UiUtils.emailNewLine();
         output += this.instructions;
