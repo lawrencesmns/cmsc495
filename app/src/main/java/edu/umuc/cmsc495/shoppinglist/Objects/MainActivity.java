@@ -31,7 +31,8 @@ public class MainActivity extends AppCompatActivity {
         //        changeIngredient, and removeIngredient all persist to datastorage immediately.
 /*
         Recipe recipe = new Recipe(this);
-        recipe.setName("testRecipe1");
+        recipe.createNewRecipe(); //auto increments the name and sets it to the first new increment
+        recipe.setName("testRecipe1"); //changes the name
         recipe.setInstructions("these are the instructions");
 
         Ingredient i = new Ingredient();
@@ -40,11 +41,14 @@ public class MainActivity extends AppCompatActivity {
         i.setCountFull("2"); //from spinner or modal
         i.setCountPartial("1/8"); //from spinner or modal
         recipe.addIngredient(i); //add the ingredient to the object which persists to database
+
         recipe.removeIngredient(i); //remove the ingredient
+
         recipe.setInstructions("these are the new instructions"); //change the instructions
 */
 /*
         ShoppingList sl = new ShoppingList(this); //creates a new list with db pernanence via this.
+        sl.createNewList(); //auto increments the name and sets it to the first new increment not taken.
         sl.setName("testShoppingList1"); //sets the name of the list
         //create a new ingredient
         Ingredient j = new Ingredient();
@@ -82,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
 /*        //demonstrate auto increment naming for Recipe
         Recipe r2 = new Recipe(this);
-        r2.createNewList(); //auto increments the name
+        r2.createNewRecipe(); //auto increments the name and sets it to the first new increment
         String defaultName = r2.getName();
 */
     }

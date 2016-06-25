@@ -35,7 +35,7 @@ public class Recipe extends GbList implements Serializable {
 
     }
 
-    public Recipe createNewList(){
+    public Recipe createNewRecipe(){
         DataLayer d = new DataLayer(this.context);
         this.name = d.createEmptyRecipe();
         save();
