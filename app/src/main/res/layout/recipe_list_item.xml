@@ -12,7 +12,7 @@
         >
 
         <TextView
-            android:id="@+id/recipe_name"
+            android:id="@+id/list_name"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:paddingTop="12dp"
@@ -22,7 +22,7 @@
             android:textColor="#434343"/>
 
         <ImageButton
-            android:id="@+id/recipe_delete"
+            android:id="@+id/list_delete"
             android:layout_width="24dp"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_delete_black_24dp"
