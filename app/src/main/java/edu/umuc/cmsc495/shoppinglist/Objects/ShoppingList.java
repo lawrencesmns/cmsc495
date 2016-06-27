@@ -17,9 +17,11 @@ public class ShoppingList extends GbList implements Serializable{
     public ShoppingList(Context context){
         this.createdOn = UiUtils.getDateTimeNow();
         this.context = context;
+        this.isPersisting = true;
     }
     protected ShoppingList(){
         this.createdOn = UiUtils.getDateTimeNow();
+        this.isPersisting = false;
     }
 
     public static ShoppingList loadShoppingList(String name){ //probably not the cleanest
@@ -111,7 +113,7 @@ public class ShoppingList extends GbList implements Serializable{
     private boolean save(){
         boolean checkValue = true;
         //TODO: check if it can eb saved, like enough free space
-        if(context != null){
+        if(context != null && this.isPersisting){
             DataLayer d = new DataLayer(context);
             checkValue = d.deleteShoppingList(this);
 
@@ -131,14 +133,17 @@ public class ShoppingList extends GbList implements Serializable{
         else{return false;}
     }
 
+}
+
+
+/*
     public boolean doesShoppingListExistInStorage(String listName){
         boolean checkFlag = false;
 
         //TODO: Add call to DataLayer to look for shoppinglist name
 
         return checkFlag;
-    }
-}
+    } */
 
 
 /**

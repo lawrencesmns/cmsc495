@@ -20,9 +20,11 @@ public class Recipe extends GbList implements Serializable {
         this.createdOn = UiUtils.getDateTimeNow();
         this.lastModifiedOn = UiUtils.getDateTimeNow();
         this.context = context;
+        this.isPersisting = true;
     }
     protected Recipe(){
         this.createdOn = UiUtils.getDateTimeNow();
+        this.isPersisting = false;
     }
 
     public static Recipe loadRecipe(String name){ //probably not the cleanest
@@ -96,7 +98,7 @@ public class Recipe extends GbList implements Serializable {
     private boolean save(){
         boolean checkValue = true;
         //TODO: check if it can eb saved, like enough free space
-        if(context != null){
+        if(context != null && this.isPersisting){
             DataLayer d = new DataLayer(context);
 
             checkValue = d.deleteRecipe(this);

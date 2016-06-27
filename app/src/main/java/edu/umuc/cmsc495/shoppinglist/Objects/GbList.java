@@ -12,7 +12,9 @@ import java.util.List;
 public class GbList implements Serializable {
     public String name = "", createdOn = "", lastModifiedOn = "";
     public List<Ingredient> ingredientList = new ArrayList<>();
+
    // private static Context context;
+    protected boolean isPersisting = false;
 
     //region get Methods
     public String getName() {

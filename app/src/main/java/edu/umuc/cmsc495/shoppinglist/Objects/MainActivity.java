@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         k.setCountPartial("1/4"); //from spinner or modal
         sl.addIngredient(k);
 
-        //create a shopping list by name and iterate through ingredients, get some other properties
+        //load a shopping list by name and iterate through ingredients, get some other properties
         ShoppingList sl1 = new ShoppingList(this);
         sl1.loadShoppingList("testShoppingList1");
         String name = sl1.getName();
@@ -78,6 +78,8 @@ public class MainActivity extends AppCompatActivity {
 */
 
         /*
+
+
         //demonstrate auto increment naming for ShoppingList
         ShoppingList sl2 = new ShoppingList(this);
         sl2.createNewList(); //auto increments the name
