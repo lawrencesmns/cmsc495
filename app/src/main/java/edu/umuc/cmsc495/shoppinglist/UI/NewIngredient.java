@@ -25,7 +25,7 @@ public class NewIngredient extends AppCompatActivity {
         Spinner measurements =(Spinner)findViewById(R.id.measurements_item);
 
 
-        ArrayAdapter wholeQuantityAd = ArrayAdapter.createFromResource(this,R.array.whole_quantities,android.R.layout.simple_spinner_item);
+        ArrayAdapter wholeQuantityAd = new ArrayAdapter(this,android.R.layout.simple_spinner_item, UiUtils.getCountFull());
         ArrayAdapter partialQuantityAd = new ArrayAdapter(this,android.R.layout.simple_spinner_item, UiUtils.getCountPartial());
         ArrayAdapter measurementsAd = new ArrayAdapter(this,android.R.layout.simple_spinner_item, UiUtils.getMeasurementsShoppingList());
 

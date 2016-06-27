@@ -33,6 +33,7 @@ public class UiUtils {
 
     public static final ArrayList<String> getCountFull(){
         ArrayList<String> spinnerArray =  new ArrayList<>();
+        spinnerArray.add("");
         for(Integer i=1; i<=20; i++){
             spinnerArray.add(i.toString());
         }
