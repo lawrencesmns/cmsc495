@@ -42,6 +42,7 @@ public class UiUtils {
 
     public static final ArrayList<String> getCountPartial() {
             ArrayList<String> spinnerArray =  new ArrayList<>();
+            spinnerArray.add("");
             spinnerArray.add("1/8");
             spinnerArray.add("1/4");
             spinnerArray.add("1/3");
@@ -53,6 +54,7 @@ public class UiUtils {
 
         public static final ArrayList<String> getMeasurementsShoppingList(){
             ArrayList<String> spinnerArray =  new ArrayList<>();
+            spinnerArray.add("");
             spinnerArray.add("Box");
             spinnerArray.add("Bag");
             spinnerArray.add("Bottle");
@@ -66,6 +68,7 @@ public class UiUtils {
 
         public static final ArrayList<String> getMeasurementsRecipe(){
             ArrayList<String> spinnerArray =  new ArrayList<>();
+            spinnerArray.add("");
             spinnerArray.add("Pinch");
             spinnerArray.add("Tsp");
             spinnerArray.add("Tbsp");
