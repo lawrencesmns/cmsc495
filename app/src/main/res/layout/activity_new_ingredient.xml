@@ -66,7 +66,7 @@
                 android:hint="Item Name"
                 />
 
-            <LinearLayout
+            <FrameLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -74,10 +74,14 @@
                 android:paddingBottom="16dp"
                 android:baselineAligned="false">
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
                 <LinearLayout
+                    android:id="@+id/whole_qty"
                     android:orientation="vertical"
-                    android:layout_weight="0.5"
-                    android:layout_width="0dp"
+
+                    android:layout_width="70dp"
                     android:layout_height="wrap_content">
 
                     <TextView
@@ -89,14 +93,16 @@
                     <Spinner
                         android:id="@+id/whole_qty_item"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        style="@style/Base.Widget.AppCompat.Spinner.Underlined">
                     </Spinner>
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/partial_qty"
                     android:orientation="vertical"
-                    android:layout_weight="0.5"
-                    android:layout_width="0dp"
+                    android:layout_toRightOf="@id/whole_qty"
+                    android:layout_width="90dp"
                     android:layout_height="wrap_content">
 
                     <TextView
@@ -107,30 +113,34 @@
                     <Spinner
                         android:id="@+id/partial_qty_item"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        style="@style/Base.Widget.AppCompat.Spinner.Underlined">
                     </Spinner>
                 </LinearLayout>
 
 
                 <LinearLayout
+                    android:id="@+id/mesurements"
                     android:orientation="vertical"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
+                    android:layout_toRightOf="@id/partial_qty"
+                    android:layout_width="95dp"
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Measurement"
                         android:paddingBottom="8dp"/>
 
                     <Spinner
                         android:id="@+id/measurements_item"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/Base.Widget.AppCompat.Spinner.Underlined">
                     </Spinner>
                 </LinearLayout>
-            </LinearLayout>
+                </RelativeLayout>
+            </FrameLayout>
         </LinearLayout>
 
         <ImageButton
@@ -142,4 +152,11 @@
             android:background="@drawable/ic_delete_black_24dp"
             android:id="@+id/edit_ingredient_delete" />
     </FrameLayout>
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New CheckBox"
+        android:id="@+id/checkBox"
+        android:layout_gravity="right" />
 </LinearLayout>

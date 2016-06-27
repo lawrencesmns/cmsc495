@@ -27,7 +27,7 @@ public class ManageRecipes extends AppCompatActivity {
 
         setContentView(R.layout.activity_manage_recipes);
 
-        ListView listView = (ListView) findViewById(R.id.shopping_lists);
+        ListView listView = (ListView) findViewById(R.id.recipes);
 
         ////////////martin added - to fit with rest of code, likely a better way//////////////
 
