@@ -1,8 +1,12 @@
 package edu.umuc.cmsc495.shoppinglist.UI;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -17,6 +21,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import edu.umuc.cmsc495.shoppinglist.Objects.Ingredient;
+import edu.umuc.cmsc495.shoppinglist.Objects.Recipe;
 import edu.umuc.cmsc495.shoppinglist.Objects.ShoppingList;
 import edu.umuc.cmsc495.shoppinglist.R;
 
@@ -24,23 +29,36 @@ public class NewShoppingListActivity extends AppCompatActivity {
 
     private ArrayAdapter<Ingredient> mRecipeAdapter;
     private DragSortListView draggableList;
-    List<Ingredient> ingredients = new LinkedList<Ingredient>();
-    private final String WORKING_LIST_NAME = "_____temp shopping list";
+    private ShoppingList shoppingList;
+    private final String WORKING_LIST_NAME = "New Shopping List";
+    private final String prefKey = "NewShoppingList";
+    SharedPreferences sharedPref;
+    SharedPreferences.Editor editor;
+    private boolean exiting = false;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()){
+        switch (item.getItemId()) {
+            case R.id.action_email:
+                composeEmail(shoppingList.getEmailSubject(), shoppingList.getEmailBodyText());
+                return true;
             case R.id.action_addRecipe:
-                saveList();
-                break;
+                //ToDo: Add ingredients to working shopping list based on recipe
+                return true;
+            case android.R.id.home:
+                exiting = true;
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
         }
 
-        return true;
+        return false;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sharedPref = getPreferences(Context.MODE_PRIVATE);
+        editor = sharedPref.edit();
         initializeUI();
 
     }
@@ -52,86 +70,67 @@ public class NewShoppingListActivity extends AppCompatActivity {
         return true;
     }
 
+    public void composeEmail(String subject, String body) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("*/*");
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+        intent.putExtra(Intent.EXTRA_TEXT, body);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
+    }
+
     @Override
     protected void onStop() {
         super.onStop();
+        String title = ((EditText) findViewById(R.id.shopping_list_title)).getText().toString();
+        shoppingList.setName(title);
+        if (!exiting) {
+            editor.putString(prefKey, shoppingList.getName());
+        } else
+            editor.putString(prefKey, WORKING_LIST_NAME);
 
-        ingredients.remove(0); //is there one added?  check out mainActivity.java for recipe and shopping list object usage.  the sequences presented there work as expected.
-        //Save current adapter as a temporary shopping list
-        ShoppingList shoppingList = new ShoppingList(this);
-        for(Ingredient i : ingredients)
-                shoppingList.addIngredient(i); //list saves automatically on the following method calls: setName, addIngredient, changeIngredient, removeIngredient.  you don't need to call save from the UI.
-        try {
-            shoppingList.setName(WORKING_LIST_NAME); //saves automatically behind the scenes
-        }catch(Exception e){
-            //show popup box with e.getMessage();  friendly exception messages will be passed up the stack.  If they aren't friednly let me know.  -Martin
-
-        }
-
-      //  Boolean isSaved = shoppingList.save(); //Does this overrwrite existing list?
-      //  if(!isSaved){
-            //TODO: create a dialog saying there isn't enough space and the list will be lost
-      //  }
+        editor.commit();
 
     }
 
     @Override
     protected void onPostResume() {
         super.onPostResume();
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        String oldListName = sharedPref.getString(prefKey, WORKING_LIST_NAME);
 
-        //Crappy hack because the draggableListView doesnt show the first item in list
-        Ingredient dummyIngredient = new Ingredient("","","","",true); //not needed?  Not sure what this code is trying to do - martin
-        ingredients.add(dummyIngredient); //not needed?  Not sure what this code is trying to do - martin
+        ((EditText) findViewById(R.id.shopping_list_title)).setText(oldListName);
 
-        //Restore saved adapter
-        ShoppingList shoppingList = new ShoppingList(this);
         try {
-            shoppingList = shoppingList.loadShoppingList(WORKING_LIST_NAME);
-        }catch(NullPointerException e){
-                e.printStackTrace();
-            }
-
-
-        for(Ingredient i : shoppingList.getIngredientList()){
-            ingredients.add(i);
+            shoppingList = shoppingList.loadShoppingList(oldListName);
+        } catch (Exception e) {
+            e.printStackTrace();
+            shoppingList = new ShoppingList(this);
         }
+
 
         //Get new ingredient if there is any
         Intent intent = getIntent();
         String incoming = intent.getStringExtra("Incoming ingredient");
 
-        if(incoming != null){
+        if (incoming != null) {
             String[] incomingSplit = incoming.split(",");
             Ingredient incomingIngredient = new Ingredient(incomingSplit[0], incomingSplit[1],
                     incomingSplit[2], incomingSplit[3], false);
-            ingredients.add(incomingIngredient);
+            shoppingList.addIngredient(incomingIngredient);
         }
 
         mRecipeAdapter = new ArrayAdapter(this,
-                R.layout.list_item_added_ingredient, R.id.list_item_ingredient_textview, ingredients);
+                R.layout.list_item_added_ingredient, R.id.list_item_ingredient_textview,
+                shoppingList.ingredientList);
 
         draggableList = (DragSortListView) findViewById(R.id.listview_added_ingredient);
         draggableList.setAdapter(mRecipeAdapter);
     }
 
-    private void saveList(){ //list saves automatically on the following method calls: setName, addIngredient, changeIngredient, removeIngredient.  you don't need to call save from the UI.
-        String title = ((EditText) findViewById(R.id.shopping_list_title)).getText().toString();
-        //ShoppingList shoppingList = new ShoppingList(); //should use a class level var and the new ShoppingList(this); constructor?
-        ShoppingList shoppingList = new ShoppingList(this); //modified the empty ShoppingList constructor to protected access to avoid confusion for UI guys.  Business and datalayer need an empty constuctor.
-        shoppingList.setName(title); //if using class level var and the user changed the name, this would be set?
-
-        ingredients.remove(0); //ingredients here is a class var not a reference to the shoppingList object?
-        for(Ingredient i : ingredients){ //should be for(Ingredient i : shoppingList.getIngredients())
-            shoppingList.addIngredient(i); //should happen on an event when a user adds an ingredient?
-        }
-
-        //shoppingList.save(); //not needed - martin
-        Toast toast = Toast.makeText(this, "List saved!", Toast.LENGTH_SHORT);
-        toast.show();
-        finish();
-    }
-
-    private void initializeUI(){
+    //Generic UI method that initializes button clicks oother no-changing UI elements
+    private void initializeUI() {
 
         setContentView(R.layout.activity_new_shopping_list);
 
@@ -178,22 +177,20 @@ public class NewShoppingListActivity extends AppCompatActivity {
         mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //TODO: Prompt user to save unfinished lists
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-               //         .setAction("Action", null).show();
-                Intent intent = new Intent(view.getContext(),NewIngredient.class);
+                // Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                //         .setAction("Action", null).show();
+                Intent intent = new Intent(view.getContext(), NewIngredient.class);
                 startActivity(intent);
             }
         });
 
 
     }
-
 
 
 }

@@ -1,23 +1,10 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".UI.NewShoppingListActivity">
-
-    <edu.umuc.cmsc495.shoppinglist.UI.DragSortListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/listview_added_ingredient" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:tint="@android:color/white"
-        android:src="@android:drawable/ic_input_add" />
+    tools:context=".UI.NewShoppingListActivity"
+    android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/new_shopping_list_toolbar"
@@ -36,4 +23,24 @@
             android:layout_height="wrap_content"/>
     </android.support.v7.widget.Toolbar>
 
-</FrameLayout>
+    <FrameLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <edu.umuc.cmsc495.shoppinglist.UI.DragSortListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/listview_added_ingredient" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            android:tint="@android:color/white"
+            android:src="@android:drawable/ic_input_add" />
+    </FrameLayout>
+
+</LinearLayout>
