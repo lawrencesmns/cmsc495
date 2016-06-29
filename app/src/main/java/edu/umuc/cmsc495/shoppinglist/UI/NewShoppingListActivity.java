@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.NavUtils;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -17,11 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import edu.umuc.cmsc495.shoppinglist.Objects.Ingredient;
-import edu.umuc.cmsc495.shoppinglist.Objects.Recipe;
 import edu.umuc.cmsc495.shoppinglist.Objects.ShoppingList;
 import edu.umuc.cmsc495.shoppinglist.R;
 
@@ -40,7 +37,8 @@ public class NewShoppingListActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_email:
-                composeEmail(shoppingList.getEmailSubject(), shoppingList.getEmailBodyText());
+                Utility.composeEmail(shoppingList.getEmailSubject(), shoppingList.getEmailBodyText(),
+                        this);
                 return true;
             case R.id.action_addRecipe:
                 //ToDo: Add ingredients to working shopping list based on recipe
@@ -70,16 +68,6 @@ public class NewShoppingListActivity extends AppCompatActivity {
         return true;
     }
 
-    public void composeEmail(String subject, String body) {
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("*/*");
-        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
-        intent.putExtra(Intent.EXTRA_TEXT, body);
-        if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivity(intent);
-        }
-    }
-
     @Override
     protected void onStop() {
         super.onStop();
@@ -87,8 +75,11 @@ public class NewShoppingListActivity extends AppCompatActivity {
         shoppingList.setName(title);
         if (!exiting) {
             editor.putString(prefKey, shoppingList.getName());
-        } else
+        } else {
             editor.putString(prefKey, WORKING_LIST_NAME);
+            Toast toast = Toast.makeText(this, title + " saved", Toast.LENGTH_SHORT);
+            toast.show();
+        }
 
         editor.commit();
 
@@ -105,7 +96,7 @@ public class NewShoppingListActivity extends AppCompatActivity {
         try {
             shoppingList = shoppingList.loadShoppingList(oldListName);
         } catch (Exception e) {
-            e.printStackTrace();
+            Utility.debugAlert(this, e.getMessage());
             shoppingList = new ShoppingList(this);
         }
 
