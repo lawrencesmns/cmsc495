@@ -21,16 +21,17 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
+import edu.umuc.cmsc495.shoppinglist.Objects.DataLayer;
 import edu.umuc.cmsc495.shoppinglist.Objects.FileList;
 import edu.umuc.cmsc495.shoppinglist.Objects.FileListItem;
+import edu.umuc.cmsc495.shoppinglist.Objects.ShoppingList;
 import edu.umuc.cmsc495.shoppinglist.R;
 
 public class ManageShoppingLists extends AppCompatActivity {
 
-    private List<String> listNames;
-    private List<FileListItem> lists;
-    private String[] names;
-    private ListView listView;
+    private List<String> listNames=null;
+    private List<FileListItem> lists=null;
+    private ListView listView=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +50,9 @@ public class ManageShoppingLists extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-               Toast toast = Toast.makeText(getApplicationContext(),"Open " + ((TextView)view.findViewById(R.id.list_name)).getText(),Toast.LENGTH_SHORT);
-                toast.show();
+               //Toast toast = Toast.makeText(getApplicationContext(),"Open " + ((TextView)view.findViewById(R.id.list_name)).getText(),Toast.LENGTH_SHORT);
+                //toast.show();
+
             }
         });
 
@@ -145,7 +147,7 @@ public class ManageShoppingLists extends AppCompatActivity {
     //Populates an ArrayList of Shopping List Names
     public void fillListNames(){
         listNames = new ArrayList<>();
-        new FileList(this);
+        new FileList(getApplicationContext());
         lists = FileList.shoppingLists;
         for (FileListItem list : lists) {
             if(!listNames.contains(list.getName().substring(0,list.getName().length()-4))) {
@@ -153,4 +155,13 @@ public class ManageShoppingLists extends AppCompatActivity {
             }
         }
     }
+
+
+    public void onStop(){
+        super.onStop();
+        //Clear the lists array so the deleted shopping list doesn't
+        //display in the listview when leaving and coming back to the activity
+        lists.clear();
+    }
+
 }
