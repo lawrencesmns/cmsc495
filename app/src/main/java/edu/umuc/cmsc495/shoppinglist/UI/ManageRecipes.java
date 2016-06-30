@@ -1,6 +1,5 @@
 package edu.umuc.cmsc495.shoppinglist.UI;
 
-import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -8,52 +7,50 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import edu.umuc.cmsc495.shoppinglist.Objects.FileList;
 import edu.umuc.cmsc495.shoppinglist.Objects.FileListItem;
+import edu.umuc.cmsc495.shoppinglist.Objects.Recipe;
 import edu.umuc.cmsc495.shoppinglist.R;
 
 public class ManageRecipes extends AppCompatActivity {
 
+
+    private List<String> recipeNames =null;
+    private List<FileListItem> recipes =null;
+    private ListView listView=null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_manage_recipes);
 
-        ListView listView = (ListView) findViewById(R.id.recipes);
-
-        ////////////martin added - to fit with rest of code, likely a better way//////////////
-
-        FileList f = new FileList(this);
-        List<String> recipes = new ArrayList<String>();
-
-        for(FileListItem fi:f.recipes){
-            recipes.add(fi.getName());
-        }
-        String[] stringArray = new String[recipes.size()];
-        stringArray = recipes.toArray(stringArray);
-
-        //////////////////////////////////////
-
-
-        //String[] stringArray={"Item1","item2","item3"};
-
-
-        ArrayAdapter<String> shoppingListAdaptor = new ArrayAdapter<>(this,R.layout.recipe_list_item,R.id.list_name,stringArray);
-        listView.setAdapter(shoppingListAdaptor);
+        fillRecipeNames();
+        setListViewAdapter();
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.manage_recipes_toolbar);
         setSupportActionBar(myToolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle(R.string.recipes);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //Toast toast = Toast.makeText(getApplicationContext(),"Open " + ((TextView)view.findViewById(R.id.list_name)).getText(),Toast.LENGTH_SHORT);
+                // toast.show();
+
+            }
+        });
+
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -62,37 +59,74 @@ public class ManageRecipes extends AppCompatActivity {
         return true;
     }
 
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Context context = getApplicationContext();
-        Toast toast;
-        CharSequence text;
+
         switch (item.getItemId()) {
             case R.id.menuSortAscending:
-                // User chose the "Settings" item, show the app settings UI...
-
-                text = "Sorted A-Z";
-                toast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
-                toast.show();
+                Collections.sort(recipeNames,new Comparator<String>() {
+                    @Override
+                    public int compare(String lhs, String rhs) {
+                        return lhs.compareTo(rhs);
+                    }
+                });
+                setListViewAdapter();
                 return true;
 
             case R.id.menuSortDescending:
-                // User chose the "Favorite" action, mark the current item
-                // as a favorite...
-                text = "Sorted Z-A";
-                toast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
-                toast.show();
+                Collections.sort(recipeNames, new Comparator<String>() {
+                    @Override
+                    public int compare(String lhs, String rhs) {
+                        return rhs.compareTo(lhs);
+                    }
+                });
+                setListViewAdapter();
                 return true;
 
             case R.id.menuSortNewest:
-                text = "Sorted Newest to Oldest";
-                toast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
-                toast.show();
+                recipeNames.clear();
+                recipes.clear();
+                fillRecipeNames();
+                //setListViewAdapter();
+                Collections.sort(recipes, new Comparator<FileListItem>() {
+                    @Override
+                    public int compare(FileListItem lhs, FileListItem rhs) {
+                        Date date1 = new Date(lhs.getModifiedOn());
+                        Date date2 = new Date(rhs.getModifiedOn());
+                        if (date1.after(date2))
+                            return -1;
+                        else if (date1.equals(date2)) // it's equals
+                            return 0;
+                        else
+                            return 1;
+                    }
+
+
+                });
+                fillRecipeNames();
+                setListViewAdapter();
                 return true;
 
             case R.id.menuSortOldest:
-                text = "Sorted Oldest to Newest";
-                toast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
-                toast.show();
+                recipeNames.clear();
+                recipes.clear();
+                fillRecipeNames();
+                setListViewAdapter();
+                Collections.sort(recipes, new Comparator<FileListItem>() {
+                    @Override
+                    public int compare(FileListItem lhs, FileListItem rhs) {
+                        Date date1 = new Date(lhs.getModifiedOn());
+                        Date date2 = new Date(rhs.getModifiedOn());
+                        if (date2.after(date1))
+                            return -1;
+                        else if (date2.equals(date1)) // it's equals
+                            return 0;
+                        else
+                            return 1;
+                    }
+                });
+                fillRecipeNames();
+                setListViewAdapter();
                 return true;
 
             default:
@@ -101,5 +135,32 @@ public class ManageRecipes extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
 
         }
+    }
+
+    //Sets the Adapter that populates the ListView
+    public void setListViewAdapter(){
+        listView = (ListView)findViewById(R.id.recipes);
+        ListsAdapter<String> recipesAdaptor = new ListsAdapter<>(this, R.layout.recipe_list_item, recipeNames);
+        listView.setAdapter(recipesAdaptor);
+    }
+
+    //Populates an ArrayList of Shopping List Names
+    public void fillRecipeNames(){
+        recipeNames = new ArrayList<>();
+        new FileList(getApplicationContext());
+        recipes = FileList.recipes;
+        for (FileListItem recipe : recipes) {
+            if(!recipeNames.contains(recipe.getName().substring(0,recipe.getName().length()-4))) {
+                recipeNames.add(recipe.getName().substring(0, recipe.getName().length() - 4));
+            }
+        }
+    }
+
+
+    public void onStop(){
+        super.onStop();
+        //Clear the recipes array so the deleted shopping list doesn't
+        //display in the listview when leaving and coming back to the activity
+        recipes.clear();
     }
 }

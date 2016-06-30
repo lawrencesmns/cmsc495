@@ -1,9 +1,7 @@
 package edu.umuc.cmsc495.shoppinglist.UI;
 
-import android.content.Context;
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -11,10 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -24,6 +19,7 @@ import java.util.List;
 import edu.umuc.cmsc495.shoppinglist.Objects.DataLayer;
 import edu.umuc.cmsc495.shoppinglist.Objects.FileList;
 import edu.umuc.cmsc495.shoppinglist.Objects.FileListItem;
+import edu.umuc.cmsc495.shoppinglist.Objects.Recipe;
 import edu.umuc.cmsc495.shoppinglist.Objects.ShoppingList;
 import edu.umuc.cmsc495.shoppinglist.R;
 
@@ -38,6 +34,13 @@ public class ManageShoppingLists extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_shopping_lists);
 
+        String[] alpha = {"a","b","c","d","e"};
+        DataLayer d = new DataLayer(this);
+        ShoppingList m;
+        for(int i = 0; i < 5;i++){
+            m = new ShoppingList(this);
+            m.setName(alpha[i] + " Shopping List");
+        }
         fillListNames();
         setListViewAdapter();
 
@@ -51,7 +54,7 @@ public class ManageShoppingLists extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                //Toast toast = Toast.makeText(getApplicationContext(),"Open " + ((TextView)view.findViewById(R.id.list_name)).getText(),Toast.LENGTH_SHORT);
-                //toast.show();
+                // toast.show();
 
             }
         });
@@ -92,6 +95,9 @@ public class ManageShoppingLists extends AppCompatActivity {
                 return true;
 
             case R.id.menuSortNewest:
+                clearLists();
+                fillListNames();
+                setListViewAdapter();
                 Collections.sort(lists, new Comparator<FileListItem>() {
                     @Override
                     public int compare(FileListItem lhs, FileListItem rhs) {
@@ -112,6 +118,9 @@ public class ManageShoppingLists extends AppCompatActivity {
                 return true;
 
             case R.id.menuSortOldest:
+                clearLists();
+                fillListNames();
+                setListViewAdapter();
                 Collections.sort(lists, new Comparator<FileListItem>() {
                     @Override
                     public int compare(FileListItem lhs, FileListItem rhs) {
@@ -157,10 +166,17 @@ public class ManageShoppingLists extends AppCompatActivity {
     }
 
 
+
+
     public void onStop(){
         super.onStop();
         //Clear the lists array so the deleted shopping list doesn't
         //display in the listview when leaving and coming back to the activity
+        clearLists();
+    }
+
+    public void clearLists(){
+        listNames.clear();
         lists.clear();
     }
 
