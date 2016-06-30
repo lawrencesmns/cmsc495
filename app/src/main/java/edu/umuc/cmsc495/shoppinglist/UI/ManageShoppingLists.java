@@ -17,11 +17,8 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-import edu.umuc.cmsc495.shoppinglist.Objects.DataLayer;
 import edu.umuc.cmsc495.shoppinglist.Objects.FileList;
 import edu.umuc.cmsc495.shoppinglist.Objects.FileListItem;
-import edu.umuc.cmsc495.shoppinglist.Objects.Ingredient;
-import edu.umuc.cmsc495.shoppinglist.Objects.Recipe;
 import edu.umuc.cmsc495.shoppinglist.Objects.ShoppingList;
 import edu.umuc.cmsc495.shoppinglist.R;
 
@@ -30,22 +27,12 @@ public class ManageShoppingLists extends AppCompatActivity {
     private List<String> listNames=null;
     private List<FileListItem> lists=null;
     private ListView listView=null;
-    private ShoppingList m=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_shopping_lists);
 
-        String[] alpha = {"a","b","c","d","e"};
-        DataLayer d = new DataLayer(this);
-
-        for(int i = 0; i < 5;i++){
-            Ingredient ing = new Ingredient("test","pound",String.valueOf(i),"1/8",false);
-            m = new ShoppingList(this);
-            m.setName(alpha[i] + " Shopping List");
-            m.addIngredient(ing);
-        }
         fillListNames();
         setListViewAdapter();
 
@@ -55,17 +42,14 @@ public class ManageShoppingLists extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle(R.string.shopping_lists);
 
-        final ShoppingList finalM = m;
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-               //Toast toast = Toast.makeText(getApplicationContext(),"Open " + ((TextView)view.findViewById(R.id.list_name)).getText(),Toast.LENGTH_SHORT);
-                // toast.show();
+                //Pass ShoppingList object of selected list to NewListActivity
                 ShoppingList list = ShoppingList.loadShoppingList(listView.getItemAtPosition(position).toString());
                 Intent intent = new Intent(view.getContext(),NewShoppingListActivity.class);
                 intent.putExtra("list", list);
                 startActivity(intent);
-
             }
         });
 
