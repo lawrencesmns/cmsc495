@@ -1,5 +1,6 @@
 package edu.umuc.cmsc495.shoppinglist.UI;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -19,6 +20,7 @@ import java.util.List;
 import edu.umuc.cmsc495.shoppinglist.Objects.FileList;
 import edu.umuc.cmsc495.shoppinglist.Objects.FileListItem;
 import edu.umuc.cmsc495.shoppinglist.Objects.Recipe;
+import edu.umuc.cmsc495.shoppinglist.Objects.ShoppingList;
 import edu.umuc.cmsc495.shoppinglist.R;
 
 public class ManageRecipes extends AppCompatActivity {
@@ -45,9 +47,11 @@ public class ManageRecipes extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //Toast toast = Toast.makeText(getApplicationContext(),"Open " + ((TextView)view.findViewById(R.id.list_name)).getText(),Toast.LENGTH_SHORT);
-                // toast.show();
-
+                //Pass ShoppingList object of selected list to NewListActivity
+                Recipe recipe = Recipe.loadRecipe(listView.getItemAtPosition(position).toString());
+                Intent intent = new Intent(view.getContext(),RecipesList.class);
+                intent.putExtra("recipe", recipe);
+                startActivity(intent);
             }
         });
 
