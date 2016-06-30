@@ -57,6 +57,7 @@ public class NewShoppingListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         sharedPref = getPreferences(Context.MODE_PRIVATE);
         editor = sharedPref.edit();
+
         initializeUI();
 
     }
@@ -94,7 +95,14 @@ public class NewShoppingListActivity extends AppCompatActivity {
         ((EditText) findViewById(R.id.shopping_list_title)).setText(oldListName);
 
         try {
-            shoppingList = shoppingList.loadShoppingList(oldListName);
+            //Modified by Michael - to show list contents if launched from manage shopping lists
+            //activity
+            Bundle existingList = getIntent().getExtras();
+            if( existingList.getSerializable("list") !=null) {
+                shoppingList = (ShoppingList) existingList.getSerializable("list");
+            }else {
+                shoppingList = shoppingList.loadShoppingList(oldListName);
+            }
         } catch (Exception e) {
             Utility.debugAlert(this, e.getMessage());
             shoppingList = new ShoppingList(this);
