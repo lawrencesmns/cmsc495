@@ -3,11 +3,9 @@ package edu.umuc.cmsc495.shoppinglist.UI;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.NavUtils;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -18,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Toast;
 
+
 import edu.umuc.cmsc495.shoppinglist.Objects.Ingredient;
 import edu.umuc.cmsc495.shoppinglist.Objects.ShoppingList;
 import edu.umuc.cmsc495.shoppinglist.R;
@@ -26,9 +25,9 @@ public class NewShoppingListActivity extends AppCompatActivity {
 
     private ArrayAdapter<Ingredient> mRecipeAdapter;
     private DragSortListView draggableList;
-    private ShoppingList shoppingList;
-    private final String WORKING_LIST_NAME = "New Shopping List";
-    private final String prefKey = "NewShoppingList";
+    private ShoppingList shoppingList = new ShoppingList(this);
+    private final String DEFAULT_KEY = "nada";
+    private final String prefKey = "OldListName";
     SharedPreferences sharedPref;
     SharedPreferences.Editor editor;
     private boolean exiting = false;
@@ -74,10 +73,11 @@ public class NewShoppingListActivity extends AppCompatActivity {
         super.onStop();
         String title = ((EditText) findViewById(R.id.shopping_list_title)).getText().toString();
         shoppingList.setName(title);
+
         if (!exiting) {
             editor.putString(prefKey, shoppingList.getName());
         } else {
-            editor.putString(prefKey, WORKING_LIST_NAME);
+            editor.putString(prefKey, DEFAULT_KEY);
             Toast toast = Toast.makeText(this, title + " saved", Toast.LENGTH_SHORT);
             toast.show();
         }
@@ -90,35 +90,29 @@ public class NewShoppingListActivity extends AppCompatActivity {
     protected void onPostResume() {
         super.onPostResume();
         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-        String oldListName = sharedPref.getString(prefKey, WORKING_LIST_NAME);
+        String oldListName = sharedPref.getString(prefKey, DEFAULT_KEY);
 
-        ((EditText) findViewById(R.id.shopping_list_title)).setText(oldListName);
-
-        try {
-            //Modified by Michael - to show list contents if launched from manage shopping lists
-            //activity
-            Bundle existingList = getIntent().getExtras();
-            if( existingList.getSerializable("list") !=null) {
-                shoppingList = (ShoppingList) existingList.getSerializable("list");
-            }else {
-                shoppingList = shoppingList.loadShoppingList(oldListName);
-            }
-        } catch (Exception e) {
-            Utility.debugAlert(this, e.getMessage());
-            shoppingList = new ShoppingList(this);
-        }
-
-
-        //Get new ingredient if there is any
+        //Collect intent info
         Intent intent = getIntent();
         String incoming = intent.getStringExtra("Incoming ingredient");
+        Bundle existingList = intent.getExtras();
 
-        if (incoming != null) {
+        if (existingList != null && existingList.getSerializable("list") != null) {
+            //Modified by Michael - to show list contents if launched from manage shopping lists
+            //activity
+            shoppingList = (ShoppingList) existingList.getSerializable("list");
+        } else if (incoming != null) {
+            shoppingList = shoppingList.loadShoppingList(oldListName);
             String[] incomingSplit = incoming.split(",");
             Ingredient incomingIngredient = new Ingredient(incomingSplit[0], incomingSplit[1],
                     incomingSplit[2], incomingSplit[3], false);
             shoppingList.addIngredient(incomingIngredient);
+        } else {
+            shoppingList.createNewList();
         }
+
+
+        oldListName = shoppingList.getName();
 
         mRecipeAdapter = new ArrayAdapter(this,
                 R.layout.list_item_added_ingredient, R.id.list_item_ingredient_textview,
@@ -126,9 +120,11 @@ public class NewShoppingListActivity extends AppCompatActivity {
 
         draggableList = (DragSortListView) findViewById(R.id.listview_added_ingredient);
         draggableList.setAdapter(mRecipeAdapter);
+
+        ((EditText) findViewById(R.id.shopping_list_title)).setText(oldListName);
     }
 
-    //Generic UI method that initializes button clicks oother no-changing UI elements
+    //Generic UI method that initializes button clicks other non-changing UI elements
     private void initializeUI() {
 
         setContentView(R.layout.activity_new_shopping_list);

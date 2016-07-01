@@ -45,7 +45,7 @@ public class ManageShoppingLists extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //Pass ShoppingList object of selected list to NewListActivity
+                //Pass ShoppingList object of selected list to NewShoppingListActivity
                 ShoppingList list = ShoppingList.loadShoppingList(listView.getItemAtPosition(position).toString());
                 Intent intent = new Intent(view.getContext(),NewShoppingListActivity.class);
                 intent.putExtra("list", list);
