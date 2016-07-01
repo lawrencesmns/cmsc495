@@ -19,7 +19,6 @@ import java.util.List;
 
 import edu.umuc.cmsc495.shoppinglist.Objects.FileList;
 import edu.umuc.cmsc495.shoppinglist.Objects.FileListItem;
-import edu.umuc.cmsc495.shoppinglist.Objects.ShoppingList;
 import edu.umuc.cmsc495.shoppinglist.R;
 
 public class ManageShoppingLists extends AppCompatActivity {
@@ -46,9 +45,9 @@ public class ManageShoppingLists extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //Pass ShoppingList object of selected list to NewShoppingListActivity
-                ShoppingList list = ShoppingList.loadShoppingList(listView.getItemAtPosition(position).toString());
+                //ShoppingList list = ShoppingList.loadShoppingList(listView.getItemAtPosition(position).toString());
                 Intent intent = new Intent(view.getContext(),NewShoppingListActivity.class);
-                intent.putExtra("list", list);
+                intent.putExtra("list", listView.getItemAtPosition(position).toString());
                 startActivity(intent);
             }
         });
@@ -150,7 +149,7 @@ public class ManageShoppingLists extends AppCompatActivity {
     //Populates an ArrayList of Shopping List Names
     public void fillListNames(){
         listNames = new ArrayList<>();
-        new FileList(getApplicationContext());
+        new FileList(this);
         lists = FileList.shoppingLists;
         for (FileListItem list : lists) {
             if(!listNames.contains(list.getName().substring(0,list.getName().length()-4))) {

@@ -40,11 +40,11 @@ public class NewIngredient extends FragmentActivity {
         btnSave.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View v) {
-                String sending = "";
-                sending += ((EditText)findViewById(R.id.new_ingredient_name)).getText().toString() + ",";
-                sending += ((Spinner)findViewById(R.id.partial_qty_item)).getSelectedItem().toString() + ",";
-                sending += ((Spinner)findViewById(R.id.whole_qty_item)).getSelectedItem().toString() + ",";
-                sending += ((Spinner)findViewById(R.id.measurements_item)).getSelectedItem().toString();
+                String[] sending = new String[4];
+                sending[0] = ((EditText)findViewById(R.id.new_ingredient_name)).getText().toString();
+                sending[1] = ((Spinner)findViewById(R.id.partial_qty_item)).getSelectedItem().toString();
+                sending[2] = ((Spinner)findViewById(R.id.whole_qty_item)).getSelectedItem().toString();
+                sending[3] = ((Spinner)findViewById(R.id.measurements_item)).getSelectedItem().toString();
 
                 Intent intent = new Intent(v.getContext(),NewShoppingListActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

@@ -78,7 +78,7 @@ public class NewShoppingListActivity extends AppCompatActivity {
             editor.putString(prefKey, shoppingList.getName());
         } else {
             editor.putString(prefKey, DEFAULT_KEY);
-            Toast toast = Toast.makeText(this, title + " saved", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(this, shoppingList.getName() + " saved", Toast.LENGTH_SHORT);
             toast.show();
         }
 
@@ -94,23 +94,19 @@ public class NewShoppingListActivity extends AppCompatActivity {
 
         //Collect intent info
         Intent intent = getIntent();
-        String incoming = intent.getStringExtra("Incoming ingredient");
-        Bundle existingList = intent.getExtras();
+        String[] incomingIngredient = intent.getStringArrayExtra("Incoming ingredient");
+        String incomingList = intent.getStringExtra("list");
 
-        if (existingList != null && existingList.getSerializable("list") != null) {
-            //Modified by Michael - to show list contents if launched from manage shopping lists
-            //activity
-            shoppingList = (ShoppingList) existingList.getSerializable("list");
-        } else if (incoming != null) {
+        if(incomingList != null){
+            shoppingList = shoppingList.loadShoppingList(incomingList);
+        }else if (incomingIngredient != null) {
             shoppingList = shoppingList.loadShoppingList(oldListName);
-            String[] incomingSplit = incoming.split(",");
-            Ingredient incomingIngredient = new Ingredient(incomingSplit[0], incomingSplit[1],
-                    incomingSplit[2], incomingSplit[3], false);
-            shoppingList.addIngredient(incomingIngredient);
+            Ingredient ing = new Ingredient(incomingIngredient[0], incomingIngredient[1],
+                    incomingIngredient[2], incomingIngredient[3], false);
+            shoppingList.addIngredient(ing);
         } else {
             shoppingList.createNewList();
         }
-
 
         oldListName = shoppingList.getName();
 
