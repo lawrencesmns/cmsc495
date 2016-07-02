@@ -1,6 +1,5 @@
 package edu.umuc.cmsc495.shoppinglist.UI;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -97,7 +96,6 @@ public class NewShoppingListActivity extends AppCompatActivity {
         }
 
         editor.commit();
-
     }
 
     @Override
