@@ -37,6 +37,7 @@ public class Recipe extends GbList implements Serializable {
                 this.createdOn = r.getCreatedOn();
                 this.lastModifiedOn = r.getLastModifiedOn();
                 this.ingredientList = r.getIngredientList();
+                this.instructions = r.getInstructions();
             }else{
                 throw new IllegalStateException("The context must be passed in the Recipe constructor");
             }

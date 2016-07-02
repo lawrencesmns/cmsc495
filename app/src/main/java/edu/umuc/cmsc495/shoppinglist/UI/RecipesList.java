@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -37,19 +38,19 @@ public class RecipesList extends AppCompatActivity {
     SharedPreferences sharedPref;
     SharedPreferences.Editor editor;
     private boolean exiting = false;
+ //   String oldListName = sharedPref.getString(prefKey,DEFAULT_KEY);
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        String oldListName = sharedPref.getString(prefKey,DEFAULT_KEY);
 
-        if(requestCode == Utility.REQUEST_INGREDIENT){
-            String[] incomingIngredient = data.getStringArrayExtra("Incoming ingredient");
-            mRecipe = mRecipe.loadRecipe(oldListName);
-            Ingredient ing = new Ingredient(incomingIngredient[0], incomingIngredient[1],
-                    incomingIngredient[2], incomingIngredient[3], false);
-            mRecipe.addIngredient(ing);
-
+        if(requestCode == Utility.REQUEST_INGREDIENT) {
+            //  String[] incomingIngredient = data.getStringArrayExtra("Incoming ingredient");
+            //  mRecipe = mRecipe.loadRecipe(oldListName);
+            //  Ingredient ing = new Ingredient(incomingIngredient[0], incomingIngredient[1],
+            //          incomingIngredient[2], incomingIngredient[3], false);
+            //  mRecipe.addIngredient(ing);
         }
+
     }
 
     @Override
@@ -96,11 +97,31 @@ public class RecipesList extends AppCompatActivity {
         Intent intent = getIntent();
         String incomingRecipe = intent.getStringExtra("recipe");
 
-        if(incomingRecipe != null){
-            mRecipe.loadRecipe(incomingRecipe);
-        }else if(oldListName.equals(DEFAULT_KEY) && intent.getStringArrayExtra("Incoming ingredient") == null){
+      //  Ingredient incomingIngredient= null;
+      //  try{
+      //      incomingIngredient = (Ingredient)intent.getExtras().getSerializable("Incoming ingredient");
+      //  }catch(Exception e){}
+
+        Recipe r= null;
+        try{
+            r = (Recipe)intent.getExtras().getSerializable("recipe");
+        }catch(Exception e){}
+
+        if(r != null){
+            mRecipe = r;
+            ((EditText) findViewById(R.id.instructions)).setText(mRecipe.getInstructions());
+     //   }else if (incomingIngredient != null) {
+            //shoppingList.addIngredient(incomingIngredient);
+            //shoppingList = sl;
+        } else {
             mRecipe.createNewRecipe();
         }
+
+       // if(incomingRecipe != null){
+       //   mRecipe.loadRecipe(incomingRecipe);
+        //}else if(oldListName.equals(DEFAULT_KEY) && intent.getStringArrayExtra("Incoming ingredient") == null){
+        //    mRecipe.createNewRecipe();
+      //  }
 
         oldListName = mRecipe.getName();
 
@@ -154,6 +175,20 @@ public class RecipesList extends AppCompatActivity {
                     }
                 };
 
+        DragSortListView.OnItemClickListener onClick = new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Intent intent = new Intent(view.getContext(), NewIngredient.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Ingredient i = (Ingredient)parent.getItemAtPosition(position);
+                intent.putExtra("ischanging", true);
+                intent.putExtra("ingredient",i);
+                intent.putExtra("recipe", mRecipe);
+                startActivity(intent);
+            }
+        };
+
         DragSortListView.DragScrollProfile ssProfile =
                 new DragSortListView.DragScrollProfile() {
                     @Override
@@ -170,6 +205,7 @@ public class RecipesList extends AppCompatActivity {
         draggableList = (DragSortListView) findViewById(R.id.listview_added_ingredient);
         draggableList.setDropListener(onDrop);
         draggableList.setRemoveListener(onRemove);
+        draggableList.setOnItemClickListener(onClick);
         draggableList.setDivider(null);
         draggableList.setDragScrollProfile(ssProfile);
 
@@ -185,7 +221,8 @@ public class RecipesList extends AppCompatActivity {
                 //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 //        .setAction("Action", null).show();
                 Intent intent = new Intent(view.getContext(),NewIngredient.class);
-                startActivityForResult(intent, Utility.REQUEST_INGREDIENT);
+                intent.putExtra("recipe", mRecipe);
+                startActivity(intent);
 
             }
         });

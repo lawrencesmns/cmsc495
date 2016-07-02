@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 
 import edu.umuc.cmsc495.shoppinglist.Objects.Ingredient;
+import edu.umuc.cmsc495.shoppinglist.Objects.Recipe;
 import edu.umuc.cmsc495.shoppinglist.Objects.ShoppingList;
 import edu.umuc.cmsc495.shoppinglist.Objects.UiUtils;
 import edu.umuc.cmsc495.shoppinglist.R;
@@ -20,7 +21,10 @@ public class NewIngredient extends FragmentActivity {
 
     Ingredient ingOld = null;
     ShoppingList sl = null;
+    Recipe recipe;
     boolean isChanging = false;
+    boolean isShoppingList = false;
+    boolean isRecipe =false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +43,17 @@ public class NewIngredient extends FragmentActivity {
 
         try{
             sl = (ShoppingList) intent.getExtras().getSerializable("shoppinglist");
+            if(sl !=null){
+                isShoppingList = true;
+            }
+        }catch(Exception e){
+        }
+
+        try{
+            recipe = (Recipe) intent.getExtras().getSerializable("recipe");
+            if(recipe !=null){
+                isRecipe = true;
+            }
         }catch(Exception e){
         }
 
@@ -50,9 +65,17 @@ public class NewIngredient extends FragmentActivity {
 
 
         ArrayAdapter wholeQuantityAd = new ArrayAdapter(this,android.R.layout.simple_spinner_item, UiUtils.getCountFull());
-        ArrayAdapter partialQuantityAd = new ArrayAdapter(this,android.R.layout.simple_spinner_item, UiUtils.getCountPartial());
-        ArrayAdapter measurementsAd = new ArrayAdapter(this,android.R.layout.simple_spinner_item, UiUtils.getMeasurementsShoppingList());
 
+        ArrayAdapter partialQuantityAd = new ArrayAdapter(this,android.R.layout.simple_spinner_item, UiUtils.getCountPartial());
+
+        ArrayAdapter measurementsAd = null;
+        if(isRecipe){
+            measurementsAd = new ArrayAdapter(this,android.R.layout.simple_spinner_item, UiUtils.getMeasurementsRecipe());
+        }
+
+        if(isShoppingList){
+            measurementsAd = new ArrayAdapter(this,android.R.layout.simple_spinner_item, UiUtils.getMeasurementsShoppingList());
+        }
 
         wholeQuantity.setAdapter(wholeQuantityAd);
         partialQuantity.setAdapter(partialQuantityAd);
@@ -79,18 +102,39 @@ public class NewIngredient extends FragmentActivity {
                 ingNew.setCountFull(((Spinner)findViewById(R.id.whole_qty_item)).getSelectedItem().toString());
                 ingNew.setMeasurement(((Spinner)findViewById(R.id.measurements_item)).getSelectedItem().toString());
 
-                if(isChanging){
-                    sl.changeIngredient(ingNew,ingOld);
-                }else{
-                    sl.addIngredient(ingNew);
+                Intent intent = null;
+
+                if(isShoppingList){
+                    intent = new Intent(v.getContext(),NewShoppingListActivity.class);
+
+                    if(isChanging){
+                        sl.changeIngredient(ingNew,ingOld);
+                    }else{
+                        sl.addIngredient(ingNew);
+                    }
+
                 }
 
-                Intent intent = new Intent(v.getContext(),NewShoppingListActivity.class);
+                if(isRecipe) {
+                    intent = new Intent(v.getContext(),RecipesList.class);
+                    if (isChanging) {
+                        recipe.changeIngredient(ingNew, ingOld);
+                    } else {
+                        recipe.addIngredient(ingNew);
+                    }
+
+                    //finish();
+                }
+
                 //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
                 intent.putExtra("list", sl);
-                intent.putExtra("Incoming ingredient", ingNew);
+                intent.putExtra("recipe", recipe);
+                //intent.putExtra("Incoming ingredient", ingNew);
+
 
                 startActivity(intent);
+
             }
         });
 
@@ -100,6 +144,7 @@ public class NewIngredient extends FragmentActivity {
                 Intent intent = new Intent(v.getContext(),NewShoppingListActivity.class);
                 //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("list",sl);
+                intent.putExtra("recipe", recipe);
                 startActivity(intent);
             }
         });
@@ -112,6 +157,7 @@ public class NewIngredient extends FragmentActivity {
                 Intent intent = new Intent(v.getContext(),NewShoppingListActivity.class);
                 //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("list",sl);
+                intent.putExtra("recipe", recipe);
                 startActivity(intent);
             }
         });

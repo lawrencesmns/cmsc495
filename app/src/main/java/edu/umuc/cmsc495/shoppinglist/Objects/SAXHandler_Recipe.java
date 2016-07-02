@@ -43,7 +43,7 @@ public class SAXHandler_Recipe extends DefaultHandler{
         } else if (qName.equalsIgnoreCase("CreatedOn")) {
             tempRecipe.setCreatedOn(elementValue);
         } else if (qName.equalsIgnoreCase("LastModifiedOn")) {
-                tempRecipe.setCreatedOn(elementValue);
+                tempRecipe.setLastModifiedOn(elementValue);
            // Log.i("created on;", elementValue);
         } else if (qName.equalsIgnoreCase("Instructions")) {
             tempRecipe.setInstructions(elementValue);
@@ -62,6 +62,7 @@ public class SAXHandler_Recipe extends DefaultHandler{
             //  Log.i("count full;", elementValue);
         } else if (qName.equalsIgnoreCase("CountPart")) {
             tempIngredient.setCountPartial(elementValue);
+            tempRecipe.addIngredient(tempIngredient);
             // Log.i("ingredientCountPartial;", elementValue);
         }
     }

@@ -99,10 +99,10 @@ public class NewShoppingListActivity extends AppCompatActivity {
 
         //Collect intent info
         Intent intent = getIntent();
-        Ingredient incomingIngredient= null;
-        try{
-            incomingIngredient = (Ingredient)intent.getExtras().getSerializable("Incoming ingredient");
-        }catch(Exception e){}
+       // Ingredient incomingIngredient= null;
+       // try{
+       //     incomingIngredient = (Ingredient)intent.getExtras().getSerializable("Incoming ingredient");
+       // }catch(Exception e){}
 
         ShoppingList sl = null;
         try{
@@ -111,7 +111,7 @@ public class NewShoppingListActivity extends AppCompatActivity {
 
         if(sl != null){
             shoppingList = sl;
-        }else if (incomingIngredient != null) {
+       // }else if (incomingIngredient != null) {
             //shoppingList.addIngredient(incomingIngredient);
             //shoppingList = sl;
         } else {

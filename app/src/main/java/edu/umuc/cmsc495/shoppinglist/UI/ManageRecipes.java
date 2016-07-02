@@ -52,6 +52,8 @@ public class ManageRecipes extends AppCompatActivity {
                 Recipe recipe = new Recipe(getApplicationContext());
                 recipe.loadRecipe(listView.getItemAtPosition(position).toString());
                 Intent intent = new Intent(view.getContext(),RecipesList.class);
+
+
                 intent.putExtra("recipe", recipe);
                 startActivity(intent);
             }
