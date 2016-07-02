@@ -26,14 +26,15 @@ public class ShoppingList extends GbList implements Serializable{
 
     public static ShoppingList loadShoppingList(String name){ //probably not the cleanest
         if(context !=null){
-            ShoppingList returnList = new ShoppingList(context);
+            /*ShoppingList returnList = new ShoppingList(context);
             ShoppingList parsedList = DataLayer.parseList(name);
             for(Ingredient i : parsedList.getIngredientList()){
                 returnList.addIngredient(i);
             }
             returnList.setName(parsedList.getName());
             returnList.createdOn = parsedList.createdOn;
-            return returnList;
+            return returnList;*/
+            return DataLayer.parseList(name);
         }
 
         return new ShoppingList();

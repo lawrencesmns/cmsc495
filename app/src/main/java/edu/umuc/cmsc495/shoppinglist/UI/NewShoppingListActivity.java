@@ -111,15 +111,13 @@ public class NewShoppingListActivity extends AppCompatActivity {
             shoppingList = shoppingList.loadShoppingList(incomingList);
         }else if(oldListName.equals(DEFAULT_KEY) && intent.getStringArrayExtra("Incoming ingredient") == null){
             shoppingList.createNewList();
-        }else{
-            shoppingList.loadShoppingList(oldListName);
         }
 
         oldListName = shoppingList.getName();
 
         mRecipeAdapter = new ArrayAdapter(this,
                 R.layout.list_item_added_ingredient, R.id.list_item_ingredient_textview,
-                shoppingList.ingredientList);
+                shoppingList.getIngredientList());
 
         draggableList = (DragSortListView) findViewById(R.id.listview_added_ingredient);
         draggableList.setAdapter(mRecipeAdapter);

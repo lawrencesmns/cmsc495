@@ -29,11 +29,18 @@ public class Recipe extends GbList implements Serializable {
 
     public static Recipe loadRecipe(String name){ //probably not the cleanest
         if(context !=null){
+            /*Recipe returnList = new Recipe(context);
+            Recipe parsedList = DataLayer.parseRecipe(name);
+            for(Ingredient i : parsedList.getIngredientList()){
+                returnList.addIngredient(i);
+            }
+            returnList.setName(parsedList.getName());
+            returnList.createdOn = parsedList.createdOn;
+            returnList.setInstructions(parsedList.getInstructions());*/
             return DataLayer.parseRecipe(name);
-        } else{
-            return new Recipe();
         }
 
+        return new Recipe();
 
     }
 
