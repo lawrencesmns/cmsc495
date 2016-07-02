@@ -12,9 +12,17 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
+        android:title="New Recipe"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+        <EditText
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            android:id="@+id/recipe_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:editable="true"
+            android:autoText="false" />
     </android.support.v7.widget.Toolbar>
 
 
@@ -27,7 +35,7 @@
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-           >
+            >
 
             <edu.umuc.cmsc495.shoppinglist.UI.DragSortListView
                 android:layout_width="match_parent"

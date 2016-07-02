@@ -1,5 +1,7 @@
 package edu.umuc.cmsc495.shoppinglist.UI;
 
+import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -46,9 +48,17 @@ public class ManageShoppingLists extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //Pass ShoppingList object of selected list to NewShoppingListActivity
                 //ShoppingList list = ShoppingList.loadShoppingList(listView.getItemAtPosition(position).toString());
+                String name = listView.getItemAtPosition(position).toString();
+
+                
                 Intent intent = new Intent(view.getContext(),NewShoppingListActivity.class);
-                intent.putExtra("list", listView.getItemAtPosition(position).toString());
+                intent.putExtra("list", name);
                 startActivity(intent);
+
+                /*intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("Incoming ingredient", name);
+                setResult(Activity.RESULT_OK,intent);
+                finish();*/
             }
         });
 
