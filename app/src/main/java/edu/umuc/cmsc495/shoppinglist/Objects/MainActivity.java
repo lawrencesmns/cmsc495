@@ -90,6 +90,25 @@ public class MainActivity extends AppCompatActivity {
         Recipe r2 = new Recipe(this);
         r2.createNewRecipe(); //auto increments the name and sets it to the first new increment
         String defaultName = r2.getName();
+        */
+/*
+        //load shoopping list
+        ShoppingList sl3 = new ShoppingList(this);
+        sl3.loadShoppingList("Untitled Shopping List - 2");
+        String sl3Name = sl3.getName();
+        for (Ingredient i : sl3.getIngredientList()) {
+            Ingredient j = i;
+        }
+*/
+
+        /*
+        //load recipe
+        Recipe r4 = new Recipe(this);
+        r4.loadRecipe("Untitled Recipe - 3");
+        String r4Name = r4.getName();
+        for (Ingredient i : r4.getIngredientList()) {
+            Ingredient j = i;
+        }
 */
     }
 

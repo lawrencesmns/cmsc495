@@ -24,19 +24,24 @@ public class ShoppingList extends GbList implements Serializable{
         this.isPersisting = false;
     }
 
-    public static ShoppingList loadShoppingList(String name){ //probably not the cleanest
-        if(context !=null){
-            ShoppingList returnList = new ShoppingList(context);
-            ShoppingList parsedList = DataLayer.parseList(name);
-            for(Ingredient i : parsedList.getIngredientList()){
-                returnList.addIngredient(i);
-            }
-            returnList.setName(parsedList.getName());
-            returnList.createdOn = parsedList.createdOn;
-            return returnList;
-        }
+    public ShoppingList loadShoppingList(String name){ //probably not the cleanest
+        try {
 
-        return new ShoppingList();
+            if (context != null) {
+                DataLayer d = new DataLayer(context);
+                ShoppingList sl = new ShoppingList();
+                sl = d.parseList(name);
+                this.name = sl.getName();
+                this.createdOn = sl.getCreatedOn();
+                this.lastModifiedOn = sl.getLastModifiedOn();
+                this.ingredientList = sl.getIngredientList();
+            } else {
+                throw new IllegalStateException("The context must be passed in the shopping list constructor");
+            }
+        }catch(Exception e){
+            throw new IllegalArgumentException("The shopping list name " + name + " could not be loaded or parsed");
+        }
+        return this;
     }
     public ShoppingList createNewList(){
         DataLayer d = new DataLayer(this.context);

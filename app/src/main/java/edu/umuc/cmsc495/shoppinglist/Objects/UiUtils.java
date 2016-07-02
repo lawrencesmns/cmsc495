@@ -22,6 +22,7 @@ public class UiUtils {
     public static final String getAppName(){
         return "Grocery Butler";
     }
+
     public static String getDateTimeNow(){
         return SimpleDateFormat.getDateTimeInstance(
                 DateFormat.MEDIUM, DateFormat.SHORT).format(new Date());
@@ -30,6 +31,7 @@ public class UiUtils {
         return SimpleDateFormat.getDateTimeInstance(
                 DateFormat.MEDIUM, DateFormat.SHORT).format(in);
     }
+
 
     public static final ArrayList<String> getCountFull(){
         ArrayList<String> spinnerArray =  new ArrayList<>();

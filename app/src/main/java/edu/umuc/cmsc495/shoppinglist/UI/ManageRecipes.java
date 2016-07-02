@@ -48,7 +48,9 @@ public class ManageRecipes extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //Pass ShoppingList object of selected list to NewListActivity
-                Recipe recipe = Recipe.loadRecipe(listView.getItemAtPosition(position).toString());
+                //Recipe recipe = Recipe.loadRecipe(listView.getItemAtPosition(position).toString()); //martin commented
+                Recipe recipe = new Recipe(getApplicationContext());
+                recipe.loadRecipe(listView.getItemAtPosition(position).toString());
                 Intent intent = new Intent(view.getContext(),RecipesList.class);
                 intent.putExtra("recipe", recipe);
                 startActivity(intent);

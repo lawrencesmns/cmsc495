@@ -27,14 +27,24 @@ public class Recipe extends GbList implements Serializable {
         this.isPersisting = false;
     }
 
-    public static Recipe loadRecipe(String name){ //probably not the cleanest
-        if(context !=null){
-            return DataLayer.parseRecipe(name);
-        } else{
-            return new Recipe();
+    public Recipe loadRecipe(String name){ //probably not the cleanest
+        try {
+            if (context != null) {
+                DataLayer d = new DataLayer(context);
+                Recipe r = new Recipe();
+                r = d.parseRecipe(name);
+                this.name = r.getName();
+                this.createdOn = r.getCreatedOn();
+                this.lastModifiedOn = r.getLastModifiedOn();
+                this.ingredientList = r.getIngredientList();
+            }else{
+                throw new IllegalStateException("The context must be passed in the Recipe constructor");
+            }
         }
-
-
+        catch(Exception e){
+            throw new IllegalArgumentException("The recipe name " + name + " could not be loaded or parsed");
+        }
+        return this;
     }
 
     public Recipe createNewRecipe(){

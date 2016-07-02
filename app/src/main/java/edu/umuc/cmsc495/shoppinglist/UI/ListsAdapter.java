@@ -59,28 +59,30 @@ public class ListsAdapter<T> extends ArrayAdapter<String> {
                                     if (context.getClass().getSimpleName().equals("ManageShoppingLists")) {
 
                                         //Create shopping list object of the selected shopping list for deletion
-                                        ShoppingList shoppingList = new ShoppingList(getContext().getApplicationContext());
-                                        shoppingList.setName(viewHolder.listName.getText().toString());
+                                        //ShoppingList shoppingList = new ShoppingList(getContext().getApplicationContext()); //martin commented
+                                        //shoppingList.setName(viewHolder.listName.getText().toString()); //martin commented
 
                                         //Kept getting a NullPointer exception without doing the above first
                                         DataLayer dataLayer = new DataLayer(getContext().getApplicationContext());
 
                                         //Delete shopping list and remove the name from the listview
-                                        if (dataLayer.deleteShoppingList(ShoppingList.loadShoppingList(shoppingList.getName()))) {
+                                        //if (dataLayer.deleteShoppingList(ShoppingList.loadShoppingList(shoppingList.getName()))) { //martin commented
+                                        if (dataLayer.deleteShoppingList(viewHolder.listName.getText().toString())) {
                                             names.remove(viewHolder.listName.getText());
                                             upDateList(names);
                                             Toast.makeText(getContext(), viewHolder.listName.getText() + " deleted", Toast.LENGTH_SHORT).show();
                                         }
                                     }else if(context.getClass().getSimpleName().equals("ManageRecipes")){
                                         //Create recipe object of the selected shopping list for deletion
-                                        Recipe recipe = new Recipe(getContext().getApplicationContext());
-                                        recipe.setName(viewHolder.listName.getText().toString());
+                                       // Recipe recipe = new Recipe(getContext().getApplicationContext()); //martin commented
+                                       // recipe.setName(viewHolder.listName.getText().toString()); //martin commented
 
                                         //Kept getting a NullPointer exception without doing the above first
                                         DataLayer dataLayer = new DataLayer(getContext().getApplicationContext());
 
                                         //Delete recipe and remove the name from the listview
-                                        if (dataLayer.deleteRecipe(Recipe.loadRecipe(recipe.getName()))) {
+                                        //if (dataLayer.deleteRecipe(Recipe.loadRecipe(recipe.getName()))) { //martin commented
+                                        if (dataLayer.deleteRecipe(viewHolder.listName.getText().toString())) {
                                             names.remove(viewHolder.listName.getText());
                                             upDateList(names);
                                             Toast.makeText(getContext(), viewHolder.listName.getText() + " deleted", Toast.LENGTH_SHORT).show();

@@ -3,6 +3,7 @@ package edu.umuc.cmsc495.shoppinglist.UI;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.NavUtils;
@@ -11,13 +12,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Toast;
 
 
 import edu.umuc.cmsc495.shoppinglist.Objects.Ingredient;
+import edu.umuc.cmsc495.shoppinglist.Objects.MainActivity;
 import edu.umuc.cmsc495.shoppinglist.Objects.ShoppingList;
 import edu.umuc.cmsc495.shoppinglist.R;
 
@@ -38,6 +42,7 @@ public class NewShoppingListActivity extends AppCompatActivity {
             case R.id.action_email:
                 Utility.composeEmail(shoppingList.getEmailSubject(), shoppingList.getEmailBodyText(),
                         this);
+
                 return true;
             case R.id.action_addRecipe:
                 //ToDo: Add ingredients to working shopping list based on recipe
@@ -94,16 +99,21 @@ public class NewShoppingListActivity extends AppCompatActivity {
 
         //Collect intent info
         Intent intent = getIntent();
-        String[] incomingIngredient = intent.getStringArrayExtra("Incoming ingredient");
-        String incomingList = intent.getStringExtra("list");
+        Ingredient incomingIngredient= null;
+        try{
+            incomingIngredient = (Ingredient)intent.getExtras().getSerializable("Incoming ingredient");
+        }catch(Exception e){}
 
-        if(incomingList != null){
-            shoppingList = shoppingList.loadShoppingList(incomingList);
+        ShoppingList sl = null;
+        try{
+            sl = (ShoppingList)intent.getExtras().getSerializable("list");
+        }catch(Exception e){}
+
+        if(sl != null){
+            shoppingList = sl;
         }else if (incomingIngredient != null) {
-            shoppingList = shoppingList.loadShoppingList(oldListName);
-            Ingredient ing = new Ingredient(incomingIngredient[0], incomingIngredient[1],
-                    incomingIngredient[2], incomingIngredient[3], false);
-            shoppingList.addIngredient(ing);
+            //shoppingList.addIngredient(incomingIngredient);
+            //shoppingList = sl;
         } else {
             shoppingList.createNewList();
         }
@@ -119,6 +129,8 @@ public class NewShoppingListActivity extends AppCompatActivity {
 
         ((EditText) findViewById(R.id.shopping_list_title)).setText(oldListName);
     }
+
+
 
     //Generic UI method that initializes button clicks other non-changing UI elements
     private void initializeUI() {
@@ -145,6 +157,26 @@ public class NewShoppingListActivity extends AppCompatActivity {
                     }
                 };
 
+        DragSortListView.OnItemClickListener onClick = new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Intent intent = new Intent(view.getContext(), NewIngredient.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Ingredient i = (Ingredient)parent.getItemAtPosition(position);
+                intent.putExtra("ischanging", true);
+                intent.putExtra("ingredient",i);
+                intent.putExtra("shoppinglist", shoppingList);
+                startActivity(intent);
+            }
+        };
+
+
+
+
+
+
+
         DragSortListView.DragScrollProfile ssProfile =
                 new DragSortListView.DragScrollProfile() {
                     @Override
@@ -163,7 +195,7 @@ public class NewShoppingListActivity extends AppCompatActivity {
         draggableList.setRemoveListener(onRemove);
         draggableList.setDivider(null);
         draggableList.setDragScrollProfile(ssProfile);
-
+        draggableList.setOnItemClickListener(onClick);
         Toolbar mToolbar = (Toolbar) findViewById(R.id.new_shopping_list_toolbar);
         mToolbar.setTitle("");
         setSupportActionBar(mToolbar);
@@ -176,6 +208,7 @@ public class NewShoppingListActivity extends AppCompatActivity {
                 // Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 //         .setAction("Action", null).show();
                 Intent intent = new Intent(view.getContext(), NewIngredient.class);
+                intent.putExtra("shoppinglist", shoppingList);
                 startActivity(intent);
             }
         });

@@ -26,8 +26,8 @@ public class DataLayer {
     public final static String RECIPE_FILE_PREFIX = "r_";
     public final static String SHOPPING_LIST_FILE_PREFIX = "sl_";
     public final static String FILE_EXTENSION = ".xml";
-    public final static String DEFAULT_SHOPPING_LIST_NAME_WITHOUT_INCREMEMNTER = "Untitled Shopping List - ";
-    public final static String DEFAULT_RECIPE_NAME_WITHOUT_INCREMEMNTER = "Untitled Recipe - ";
+    public final static String DEFAULT_SHOPPING_LIST_NAME_WITHOUT_INCREMEMNTER = "Untitled - ";
+    public final static String DEFAULT_RECIPE_NAME_WITHOUT_INCREMEMNTER = "Untitled - ";
 
     static Context context;
 
@@ -43,6 +43,10 @@ public class DataLayer {
 
     public boolean deleteRecipe(Recipe recipe) {
         String fileName = RECIPE_FILE_PREFIX + recipe.getName() + FILE_EXTENSION;
+        return removeFile(fileName);
+    }
+    public boolean deleteRecipe(String recipeName) {
+        String fileName = RECIPE_FILE_PREFIX + recipeName + FILE_EXTENSION;
         return removeFile(fileName);
     }
 
@@ -109,6 +113,10 @@ public class DataLayer {
 
     public boolean deleteShoppingList(ShoppingList shoppingList){
         String fileName = SHOPPING_LIST_FILE_PREFIX + shoppingList.getName() + FILE_EXTENSION;
+        return removeFile(fileName);
+    }
+    public boolean deleteShoppingList(String shoppingListName){
+        String fileName = SHOPPING_LIST_FILE_PREFIX + shoppingListName + FILE_EXTENSION;
         return removeFile(fileName);
     }
 

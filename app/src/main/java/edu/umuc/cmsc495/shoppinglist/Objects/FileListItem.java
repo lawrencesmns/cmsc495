@@ -9,9 +9,10 @@ public class FileListItem{
 
     private String name;
     private String lastModifiedOn;
-
+    private String fileName;
     //region Get Methods
     public String getName(){return name;}
+    public String getFileName(){return fileName;}
     //public Date getCreatedDate(){return createdOn;}
     public String getModifiedOn(){return lastModifiedOn;}
     //endregion
@@ -19,7 +20,9 @@ public class FileListItem{
     //Constructor
     FileListItem(String name, String lastModifiedOn){
         //Global variables
-        this.name = name;
+        this.fileName = name;
+        this.name = name.substring(0,name.length()-4);
+        this.name = name.substring(name.indexOf("_") + 1);
         this.lastModifiedOn = lastModifiedOn;
         //Set created and last modified date
         //  this.createdOn = new Date();
