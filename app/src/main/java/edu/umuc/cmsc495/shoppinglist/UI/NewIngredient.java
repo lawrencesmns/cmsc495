@@ -1,5 +1,6 @@
 package edu.umuc.cmsc495.shoppinglist.UI;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
@@ -16,7 +17,7 @@ import edu.umuc.cmsc495.shoppinglist.Objects.UiUtils;
 import edu.umuc.cmsc495.shoppinglist.R;
 
 public class NewIngredient extends FragmentActivity {
-
+    Ingredient mIngredient;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,10 +47,11 @@ public class NewIngredient extends FragmentActivity {
                 sending[2] = ((Spinner)findViewById(R.id.whole_qty_item)).getSelectedItem().toString();
                 sending[3] = ((Spinner)findViewById(R.id.measurements_item)).getSelectedItem().toString();
 
-                Intent intent = new Intent(v.getContext(),NewShoppingListActivity.class);
+                Intent intent = new Intent();
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("Incoming ingredient", sending);
-                startActivity(intent);
+                setResult(Activity.RESULT_OK,intent);
+                finish();
             }
         });
 
@@ -68,4 +70,5 @@ public class NewIngredient extends FragmentActivity {
             }
         });
     }
+
 }

@@ -1,5 +1,6 @@
 package edu.umuc.cmsc495.shoppinglist.UI;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -31,6 +32,19 @@ public class NewShoppingListActivity extends AppCompatActivity {
     SharedPreferences sharedPref;
     SharedPreferences.Editor editor;
     private boolean exiting = false;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        String oldListName = sharedPref.getString(prefKey, DEFAULT_KEY);
+
+        if(requestCode == Utility.REQUEST_INGREDIENT) {
+            String[] incomingIngredient = data.getStringArrayExtra("Incoming ingredient");
+            shoppingList = shoppingList.loadShoppingList(oldListName);
+            Ingredient ing = new Ingredient(incomingIngredient[0], incomingIngredient[1],
+                    incomingIngredient[2], incomingIngredient[3], false);
+            shoppingList.addIngredient(ing);
+        }
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -89,23 +103,18 @@ public class NewShoppingListActivity extends AppCompatActivity {
     @Override
     protected void onPostResume() {
         super.onPostResume();
-        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
         String oldListName = sharedPref.getString(prefKey, DEFAULT_KEY);
 
         //Collect intent info
         Intent intent = getIntent();
-        String[] incomingIngredient = intent.getStringArrayExtra("Incoming ingredient");
         String incomingList = intent.getStringExtra("list");
 
         if(incomingList != null){
             shoppingList = shoppingList.loadShoppingList(incomingList);
-        }else if (incomingIngredient != null) {
-            shoppingList = shoppingList.loadShoppingList(oldListName);
-            Ingredient ing = new Ingredient(incomingIngredient[0], incomingIngredient[1],
-                    incomingIngredient[2], incomingIngredient[3], false);
-            shoppingList.addIngredient(ing);
-        } else {
+        }else if(oldListName.equals(DEFAULT_KEY) && intent.getStringArrayExtra("Incoming ingredient") == null){
             shoppingList.createNewList();
+        }else{
+            shoppingList.loadShoppingList(oldListName);
         }
 
         oldListName = shoppingList.getName();
@@ -176,7 +185,7 @@ public class NewShoppingListActivity extends AppCompatActivity {
                 // Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 //         .setAction("Action", null).show();
                 Intent intent = new Intent(view.getContext(), NewIngredient.class);
-                startActivity(intent);
+                startActivityForResult(intent, Utility.REQUEST_INGREDIENT);
             }
         });
 

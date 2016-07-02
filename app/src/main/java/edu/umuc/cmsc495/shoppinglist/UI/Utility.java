@@ -9,6 +9,8 @@ import android.support.v7.app.AlertDialog;
  */
 public class Utility {
 
+    final int REQUEST_INGREDIENT = 1;
+
     public static void composeEmail(String subject, String body, Context context) {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("*/*");
@@ -24,5 +26,6 @@ public class Utility {
         alertBuilder.setMessage(message);
         alertBuilder.create().show();
     }
+
 
 }
