@@ -21,6 +21,7 @@ import java.util.List;
 
 import edu.umuc.cmsc495.shoppinglist.Objects.FileList;
 import edu.umuc.cmsc495.shoppinglist.Objects.FileListItem;
+import edu.umuc.cmsc495.shoppinglist.Objects.ShoppingList;
 import edu.umuc.cmsc495.shoppinglist.R;
 
 public class ManageShoppingLists extends AppCompatActivity {
@@ -50,9 +51,11 @@ public class ManageShoppingLists extends AppCompatActivity {
                 //ShoppingList list = ShoppingList.loadShoppingList(listView.getItemAtPosition(position).toString());
                 String name = listView.getItemAtPosition(position).toString();
 
-                
+                ShoppingList sl = new ShoppingList(getApplicationContext());
+                sl.loadShoppingList(name);
+
                 Intent intent = new Intent(view.getContext(),NewShoppingListActivity.class);
-                intent.putExtra("list", name);
+                intent.putExtra("list", sl);
                 startActivity(intent);
 
                 /*intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
