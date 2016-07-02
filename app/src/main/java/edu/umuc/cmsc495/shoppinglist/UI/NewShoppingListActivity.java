@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 
 import edu.umuc.cmsc495.shoppinglist.Objects.Ingredient;
+import edu.umuc.cmsc495.shoppinglist.Objects.Recipe;
 import edu.umuc.cmsc495.shoppinglist.Objects.ShoppingList;
 import edu.umuc.cmsc495.shoppinglist.R;
 
@@ -35,13 +36,21 @@ public class NewShoppingListActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         String oldListName = sharedPref.getString(prefKey, DEFAULT_KEY);
+        shoppingList = shoppingList.loadShoppingList(oldListName);
 
         if(requestCode == Utility.REQUEST_INGREDIENT) {
             String[] incomingIngredient = data.getStringArrayExtra("Incoming ingredient");
-            shoppingList = shoppingList.loadShoppingList(oldListName);
             Ingredient ing = new Ingredient(incomingIngredient[0], incomingIngredient[1],
                     incomingIngredient[2], incomingIngredient[3], false);
             shoppingList.addIngredient(ing);
+        }
+
+        if(requestCode == Utility.REQUEST_RECIPE_INGREDIENTS){
+            String incomingRecipe = data.getStringExtra("Incoming recipe");
+            Recipe recipe = (new Recipe(this)).loadRecipe(incomingRecipe);
+            for(Ingredient i : recipe.getIngredientList()){
+                shoppingList.addIngredient(i);
+            }
         }
     }
 
@@ -53,7 +62,8 @@ public class NewShoppingListActivity extends AppCompatActivity {
                         this);
                 return true;
             case R.id.action_addRecipe:
-                //ToDo: Add ingredients to working shopping list based on recipe
+                Intent intent = new Intent(this, ManageRecipes.class);
+                startActivityForResult(intent, Utility.REQUEST_RECIPE_INGREDIENTS);
                 return true;
             case android.R.id.home:
                 exiting = true;

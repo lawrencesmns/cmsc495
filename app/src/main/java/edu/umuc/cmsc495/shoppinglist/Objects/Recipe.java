@@ -36,7 +36,8 @@ public class Recipe extends GbList implements Serializable {
             }
             returnList.setName(parsedList.getName());
             returnList.createdOn = parsedList.createdOn;
-            returnList.setInstructions(parsedList.getInstructions());*/
+            returnList.setInstructions(parsedList.getInstructions());
+            return returnList;*/
             return DataLayer.parseRecipe(name);
         }
 

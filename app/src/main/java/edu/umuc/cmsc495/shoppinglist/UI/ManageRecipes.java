@@ -1,5 +1,7 @@
 package edu.umuc.cmsc495.shoppinglist.UI;
 
+import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -48,10 +50,19 @@ public class ManageRecipes extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 //Pass ShoppingList object of selected list to NewListActivity
+                ComponentName componentName = getCallingActivity();
                 Recipe recipe = Recipe.loadRecipe(listView.getItemAtPosition(position).toString());
-                Intent intent = new Intent(view.getContext(),RecipesList.class);
-                intent.putExtra("recipe", recipe);
-                startActivity(intent);
+                if(componentName.getClassName().equals(NewShoppingListActivity.class.getCanonicalName())){
+                    Intent intent = new Intent();
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("Incoming recipe", recipe.getName());
+                    setResult(Activity.RESULT_OK,intent);
+                    finish();
+                }else {
+                    Intent intent = new Intent(view.getContext(), RecipesList.class);
+                    intent.putExtra("recipe", recipe);
+                    startActivity(intent);
+                }
             }
         });
 

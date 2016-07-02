@@ -10,6 +10,7 @@ import android.support.v7.app.AlertDialog;
 public class Utility {
 
     static final int REQUEST_INGREDIENT = 1;
+    static final int REQUEST_RECIPE_INGREDIENTS = 2;
 
     public static void composeEmail(String subject, String body, Context context) {
         Intent intent = new Intent(Intent.ACTION_SEND);
