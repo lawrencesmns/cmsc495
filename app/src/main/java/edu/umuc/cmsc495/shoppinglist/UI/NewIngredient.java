@@ -141,7 +141,13 @@ public class NewIngredient extends FragmentActivity {
         btnCancel.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(),NewShoppingListActivity.class);
+                Intent intent = null;
+                if(isShoppingList) {
+                    intent = new Intent(v.getContext(), NewShoppingListActivity.class);
+                }
+                if(isRecipe) {
+                    intent = new Intent(v.getContext(), RecipesList.class);
+                }
                 //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("list",sl);
                 intent.putExtra("recipe", recipe);
@@ -153,8 +159,16 @@ public class NewIngredient extends FragmentActivity {
             @Override
             public void onClick(View v) {
                 //TODO: Add stuff that will remove this ingredient from its parent's list (recipe or shopping list)
-                sl.removeIngredient(ingOld);
-                Intent intent = new Intent(v.getContext(),NewShoppingListActivity.class);
+
+                Intent intent = null;
+                if(isShoppingList) {
+                    sl.removeIngredient(ingOld);
+                    intent = new Intent(v.getContext(), NewShoppingListActivity.class);
+                }
+                if(isRecipe) {
+                    recipe.removeIngredient(ingOld);
+                    intent = new Intent(v.getContext(), RecipesList.class);
+                }
                 //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("list",sl);
                 intent.putExtra("recipe", recipe);

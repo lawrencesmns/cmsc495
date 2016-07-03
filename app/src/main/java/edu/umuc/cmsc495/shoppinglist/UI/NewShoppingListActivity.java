@@ -83,7 +83,7 @@ public class NewShoppingListActivity extends AppCompatActivity {
             editor.putString(prefKey, shoppingList.getName());
         } else {
             editor.putString(prefKey, DEFAULT_KEY);
-            Toast toast = Toast.makeText(this, shoppingList.getName() + " saved", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(this, shoppingList.getName() + "shopping list saved", Toast.LENGTH_SHORT);
             toast.show();
         }
 

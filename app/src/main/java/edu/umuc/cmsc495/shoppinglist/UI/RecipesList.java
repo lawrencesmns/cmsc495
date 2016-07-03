@@ -82,7 +82,7 @@ public class RecipesList extends AppCompatActivity {
             editor.putString(prefKey, mRecipe.getName());
         }else{
             editor.putString(prefKey, DEFAULT_KEY);
-            Toast toast = Toast.makeText(this, mRecipe.getName() + " saved", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(this, mRecipe.getName() + " recipe saved", Toast.LENGTH_SHORT);
             toast.show();
         }
 
@@ -178,7 +178,7 @@ public class RecipesList extends AppCompatActivity {
         DragSortListView.OnItemClickListener onClick = new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                mRecipe.setInstructions(((EditText) findViewById(R.id.instructions)).getText().toString());
                 Intent intent = new Intent(view.getContext(), NewIngredient.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 Ingredient i = (Ingredient)parent.getItemAtPosition(position);
