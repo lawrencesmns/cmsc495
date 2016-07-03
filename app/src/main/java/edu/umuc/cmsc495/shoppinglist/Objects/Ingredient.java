@@ -80,13 +80,13 @@ public class Ingredient implements Serializable {
     }
 
     //original:
-    //    @Override
-    //    public String toString(){
-    //        return this.getCountFullString() + " " + this.getCountPartialString() + "  " + this.measurement + "    " + this.name;
-    //    }
+        @Override
+        public String toString(){
+            return this.getCountFullString() + " " + this.getCountPartialString() + "   " + this.measurement + "    " + this.name;
+        }
 
-    @Override
-    public String toString(){ //lawrence, somehow this changed back to the spaced version?  Changing back to comma separated for UI display --martin
-        return this.getCountFullString() + "," + this.getCountPartialString() + "," + this.measurement + "," + this.name;
-    }
+   // @Override
+   // public String toString(){ //lawrence, somehow this changed back to the spaced version?  Changing back to comma separated for UI display --martin
+   //     return this.getCountFullString() + "," + this.getCountPartialString() + "," + this.measurement + "," + this.name;
+   // }
 }
