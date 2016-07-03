@@ -1,7 +1,6 @@
 package edu.umuc.cmsc495.shoppinglist.UI;
 
-import android.app.Activity;
-import android.content.ComponentName;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +12,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -82,7 +83,7 @@ public class ManageShoppingLists extends AppCompatActivity {
                 Collections.sort(listNames,new Comparator<String>() {
                     @Override
                     public int compare(String lhs, String rhs) {
-                        return lhs.compareTo(rhs);
+                        return lhs.compareToIgnoreCase(rhs);
                     }
                 });
                 setListViewAdapter();
@@ -94,7 +95,7 @@ public class ManageShoppingLists extends AppCompatActivity {
                 Collections.sort(listNames, new Comparator<String>() {
                     @Override
                     public int compare(String lhs, String rhs) {
-                        return rhs.compareTo(lhs);
+                        return rhs.compareToIgnoreCase(lhs);
                     }
                 });
                 setListViewAdapter();
@@ -107,14 +108,24 @@ public class ManageShoppingLists extends AppCompatActivity {
                 Collections.sort(lists, new Comparator<FileListItem>() {
                     @Override
                     public int compare(FileListItem lhs, FileListItem rhs) {
-                        Date date1 = new Date(lhs.getModifiedOn());
-                        Date date2 = new Date(rhs.getModifiedOn());
-                        if (date1.after(date2))
-                            return -1;
-                        else if (date1.equals(date2)) // it's equals
-                            return 0;
-                        else
-                            return 1;
+                        DateFormat df = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT);
+                        Date date1 = null;
+                        Date date2 = null;
+                        try {
+                            date1 = df.parse(lhs.getModifiedOn());
+                            date2 = df.parse(rhs.getModifiedOn());
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        if (date1 != null) {
+                            if (date1.after(date2))
+                                return -1;
+                            else if (date1.equals(date2)) // it's equals
+                                return 0;
+                            else
+                                return 1;
+                        }
+                        return 0;
                     }
 
 
@@ -130,14 +141,24 @@ public class ManageShoppingLists extends AppCompatActivity {
                 Collections.sort(lists, new Comparator<FileListItem>() {
                     @Override
                     public int compare(FileListItem lhs, FileListItem rhs) {
-                        Date date1 = new Date(lhs.getModifiedOn());
-                        Date date2 = new Date(rhs.getModifiedOn());
-                        if (date2.after(date1))
-                            return -1;
-                        else if (date2.equals(date1)) // it's equals
-                            return 0;
-                        else
-                            return 1;
+                        DateFormat df = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT);
+                        Date date1 = null;
+                        Date date2 = null;
+                        try {
+                            date1 = df.parse(lhs.getModifiedOn());
+                            date2 = df.parse(rhs.getModifiedOn());
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        if (date2 != null) {
+                            if (date2.after(date1))
+                                return -1;
+                            else if (date2.equals(date1)) // it's equals
+                                return 0;
+                            else
+                                return 1;
+                        }
+                        return 0;
                     }
                 });
                 fillListNames();
@@ -170,9 +191,6 @@ public class ManageShoppingLists extends AppCompatActivity {
             }
         }
     }
-
-
-
 
     public void onStop(){
         super.onStop();
