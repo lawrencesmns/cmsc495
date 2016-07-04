@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         //usage:  Recipe and shoppingList methods setName, setInstructions(recipe only), addIngredient,
         //        changeIngredient, and removeIngredient all persist to datastorage immediately.
 
+        /*
         Recipe recipe = new Recipe(this);
         recipe.createNewRecipe(); //auto increments the name and sets it to the first new increment
         recipe.setName("testRecipe1"); //changes the name

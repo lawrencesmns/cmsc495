@@ -167,6 +167,7 @@ public class NewShoppingListActivity extends AppCompatActivity {
                 intent.putExtra("ischanging", true);
                 intent.putExtra("ingredient",i);
                 intent.putExtra("shoppinglist", shoppingList);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
         };
@@ -209,6 +210,7 @@ public class NewShoppingListActivity extends AppCompatActivity {
                 //         .setAction("Action", null).show();
                 Intent intent = new Intent(view.getContext(), NewIngredient.class);
                 intent.putExtra("shoppinglist", shoppingList);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
         });
