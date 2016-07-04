@@ -5,7 +5,9 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".UI.RecipesList"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:clickable="true"
+    android:focusableInTouchMode="true">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/new_recipe_list_toolbar"
@@ -80,6 +82,8 @@
             android:layout_marginRight="16dp"
             android:layout_marginBottom="16dp"
             android:tint="@android:color/white"
-            android:src="@android:drawable/ic_input_add" />
+            android:src="@android:drawable/ic_input_add"
+            android:focusable="true"
+            android:focusableInTouchMode="true"/>
     </FrameLayout>
 </LinearLayout>

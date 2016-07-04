@@ -254,6 +254,7 @@ public class NewShoppingListActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.requestFocus();
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

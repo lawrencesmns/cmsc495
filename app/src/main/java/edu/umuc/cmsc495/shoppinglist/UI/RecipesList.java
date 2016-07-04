@@ -1,5 +1,6 @@
 package edu.umuc.cmsc495.shoppinglist.UI;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -150,10 +152,9 @@ public class RecipesList extends AppCompatActivity {
         return true;
     }
 
-    private void initializeUI(){
+    private void initializeUI() {
 
         setContentView(R.layout.activity_recipes);
-
 
 
         DragSortListView.DropListener onDrop =
@@ -181,9 +182,9 @@ public class RecipesList extends AppCompatActivity {
                 mRecipe.setInstructions(((EditText) findViewById(R.id.instructions)).getText().toString());
                 Intent intent = new Intent(view.getContext(), NewIngredient.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                Ingredient i = (Ingredient)parent.getItemAtPosition(position);
+                Ingredient i = (Ingredient) parent.getItemAtPosition(position);
                 intent.putExtra("ischanging", true);
-                intent.putExtra("ingredient",i);
+                intent.putExtra("ingredient", i);
                 intent.putExtra("recipe", mRecipe);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
@@ -216,12 +217,13 @@ public class RecipesList extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.requestFocus();
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 //        .setAction("Action", null).show();
-                Intent intent = new Intent(view.getContext(),NewIngredient.class);
+                Intent intent = new Intent(view.getContext(), NewIngredient.class);
                 intent.putExtra("recipe", mRecipe);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
@@ -229,7 +231,4 @@ public class RecipesList extends AppCompatActivity {
             }
         });
     }
-
-
-
 }
