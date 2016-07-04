@@ -6,6 +6,7 @@ package edu.umuc.cmsc495.shoppinglist.UI;
  * and drop re-ordering of list items.
  *
  * Copyright 2012 Carl Bauer
+ * Modified 2016 Lawrence Simmons
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
