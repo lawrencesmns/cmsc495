@@ -16,6 +16,7 @@ import edu.umuc.cmsc495.shoppinglist.Objects.Recipe;
 import edu.umuc.cmsc495.shoppinglist.Objects.ShoppingList;
 import edu.umuc.cmsc495.shoppinglist.Objects.UiUtils;
 import edu.umuc.cmsc495.shoppinglist.R;
+import android.widget.Toast;
 
 public class NewIngredient extends FragmentActivity {
 
@@ -89,6 +90,7 @@ public class NewIngredient extends FragmentActivity {
             ((EditText)findViewById(R.id.new_ingredient_name)).setText(ingOld.getName());
         }
 
+
         Button btnSave = (Button) findViewById(R.id.save);
         Button btnCancel = (Button) findViewById(R.id.cancel);
         ImageButton btnDelete = (ImageButton) findViewById(R.id.edit_ingredient_delete);
@@ -104,13 +106,22 @@ public class NewIngredient extends FragmentActivity {
 
                 Intent intent = null;
 
+                boolean moveToPage = true;
+
+                String errMsg = "";
                 if(isShoppingList){
                     intent = new Intent(v.getContext(),NewShoppingListActivity.class);
 
                     if(isChanging){
                         sl.changeIngredient(ingNew,ingOld);
                     }else{
-                        sl.addIngredient(ingNew);
+                        try{
+                            sl.addIngredient(ingNew);
+                        }catch(Exception e){
+                            moveToPage = false;
+                            errMsg = e.getMessage();
+                        }
+
                     }
 
                 }
@@ -120,7 +131,12 @@ public class NewIngredient extends FragmentActivity {
                     if (isChanging) {
                         recipe.changeIngredient(ingNew, ingOld);
                     } else {
-                        recipe.addIngredient(ingNew);
+                        try{
+                            recipe.addIngredient(ingNew);
+                        }catch(Exception e){
+                            moveToPage = false;
+                            errMsg = e.getMessage();
+                        }
                     }
 
                     //finish();
@@ -132,8 +148,13 @@ public class NewIngredient extends FragmentActivity {
                 intent.putExtra("recipe", recipe);
                 //intent.putExtra("Incoming ingredient", ingNew);
 
+                if(moveToPage){
+                    startActivity(intent);
+                }else{
+                    Toast toast = Toast.makeText(getApplicationContext(), errMsg, Toast.LENGTH_SHORT);
+                    toast.show();
+                }
 
-                startActivity(intent);
 
             }
         });
@@ -149,9 +170,11 @@ public class NewIngredient extends FragmentActivity {
                     intent = new Intent(v.getContext(), RecipesList.class);
                 }
                 //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
                 intent.putExtra("list",sl);
                 intent.putExtra("recipe", recipe);
                 startActivity(intent);
+
             }
         });
 
@@ -170,10 +193,12 @@ public class NewIngredient extends FragmentActivity {
                     intent = new Intent(v.getContext(), RecipesList.class);
                 }
                 //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
                 intent.putExtra("list",sl);
                 intent.putExtra("recipe", recipe);
                 startActivity(intent);
             }
         });
     }
+
 }
