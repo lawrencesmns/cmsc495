@@ -197,7 +197,7 @@ public class ManageRecipes extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String recipeName = listView.getItemAtPosition(position).toString();
                 ComponentName callingActivity = getCallingActivity();
-                if(callingActivity.getClassName().equals(NewShoppingListActivity.class.getCanonicalName())){
+                if(callingActivity != null && callingActivity.getClassName().equals(NewShoppingListActivity.class.getCanonicalName())){
                     Intent returnIntent = new Intent();
                     returnIntent.putExtra("RecipeName", recipeName);
                     setResult(Activity.RESULT_OK,returnIntent);
