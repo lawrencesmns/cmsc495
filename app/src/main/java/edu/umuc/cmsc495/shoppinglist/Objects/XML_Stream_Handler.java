@@ -174,6 +174,45 @@ public class XML_Stream_Handler{
 
             rootElement.appendChild(ingredients);
 
+            Element recipes = doc.createElement("Recipes");
+
+            for(Recipe recipe: list.getRecipesAdded()){
+                Element recipeE = doc.createElement("Recipe");
+
+                Element recipeName = doc.createElement("RecipeName");
+                recipeName.appendChild(doc.createTextNode(recipe.getName().toString()));
+                recipeE.appendChild(recipeName);
+
+                Element ingredientsR = doc.createElement("IngredientsR");
+
+                for(Ingredient i:recipe.getIngredientList()){
+                    Element ingredient = doc.createElement("IngredientR");
+
+                    Element ingName = doc.createElement("IngNameR");
+                    ingName.appendChild(doc.createTextNode(i.getName()));
+                    ingredient.appendChild(ingName);
+
+                    Element measurement = doc.createElement("MeasurementR");
+                    measurement.appendChild(doc.createTextNode(i.getMeasurement()));
+                    ingredient.appendChild(measurement);
+
+                    Element countFull = doc.createElement("CountFullR");
+                    countFull.appendChild(doc.createTextNode(i.getCountFullString()));
+                    ingredient.appendChild(countFull);
+
+                    Element countPartial = doc.createElement("CountPartR");
+                    countPartial.appendChild(doc.createTextNode(i.getCountPartialString()));
+                    ingredient.appendChild(countPartial);
+
+                    ingredientsR.appendChild(ingredient);
+
+                }
+
+                recipeE.appendChild(ingredientsR);
+                recipes.appendChild(recipeE);
+            }
+            rootElement.appendChild(recipes);
+
             doc.appendChild(rootElement);
 
             //Builds file path to write to

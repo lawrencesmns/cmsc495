@@ -18,7 +18,8 @@ public class SAXHandler_ShoppingList extends DefaultHandler{
     private String elementValue = null;
 
     private ShoppingList tempList = new ShoppingList();
-    Ingredient  tempIngredient = new Ingredient();
+    private Ingredient  tempIngredient = new Ingredient();
+    private Recipe tempRecipe = new Recipe();
 
     public ShoppingList getShoppingList(){return tempList;}
 
@@ -47,8 +48,9 @@ public class SAXHandler_ShoppingList extends DefaultHandler{
             //Log.i("list name;", elementValue);
         } else if (qName.equalsIgnoreCase("CreatedOn")) {
             tempList.setCreatedOn(elementValue);
+        } else if (qName.equalsIgnoreCase("LastModifiedOn")) {
+            tempList.setLastModifiedOn(elementValue);
         } else if (qName.equalsIgnoreCase("Ingredient")) {
-
             tempIngredient = new Ingredient();
             Log.i("new ingredient;", elementValue);
         } else if (qName.equalsIgnoreCase("IngName")) {
@@ -67,7 +69,27 @@ public class SAXHandler_ShoppingList extends DefaultHandler{
             tempIngredient.setCrossedOut(Boolean.parseBoolean(elementValue));
             tempList.addIngredient(tempIngredient);
             Log.i("ingredientCrossedOut;", elementValue);
-    }
+        } else if (qName.equalsIgnoreCase("Recipe")) {
+            tempList.addRecipe(tempRecipe);
+            tempRecipe = new Recipe();
+        } else if (qName.equalsIgnoreCase("RecipeName")) {
+            tempRecipe.setName(elementValue);
+        } else if (qName.equalsIgnoreCase("IngredientR")) {
+            tempIngredient = new Ingredient();
+        } else if (qName.equalsIgnoreCase("IngNameR")) {
+            tempIngredient.setName(elementValue);
+            Log.i("ingredient name;", elementValue);
+        } else if (qName.equalsIgnoreCase("MeasurementR")) {
+            tempIngredient.setMeasurement(elementValue);
+            Log.i("ingredient measurement;", elementValue);
+        } else if (qName.equalsIgnoreCase("CountFullR")) {
+            tempIngredient.setCountFull(elementValue);
+            Log.i("count full;", elementValue);
+        } else if (qName.equalsIgnoreCase("CountPartR")) {
+            tempIngredient.setCountPartial(elementValue);
+            tempRecipe.addIngredient(tempIngredient);
+        }
+
 
     }
 }

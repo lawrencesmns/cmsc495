@@ -11,7 +11,7 @@ import java.util.*;
  */
 public class ShoppingList extends GbList implements Serializable{
     //Class Variables
-    private List<String> recipeIngredients = new ArrayList<>();
+    private List<Recipe> recipesAdded = new ArrayList<>();
     private static Context context;
 
     public ShoppingList(Context context){
@@ -22,6 +22,9 @@ public class ShoppingList extends GbList implements Serializable{
     protected ShoppingList(){
         this.createdOn = UiUtils.getDateTimeNow();
         this.isPersisting = false;
+    }
+    protected List<Recipe> getRecipesAdded(){
+        return this.recipesAdded;
     }
 
     public ShoppingList loadShoppingList(String name){ //probably not the cleanest
@@ -35,6 +38,7 @@ public class ShoppingList extends GbList implements Serializable{
                 this.createdOn = sl.getCreatedOn();
                 this.lastModifiedOn = sl.getLastModifiedOn();
                 this.ingredientList = sl.getIngredientList();
+                this.recipesAdded = sl.getRecipesAdded();
             } else {
                 throw new IllegalStateException("The context must be passed in the shopping list constructor");
             }
@@ -74,26 +78,33 @@ public class ShoppingList extends GbList implements Serializable{
     //endregion
 
     //not yet implemented
-   /* public boolean addRecipe(Recipe newRecipe){
-        List<Ingredient> recipeIngredients = newRecipe.getIngredientList();
-
-        for(Ingredient newIngredient: recipeIngredients){
-            if(isIngredientAlreadyPresent(newIngredient)){
-                int indexOf = getIndexOfName(newIngredient);
-                Ingredient targetIngredient = this.Ingredients.get(indexOf);
-                //targetIngredient = updateIngredient(targetIngredient, newIngredient);
-                this.Ingredients.set(indexOf, targetIngredient);
-            }else{
-                addIngredient(newIngredient);
+   public void addRecipe(Recipe newRecipe){
+       boolean alreadyAdded = false;
+        for(Recipe recipe: recipesAdded){
+            if(recipe.getName().equals(newRecipe.getName())){
+                removeRecipe(newRecipe);
             }
         }
-        return true;
+        recipesAdded.add(newRecipe);
+        save();
+   }
+
+
+    public void removeRecipe(Recipe newRecipe){
+        recipesAdded.remove(newRecipe);
+        save();
     }
-*/
+
+/*
+                 int indexOf = getIndexOfName(newIngredient);
+                Ingredient targetIngredient = this.Ingredients.get(indexOf);
+                targetIngredient = updateIngredient(targetIngredient, newIngredient);
+                this.Ingredients.set(indexOf, targetIngredient);
+* */
 
 
 
-    /* private int getIndexOfName(Ingredient targetIngredient){
+     private int getIndexOfName(Ingredient targetIngredient){
         for(Ingredient ingredient: this.ingredientList){
             if(ingredient.getName().compareTo(targetIngredient.getName()) == 0){
                 return this.ingredientList.indexOf(ingredient);
@@ -101,7 +112,7 @@ public class ShoppingList extends GbList implements Serializable{
         }
         return -1;
     }
-*/
+
 
     //List Operations
 
@@ -109,6 +120,7 @@ public class ShoppingList extends GbList implements Serializable{
         super.addIngredient(newIngredient);
         save();
     }
+
 
 
     public void removeIngredient(Ingredient ingredient){

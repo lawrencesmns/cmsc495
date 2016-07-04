@@ -30,10 +30,10 @@ public class MainActivity extends AppCompatActivity {
         //usage:  Recipe and shoppingList methods setName, setInstructions(recipe only), addIngredient,
         //        changeIngredient, and removeIngredient all persist to datastorage immediately.
 
-        /*
+/*
         Recipe recipe = new Recipe(this);
         recipe.createNewRecipe(); //auto increments the name and sets it to the first new increment
-        recipe.setName("testRecipe1"); //changes the name
+        recipe.setName("testRecipe2"); //changes the name
         recipe.setInstructions("these are the instructions");
 
         Ingredient i = new Ingredient();
@@ -43,17 +43,22 @@ public class MainActivity extends AppCompatActivity {
         i.setCountPartial("1/8"); //from spinner or modal
         recipe.addIngredient(i); //add the ingredient to the object which persists to database
 
+        ShoppingList sl4 = new ShoppingList(this);
+        sl4.setName("testShoppingList3");
         Recipe r5 = new Recipe(this);
         r5.loadRecipe("testRecipe1");
-        for(Ingredient is:r5.getIngredientList())
-        {
-            Ingredient j = is;
+        sl4.addRecipe(r5);
+
+        ShoppingList sl5 = new ShoppingList(this);
+        sl5.loadShoppingList("testShoppingList3");
+        for(Recipe r:sl5.getRecipesAdded()){
+            Recipe j = r;
         }
 
         //recipe.removeIngredient(i); //remove the ingredient
 
         recipe.setInstructions("these are the new instructions"); //change the instructions
-
+*/
 /*
         ShoppingList sl = new ShoppingList(this); //creates a new list with db pernanence via this.
         sl.createNewList(); //auto increments the name and sets it to the first new increment not taken.
