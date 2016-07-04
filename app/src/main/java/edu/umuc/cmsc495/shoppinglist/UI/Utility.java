@@ -14,11 +14,11 @@ public class Utility {
 
     public static void composeEmail(String subject, String body, Context context) {
         Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("*/*");
+        intent.setType("message/rfc822");
         intent.putExtra(Intent.EXTRA_SUBJECT, subject);
         intent.putExtra(Intent.EXTRA_TEXT, body);
         if (intent.resolveActivity(context.getPackageManager()) != null) {
-            context.startActivity(intent);
+            context.startActivity(Intent.createChooser(intent, "Choose app..."));
         }
     }
 
