@@ -27,10 +27,11 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin">
 
-        <ListView
+        <edu.umuc.cmsc495.shoppinglist.UI.DragSortListView
             android:id="@+id/recipes"
+            app:remove_mode="flingRemove"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-        </ListView>
+        </edu.umuc.cmsc495.shoppinglist.UI.DragSortListView>
     </LinearLayout>
 </LinearLayout>

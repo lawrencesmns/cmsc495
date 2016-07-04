@@ -10,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.text.DateFormat;
@@ -176,7 +177,7 @@ public class ManageShoppingLists extends AppCompatActivity {
     //Sets the Adapter that populates the ListView
     public void setListViewAdapter(){
         listView = (ListView)findViewById(R.id.shopping_lists);
-        ListsAdapter<String> shoppingListAdaptor = new ListsAdapter<>(this, R.layout.list_item_shopping_list, listNames);
+        ArrayAdapter<String> shoppingListAdaptor = new ArrayAdapter<>(this, R.layout.list_item_shopping_list, R.id.list_name, listNames);
         listView.setAdapter(shoppingListAdaptor);
     }
 

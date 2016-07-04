@@ -30,7 +30,7 @@ import edu.umuc.cmsc495.shoppinglist.R;
 
 public class RecipesList extends AppCompatActivity {
 
-    private ArrayAdapter<String> mRecipeAdapter;
+    private ArrayAdapter<Ingredient> mRecipeAdapter;
     private DragSortListView draggableList;
     private Recipe mRecipe = new Recipe(this);
     private final String DEFAULT_KEY = "nothin";
@@ -160,7 +160,7 @@ public class RecipesList extends AppCompatActivity {
                 new DragSortListView.DropListener() {
                     @Override
                     public void drop(int from, int to) {
-                        String item = mRecipeAdapter.getItem(from);
+                        Ingredient item = mRecipeAdapter.getItem(from);
 
                         mRecipeAdapter.remove(item);
                         mRecipeAdapter.insert(item, to);

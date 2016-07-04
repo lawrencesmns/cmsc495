@@ -6,6 +6,7 @@ package edu.umuc.cmsc495.shoppinglist.UI;
  * and drop re-ordering of list items.
  *
  * Copyright 2012 Carl Bauer
+ * Modified 2016 Lawrence Simmons
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -577,8 +578,8 @@ public class DragSortListView extends ListView {
                             if (Math.abs(velocityX) > 1000) {
                                 Rect r = mTempRect;
                                 mFloatView.getDrawingRect(r);
-                                if ( e2.getX() > r.right * 2 / 3) {
-                                    // fast fling right with release near the right edge of the screen
+                                if ( e2.getX() > r.right * 2 / 3 || e2.getX() > r.left * 2 / 3) {
+                                    // fast fling right or left
                                     dropFloatView(true);
                                 }
                             }
