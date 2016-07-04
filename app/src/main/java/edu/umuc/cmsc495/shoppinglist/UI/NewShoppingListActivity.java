@@ -1,11 +1,14 @@
 package edu.umuc.cmsc495.shoppinglist.UI;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.NavUtils;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -31,7 +34,9 @@ public class NewShoppingListActivity extends AppCompatActivity {
     private final String prefKey = "OldListName";
     SharedPreferences sharedPref;
     SharedPreferences.Editor editor;
+    String mRecipeName = null;
     private boolean exiting = false;
+    private boolean mRemoveRecipe = false;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -42,8 +47,7 @@ public class NewShoppingListActivity extends AppCompatActivity {
 
                 return true;
             case R.id.action_addRecipe:
-                //ToDo: Add ingredients to working shopping list based on recipe
-                return true;
+                return addOrRemoveRecipe();
             case android.R.id.home:
                 exiting = true;
                 NavUtils.navigateUpFromSameTask(this);
@@ -51,6 +55,49 @@ public class NewShoppingListActivity extends AppCompatActivity {
         }
 
         return false;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode == Activity.RESULT_OK){
+            switch (requestCode){
+                case Utility.REQUEST_RECIPE:
+                    mRecipeName = data.getStringExtra("RecipeName");
+                    mRemoveRecipe = false;
+                    break;
+                case Utility.REQUEST_RECIPE_FOR_REMOVAL:
+                    mRecipeName = data.getStringExtra("RecipeName");
+                    mRemoveRecipe = true;
+                    break;
+            }
+        }
+        if(requestCode == Utility.REQUEST_RECIPE){
+            if(resultCode == Activity.RESULT_OK){
+                mRecipeName = data.getStringExtra("RecipeName");
+            }
+        }
+    }
+
+    private boolean addOrRemoveRecipe() {
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+        alertBuilder.setMessage("Would you like to add or remove a recipe?")
+        .setPositiveButton("Add", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(getApplicationContext(), ManageRecipes.class);
+                startActivityForResult(intent, Utility.REQUEST_RECIPE);
+            }
+        })
+        .setNegativeButton("Remove", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(getApplicationContext(), ManageRecipes.class);
+                startActivityForResult(intent, Utility.REQUEST_RECIPE_FOR_REMOVAL);
+            }
+        });
+        alertBuilder.create().show();
+
+        return true;
     }
 
     @Override
@@ -96,10 +143,6 @@ public class NewShoppingListActivity extends AppCompatActivity {
 
         //Collect intent info
         Intent intent = getIntent();
-       // Ingredient incomingIngredient= null;
-       // try{
-       //     incomingIngredient = (Ingredient)intent.getExtras().getSerializable("Incoming ingredient");
-       // }catch(Exception e){}
 
         ShoppingList sl = null;
         try{
@@ -108,14 +151,19 @@ public class NewShoppingListActivity extends AppCompatActivity {
 
         if(sl != null){
             shoppingList = sl;
-       // }else if (incomingIngredient != null) {
-            //shoppingList.addIngredient(incomingIngredient);
-            //shoppingList = sl;
         } else {
             shoppingList.createNewList();
         }
 
         oldListName = shoppingList.getName();
+
+        //These variables are initialized in the onActivityResult method
+        if(mRecipeName != null){
+            if(mRemoveRecipe){
+                shoppingList.removeRecipe(mRecipeName);
+            }else
+                shoppingList.addRecipe(mRecipeName);
+        }
 
         mRecipeAdapter = new ArrayAdapter(this,
                 R.layout.list_item_added_ingredient, R.id.list_item_ingredient_textview,

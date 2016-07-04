@@ -1,5 +1,7 @@
 package edu.umuc.cmsc495.shoppinglist.UI;
 
+import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -193,14 +195,20 @@ public class ManageRecipes extends AppCompatActivity {
         DragSortListView.OnItemClickListener onClick = new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                Recipe recipe = new Recipe(getApplicationContext());
-                recipe.loadRecipe(listView.getItemAtPosition(position).toString());
-                Intent intent = new Intent(view.getContext(),RecipesList.class);
-
-
-                intent.putExtra("recipe", recipe);
-                startActivity(intent);
+                String recipeName = listView.getItemAtPosition(position).toString();
+                ComponentName callingActivity = getCallingActivity();
+                if(callingActivity.getClassName().equals(NewShoppingListActivity.class.getCanonicalName())){
+                    Intent returnIntent = new Intent();
+                    returnIntent.putExtra("RecipeName", recipeName);
+                    setResult(Activity.RESULT_OK,returnIntent);
+                    finish();
+                }else {
+                    Recipe recipe = new Recipe(getApplicationContext());
+                    recipe.loadRecipe(recipeName);
+                    Intent intent = new Intent(view.getContext(), RecipesList.class);
+                    intent.putExtra("recipe", recipe);
+                    startActivity(intent);
+                }
             }
         };
 
