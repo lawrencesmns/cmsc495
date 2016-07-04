@@ -3,7 +3,6 @@ package edu.umuc.cmsc495.shoppinglist.UI;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.NavUtils;
@@ -12,7 +11,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -21,7 +19,6 @@ import android.widget.Toast;
 
 
 import edu.umuc.cmsc495.shoppinglist.Objects.Ingredient;
-import edu.umuc.cmsc495.shoppinglist.Objects.MainActivity;
 import edu.umuc.cmsc495.shoppinglist.Objects.ShoppingList;
 import edu.umuc.cmsc495.shoppinglist.R;
 
@@ -172,12 +169,6 @@ public class NewShoppingListActivity extends AppCompatActivity {
             }
         };
 
-
-
-
-
-
-
         DragSortListView.DragScrollProfile ssProfile =
                 new DragSortListView.DragScrollProfile() {
                     @Override
@@ -206,8 +197,6 @@ public class NewShoppingListActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                //         .setAction("Action", null).show();
                 Intent intent = new Intent(view.getContext(), NewIngredient.class);
                 intent.putExtra("shoppinglist", shoppingList);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
