@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by James on 6/6/2016.
  */
 public class Ingredient implements Serializable {
-    private String name = "", measurement = "", countFull = "", countPartial = "";
+    private String name = "", measurement = "", countFull = "", countPartial = "", displayName = "";
 
     private boolean isCrossedOut = false;
 
@@ -16,6 +16,7 @@ public class Ingredient implements Serializable {
         this.countFull = countFull;
         this.countPartial = countPartial;
         this.isCrossedOut = isCrossedOut;
+
     }
 
     public Ingredient(){
@@ -43,6 +44,7 @@ public class Ingredient implements Serializable {
     //Set Methods
     public void setName(String name){
         this.name = name;
+        this.displayName = name;
     }
     public void setMeasurement(String Measurement){
         this.measurement = Measurement;
@@ -56,10 +58,14 @@ public class Ingredient implements Serializable {
     public void setCrossedOut(Boolean crossedOut){
         this.isCrossedOut = crossedOut;
     }
+    public void setDisplayName(String name){this.displayName = name;}
 
     //Get Methods
     public String getName(){
         return this.name;
+    }
+    public String getDisplayName(){
+        return this.displayName;
     }
     public String getMeasurement(){
         return this.measurement;
@@ -82,7 +88,7 @@ public class Ingredient implements Serializable {
     //original:
         @Override
         public String toString(){
-            return this.getCountFullString() + " " + this.getCountPartialString() + "   " + this.measurement + "    " + this.name;
+            return this.getCountFullString() + " " + this.getCountPartialString() + "   " + this.measurement + "    " + this.displayName;
         }
 
    // @Override

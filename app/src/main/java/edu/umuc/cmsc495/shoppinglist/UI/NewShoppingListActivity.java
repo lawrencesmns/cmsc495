@@ -21,7 +21,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+
 import edu.umuc.cmsc495.shoppinglist.Objects.Ingredient;
+import edu.umuc.cmsc495.shoppinglist.Objects.Recipe;
 import edu.umuc.cmsc495.shoppinglist.Objects.ShoppingList;
 import edu.umuc.cmsc495.shoppinglist.R;
 
@@ -159,10 +165,12 @@ public class NewShoppingListActivity extends AppCompatActivity {
 
         //These variables are initialized in the onActivityResult method
         if(mRecipeName != null){
+            Recipe recipe = new Recipe(this);
+            recipe.loadRecipe(mRecipeName);
             if(mRemoveRecipe){
-                shoppingList.removeRecipe(mRecipeName);
+                shoppingList.removeRecipe(recipe);
             }else
-                shoppingList.addRecipe(mRecipeName);
+                shoppingList.addRecipe(recipe);
         }
 
         mRecipeAdapter = new ArrayAdapter(this,
@@ -191,6 +199,10 @@ public class NewShoppingListActivity extends AppCompatActivity {
 
                         mRecipeAdapter.remove(item);
                         mRecipeAdapter.insert(item, to);
+
+
+
+
                     }
                 };
 

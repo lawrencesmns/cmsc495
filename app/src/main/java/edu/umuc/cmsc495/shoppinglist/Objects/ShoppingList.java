@@ -4,7 +4,11 @@ import android.content.Context;
 import android.provider.ContactsContract;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.*;
+
+import edu.umuc.cmsc495.shoppinglist.UI.RecipesList;
+
 /**
  * Created by James on 6/7/2016.
  * Last Edited by James on 6/7/2016.
@@ -13,6 +17,7 @@ public class ShoppingList extends GbList implements Serializable{
     //Class Variables
     private List<Recipe> recipesAdded = new ArrayList<>();
     private static Context context;
+
 
     public ShoppingList(Context context){
         this.createdOn = UiUtils.getDateTimeNow();
@@ -37,8 +42,9 @@ public class ShoppingList extends GbList implements Serializable{
                 this.name = sl.getName();
                 this.createdOn = sl.getCreatedOn();
                 this.lastModifiedOn = sl.getLastModifiedOn();
-                this.ingredientList = sl.getIngredientList();
                 this.recipesAdded = sl.getRecipesAdded();
+                this.ingredientList = sl.getIngredientList();
+                addIngredientsFromRecipes();
             } else {
                 throw new IllegalStateException("The context must be passed in the shopping list constructor");
             }
@@ -77,7 +83,6 @@ public class ShoppingList extends GbList implements Serializable{
 
     //endregion
 
-    //not yet implemented
    public void addRecipe(Recipe newRecipe){
        boolean alreadyAdded = false;
         for(Recipe recipe: recipesAdded){
@@ -86,13 +91,61 @@ public class ShoppingList extends GbList implements Serializable{
             }
         }
         recipesAdded.add(newRecipe);
+        addIngredientsFromRecipes();
         save();
    }
 
 
     public void removeRecipe(Recipe newRecipe){
         recipesAdded.remove(newRecipe);
+        addIngredientsFromRecipes();
         save();
+    }
+
+    private void addIngredientsFromRecipes(){
+        for(Recipe recipe:this.recipesAdded){
+            if(!recipe.isAddedToShoppingList()){
+                recipe.setIsAddedToShoppingList(true);
+                for(Ingredient ingRecipe:recipe.ingredientList){
+                    String  nonPluralRecipeIngredientName = ingRecipe.getName();
+                    if(nonPluralRecipeIngredientName.endsWith("s")){
+                        nonPluralRecipeIngredientName = nonPluralRecipeIngredientName.substring(0,nonPluralRecipeIngredientName.length()-1);
+                    }
+                    boolean found = false;
+                    for(Ingredient ingHere:this.ingredientList){
+
+                        String nonPluralListIngredientName = ingHere.getName();
+                        if (nonPluralListIngredientName.endsWith("s")) {
+                            nonPluralListIngredientName = nonPluralListIngredientName.substring(0, nonPluralListIngredientName.length() - 1);
+                        }
+                        if(nonPluralListIngredientName.equals(nonPluralRecipeIngredientName)){
+                            found = true;
+                            ingHere.setDisplayName(ingHere.getDisplayName() + "  " + buildNameString(ingRecipe) + " for " + recipe.getName());
+                        }
+                        if(!found){
+                            ingRecipe.setDisplayName(ingRecipe.getDisplayName() + "  " + buildNameString(ingRecipe) + " for " + recipe.getName());
+                            this.ingredientList.add(ingRecipe);
+                        }
+                    }
+
+                }
+
+            }
+        }
+    }
+
+    private String buildNameString(Ingredient i){
+        String result = "";
+        if(!i.getCountFullString().equals("")){
+            result = " " + i.getCountFullString();
+        }
+        if(!i.getCountPartialString().equals("")){
+            result += " " + i.getCountPartialString();
+        }
+        if(!i.getMeasurement().equals("")){
+            result += "  " + i.getMeasurement();
+        }
+        return "+ " + result + i.getName();
     }
 
 /*

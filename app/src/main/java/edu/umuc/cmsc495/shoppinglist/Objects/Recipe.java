@@ -11,7 +11,7 @@ public class Recipe extends GbList implements Serializable {
     //Class Variable Declarations
     //Class Variable Declarations
     private String instructions = "";
-
+    private boolean isAddedToShoppingList = false;
 
     private static Context context;
 
@@ -55,6 +55,9 @@ public class Recipe extends GbList implements Serializable {
         return this;
     }
 
+
+    public boolean isAddedToShoppingList() {return this.isAddedToShoppingList;}
+
     public String getInstructions(){
         return this.instructions;
     }
@@ -79,6 +82,9 @@ public class Recipe extends GbList implements Serializable {
     //for the set methods, call to save for every set
     //region set Methods
 
+    public void setIsAddedToShoppingList(boolean added){
+        this.isAddedToShoppingList = added;
+    }
     public void setInstructions(String newInstructions){
         this.instructions = newInstructions;
         save();

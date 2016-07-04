@@ -123,6 +123,38 @@ public class MainActivity extends AppCompatActivity {
             Ingredient j = i;
         }
 */
+/*
+        Recipe r6 = new Recipe(this);
+        r6.setName("grandma's pie");
+        Ingredient i1 = new Ingredient();
+        i1.setName("apple");
+        i1.setCountFull("5");
+        r6.addIngredient(i1);
+
+        Recipe r7 = new Recipe(this);
+        r7.setName("mom's pie");
+        Ingredient i2 = new Ingredient();
+        i2.setName("apples");
+        i2.setCountFull("6");
+        r7.addIngredient(i2);
+
+        ShoppingList sl7 = new ShoppingList();
+        Ingredient i3= new Ingredient();
+        i3.setName("apples");
+        i3.setCountFull("7");
+        sl7.addIngredient(i3);
+        Ingredient i4=new Ingredient();
+        i4.setName("peaches");
+        i4.setCountFull("4");
+        sl7.addIngredient(i4);
+
+        sl7.addRecipe(r6);
+        sl7.addRecipe(r7);
+
+        for(Ingredient i:sl7.getIngredientList()){
+            Ingredient j = i;
+        }
+*/
     }
 
     /*This method initializes all UI elements for this activity.*/
