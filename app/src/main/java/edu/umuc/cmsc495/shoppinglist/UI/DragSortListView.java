@@ -577,8 +577,8 @@ public class DragSortListView extends ListView {
                             if (Math.abs(velocityX) > 1000) {
                                 Rect r = mTempRect;
                                 mFloatView.getDrawingRect(r);
-                                if ( e2.getX() > r.right * 2 / 3) {
-                                    // fast fling right with release near the right edge of the screen
+                                if ( e2.getX() > r.right * 2 / 3 || e2.getX() > r.left * 2 / 3) {
+                                    // fast fling right or left
                                     dropFloatView(true);
                                 }
                             }
