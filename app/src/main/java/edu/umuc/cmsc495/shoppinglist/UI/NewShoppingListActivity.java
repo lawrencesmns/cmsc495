@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.NavUtils;
+import android.support.v4.widget.TextViewCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -248,6 +250,7 @@ public class NewShoppingListActivity extends AppCompatActivity {
         draggableList.setDivider(null);
         draggableList.setDragScrollProfile(ssProfile);
         draggableList.setOnItemClickListener(onClick);
+        draggableList.setEmptyView((TextView)findViewById(android.R.id.empty));
         Toolbar mToolbar = (Toolbar) findViewById(R.id.new_shopping_list_toolbar);
         mToolbar.setTitle("");
         setSupportActionBar(mToolbar);

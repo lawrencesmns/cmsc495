@@ -36,6 +36,19 @@
             app:remove_mode="flingRemove"
             android:id="@+id/listview_added_ingredient" />
 
+        <TextView
+            android:id="@android:id/empty"
+            android:layout_marginBottom="50dp"
+            android:paddingLeft="70dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#f000"
+            android:textSize="16sp"
+            android:layout_gravity="bottom"
+            android:text="Tap this button to add an item">
+
+        </TextView>
+
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab"
             android:layout_width="56dp"
