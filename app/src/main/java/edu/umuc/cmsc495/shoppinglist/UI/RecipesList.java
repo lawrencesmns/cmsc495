@@ -20,6 +20,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -210,6 +211,7 @@ public class RecipesList extends AppCompatActivity {
         draggableList.setOnItemClickListener(onClick);
         draggableList.setDivider(null);
         draggableList.setDragScrollProfile(ssProfile);
+        draggableList.setEmptyView((TextView)findViewById(android.R.id.empty));
 
         Toolbar mToolbar = (Toolbar) findViewById(R.id.new_recipe_list_toolbar);
         mToolbar.setTitle("");
