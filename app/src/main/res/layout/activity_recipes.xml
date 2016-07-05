@@ -38,15 +38,21 @@
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            >
+            android:weightSum="100">
 
-            <edu.umuc.cmsc495.shoppinglist.UI.DragSortListView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.5"
-                app:remove_mode="flingRemove"
-                android:scrollbarAlwaysDrawVerticalTrack="true"
-                android:id="@+id/listview_added_ingredient" />
+                android:layout_weight="50">
+
+                <edu.umuc.cmsc495.shoppinglist.UI.DragSortListView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:remove_mode="flingRemove"
+                    android:scrollbarAlwaysDrawVerticalTrack="true"
+                    android:id="@+id/listview_added_ingredient" />
+
+            </LinearLayout>
 
             <View
                 android:id="@+id/horzontal_seperator"
@@ -55,7 +61,8 @@
                 android:background="#b7b7b8"
                 android:layout_gravity="center"
                 android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"/>
+                android:layout_marginRight="16dp"
+                android:layout_weight="0"/>
 
             <EditText
                 android:id="@+id/instructions"
@@ -69,7 +76,7 @@
                 android:lines="25"
                 android:textSize="16sp"
                 android:textColor="#434343"
-                android:layout_weight="0.5"
+                android:layout_weight="50"
                 android:gravity="top|left"
 
                 />
