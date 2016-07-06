@@ -91,4 +91,5 @@ public class UiUtils {
             Float f = Float.parseFloat(operands[0]) / Float.parseFloat(operands[1]);
             return output;
         }
+
 }

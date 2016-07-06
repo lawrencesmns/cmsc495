@@ -9,8 +9,7 @@
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_addRecipe"
-        android:icon="@drawable/ic_receipt_white_24px"
+        android:icon="@drawable/ic_add_shopping_cart_white_24px"
         android:title="test"
         app:showAsAction="ifRoom"/>
-
 </menu>

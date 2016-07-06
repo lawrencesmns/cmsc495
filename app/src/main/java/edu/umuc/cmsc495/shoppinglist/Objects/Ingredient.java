@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class Ingredient implements Serializable {
     private String name = "", measurement = "", countFull = "", countPartial = "", displayName = "";
 
-    private boolean isCrossedOut = false;
+    private boolean isCrossedOut = false, useDisplayName = false;
 
     public Ingredient(String name, String measurement, String countFull, String countPartial, boolean isCrossedOut){
         this.name = name;
@@ -16,6 +16,7 @@ public class Ingredient implements Serializable {
         this.countFull = countFull;
         this.countPartial = countPartial;
         this.isCrossedOut = isCrossedOut;
+
 
     }
 
@@ -59,6 +60,7 @@ public class Ingredient implements Serializable {
         this.isCrossedOut = crossedOut;
     }
     public void setDisplayName(String name){this.displayName = name;}
+    public void setUseDisplayName(boolean use){this.useDisplayName = use;}
 
     //Get Methods
     public String getName(){
@@ -88,8 +90,27 @@ public class Ingredient implements Serializable {
     //original:
         @Override
         public String toString(){
-            return this.getCountFullString() + " " + this.getCountPartialString() + "   " + this.measurement + "    " + this.displayName;
+            if(this.useDisplayName){
+                return this.displayName;
+            }else
+            //return this.getCountFullString() + " " + this.getCountPartialString() + "   " + this.measurement + "    " + this.displayName;
+            return buildNameString(this);
         }
+
+    private String buildNameString(Ingredient i){
+        String result = "";
+        if(!i.getCountFullString().equals("")){
+            result = " " + i.getCountFullString();
+        }
+        if(!i.getCountPartialString().equals("")){
+            result += " " + i.getCountPartialString();
+        }
+        if(!i.getMeasurement().equals("")){
+            result += " " + i.getMeasurement();
+        }
+        return result + "  " + i.getDisplayName();
+    }
+
 
    // @Override
    // public String toString(){ //lawrence, somehow this changed back to the spaced version?  Changing back to comma separated for UI display --martin

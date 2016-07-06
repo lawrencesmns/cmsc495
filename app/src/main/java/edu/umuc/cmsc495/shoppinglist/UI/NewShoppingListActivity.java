@@ -136,7 +136,7 @@ public class NewShoppingListActivity extends AppCompatActivity {
             editor.putString(prefKey, shoppingList.getName());
         } else {
             editor.putString(prefKey, DEFAULT_KEY);
-            Toast toast = Toast.makeText(this, shoppingList.getName() + "shopping list saved", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(this, shoppingList.getName() + " shopping list saved", Toast.LENGTH_SHORT);
             toast.show();
         }
 
@@ -270,11 +270,16 @@ public class NewShoppingListActivity extends AppCompatActivity {
         });
 
         //Hides keyboard when Shopping List title EditText looses focus
-        EditText listTitle = (EditText)findViewById(R.id.shopping_list_title);
+        final EditText listTitle = (EditText)findViewById(R.id.shopping_list_title);
         View.OnFocusChangeListener ofcl = new View.OnFocusChangeListener(){
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 hideKeyboard(v);
+
+                //martin added 3 lines below so the title saves if a user exits the edittext
+                if(v.getId() == R.id.shopping_list_title && !v.hasFocus()){
+                    shoppingList.setName(listTitle.getText().toString());
+                }
             }
         };
 

@@ -177,12 +177,12 @@ public class RecipesList extends AppCompatActivity {
                     }
                 };
 
-        DragSortListView.OnItemClickListener onClick = new AdapterView.OnItemClickListener() {
+        final DragSortListView.OnItemClickListener onClick = new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 mRecipe.setInstructions(((EditText) findViewById(R.id.instructions)).getText().toString());
                 Intent intent = new Intent(view.getContext(), NewIngredient.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK); //martin commented: this line kept the stack
                 Ingredient i = (Ingredient) parent.getItemAtPosition(position);
                 intent.putExtra("ischanging", true);
                 intent.putExtra("ingredient", i);
@@ -234,12 +234,23 @@ public class RecipesList extends AppCompatActivity {
         });
 
         //Hides Keyboard when title and instructions edittext view loose focus
-        EditText recipeTitle = (EditText)findViewById(R.id.recipe_title);
+        final EditText recipeTitle = (EditText)findViewById(R.id.recipe_title);
         EditText recipeInstructions = (EditText)findViewById(R.id.instructions);
         View.OnFocusChangeListener ofcl = new View.OnFocusChangeListener(){
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 hideKeyboard(v);
+
+                //martin added 3 lines below so the title saves if a user exits the edittext
+                if(v.getId() == R.id.recipe_title && !v.hasFocus()){
+                    mRecipe.setName(recipeTitle.getText().toString());
+                }
+
+                //martin added 4 lines of code so tapping the + button didn't take two taps if a user was typing the instructions
+                FloatingActionButton fab1= (FloatingActionButton)findViewById(R.id.fab);
+                if(fab1.hasFocus()){
+                    fab1.performClick();
+                }
             }
         };
 

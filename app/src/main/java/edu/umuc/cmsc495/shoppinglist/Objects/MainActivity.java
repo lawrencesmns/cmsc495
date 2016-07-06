@@ -123,13 +123,18 @@ public class MainActivity extends AppCompatActivity {
             Ingredient j = i;
         }
 */
-/*
+
+/*      //testing the addrecipe ingredients to shopping list.
         Recipe r6 = new Recipe(this);
         r6.setName("grandma's pie");
         Ingredient i1 = new Ingredient();
         i1.setName("apple");
         i1.setCountFull("5");
         r6.addIngredient(i1);
+        Ingredient i5 = new Ingredient();
+        i5.setName("cinnamon");
+        i5.setCountFull("3");
+        r6.addIngredient(i5);
 
         Recipe r7 = new Recipe(this);
         r7.setName("mom's pie");
@@ -138,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
         i2.setCountFull("6");
         r7.addIngredient(i2);
 
-        ShoppingList sl7 = new ShoppingList();
+        ShoppingList sl7 = new ShoppingList(this);
         Ingredient i3= new Ingredient();
         i3.setName("apples");
         i3.setCountFull("7");
@@ -146,7 +151,9 @@ public class MainActivity extends AppCompatActivity {
         Ingredient i4=new Ingredient();
         i4.setName("peaches");
         i4.setCountFull("4");
+       // sl7.removeIngredient(i3);
         sl7.addIngredient(i4);
+
 
         sl7.addRecipe(r6);
         sl7.addRecipe(r7);
@@ -154,7 +161,12 @@ public class MainActivity extends AppCompatActivity {
         for(Ingredient i:sl7.getIngredientList()){
             Ingredient j = i;
         }
+       // sl7.removeRecipe(r7);
+        for(Ingredient i:sl7.getIngredientList()){
+            Ingredient j = i;
+        }
 */
+
     }
 
     /*This method initializes all UI elements for this activity.*/

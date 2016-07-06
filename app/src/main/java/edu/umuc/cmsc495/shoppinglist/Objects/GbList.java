@@ -12,6 +12,7 @@ import java.util.List;
 public class GbList implements Serializable {
     public String name = "", createdOn = "", lastModifiedOn = "";
     public List<Ingredient> ingredientList = new ArrayList<>();
+    public List<Ingredient> ingredientListFromStorage = new ArrayList<>();
 
    // private static Context context;
     protected boolean isPersisting = false;
@@ -69,7 +70,7 @@ public class GbList implements Serializable {
             ingredientList.add(newIngredient);
             //  sortIngredientsAscending(); //martin note: commented this as maybe the user wants to sort the ingredients - should be an option
         } else {
-            throw new IllegalArgumentException("This ingredient is already here, please modify the existing one.");
+            throw new IllegalArgumentException("Same ingredient as another, please cancel and change that one.");
         }
     }
 
@@ -123,9 +124,9 @@ public class GbList implements Serializable {
                 break;
             }
         }
-        if(found == false){
-            throw new IllegalArgumentException("Ingredient " + ingredient.getName() + " doesn't exist");
-        }
+       // if(found == false){
+       //     throw new IllegalArgumentException("Ingredient " + ingredient.getName() + " doesn't exist");
+       // }
     }
 
 

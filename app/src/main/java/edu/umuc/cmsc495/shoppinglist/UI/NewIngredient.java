@@ -109,38 +109,30 @@ public class NewIngredient extends FragmentActivity {
                 boolean moveToPage = true;
 
                 String errMsg = "";
-                if(isShoppingList){
-                    intent = new Intent(v.getContext(),NewShoppingListActivity.class);
 
-                    if(isChanging){
-                        sl.changeIngredient(ingNew,ingOld);
-                    }else{
-                        try{
+                try { //HUGE try but it's that or repeated err handling code sections
+                    if (isShoppingList) {
+                        intent = new Intent(v.getContext(), NewShoppingListActivity.class);
+                        if (isChanging) {
+                            sl.changeIngredient(ingNew, ingOld);
+                        } else {
                             sl.addIngredient(ingNew);
-                        }catch(Exception e){
-                            moveToPage = false;
-                            errMsg = e.getMessage();
                         }
-
                     }
 
-                }
-
-                if(isRecipe) {
-                    intent = new Intent(v.getContext(),RecipesList.class);
-                    if (isChanging) {
-                        recipe.changeIngredient(ingNew, ingOld);
-                    } else {
-                        try{
+                    if (isRecipe) {
+                        intent = new Intent(v.getContext(), RecipesList.class);
+                        if (isChanging) {
+                            recipe.changeIngredient(ingNew, ingOld);
+                        } else {
                             recipe.addIngredient(ingNew);
-                        }catch(Exception e){
-                            moveToPage = false;
-                            errMsg = e.getMessage();
                         }
+                        //finish();
                     }
-
-                    //finish();
-                }
+                }catch(Exception e){
+                moveToPage = false;
+                errMsg = e.getMessage();
+            }
 
                 //intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
