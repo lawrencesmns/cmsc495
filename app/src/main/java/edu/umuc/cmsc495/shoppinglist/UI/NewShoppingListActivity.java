@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -268,8 +269,23 @@ public class NewShoppingListActivity extends AppCompatActivity {
             }
         });
 
+        //Hides keyboard when Shopping List title EditText looses focus
+        EditText listTitle = (EditText)findViewById(R.id.shopping_list_title);
+        View.OnFocusChangeListener ofcl = new View.OnFocusChangeListener(){
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                hideKeyboard(v);
+            }
+        };
+
+        if (listTitle != null) {
+            listTitle.setOnFocusChangeListener(ofcl);
+        }
 
     }
 
-
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
 }

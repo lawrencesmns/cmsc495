@@ -232,5 +232,28 @@ public class RecipesList extends AppCompatActivity {
 
             }
         });
+
+        //Hides Keyboard when title and instructions edittext view loose focus
+        EditText recipeTitle = (EditText)findViewById(R.id.recipe_title);
+        EditText recipeInstructions = (EditText)findViewById(R.id.instructions);
+        View.OnFocusChangeListener ofcl = new View.OnFocusChangeListener(){
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                hideKeyboard(v);
+            }
+        };
+
+        if (recipeInstructions != null) {
+            recipeInstructions.setOnFocusChangeListener(ofcl);
+        }
+        if (recipeTitle != null) {
+            recipeTitle.setOnFocusChangeListener(ofcl);
+        }
+
+    }
+
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }
