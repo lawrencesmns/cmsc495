@@ -80,11 +80,6 @@ public class NewShoppingListActivity extends AppCompatActivity {
                     break;
             }
         }
-        if(requestCode == Utility.REQUEST_RECIPE){
-            if(resultCode == Activity.RESULT_OK){
-                mRecipeName = data.getStringExtra("RecipeName");
-            }
-        }
     }
 
     private boolean addOrRemoveRecipe() {
@@ -213,7 +208,10 @@ public class NewShoppingListActivity extends AppCompatActivity {
                 new DragSortListView.RemoveListener() {
                     @Override
                     public void remove(int which) {
-                        mRecipeAdapter.remove(mRecipeAdapter.getItem(which));
+                        Ingredient selected = mRecipeAdapter.getItem(which);
+                        shoppingList.removeIngredient(selected);
+                        mRecipeAdapter.remove(selected);
+                        mRecipeAdapter.notifyDataSetChanged();
                     }
                 };
 
