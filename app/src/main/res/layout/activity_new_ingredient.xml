@@ -18,6 +18,7 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
         <Button
+
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:paddingLeft="16dp"
@@ -52,6 +53,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="16dp"
+
         >
         <LinearLayout
             android:orientation="vertical"
@@ -77,69 +79,76 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-                <LinearLayout
-                    android:id="@+id/whole_qty"
-                    android:orientation="vertical"
-
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content">
-
+                <TableLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="70dp"
+                    >
+                    <TableRow
+                        android:padding="12dp">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingBottom="8dp"
-                        android:text="Quantity" />
+                        android:text="Quantity"
+                        android:textAlignment="viewEnd" />
 
-                    <Spinner
-                        android:id="@+id/whole_qty_item"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="@style/Base.Widget.AppCompat.Spinner.Underlined">
-                    </Spinner>
-                </LinearLayout>
+                        <Button
+                            android:paddingLeft="12dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@android:color/transparent"
+                            style="?attr/borderlessButtonStyle"
+                            android:text="New Button"
+                            android:id="@+id/bQuantityFull"
+                            android:layout_below="@+id/textView2"
+                            android:layout_alignParentLeft="true" />
+                    </TableRow>
 
-                <LinearLayout
-                    android:id="@+id/partial_qty"
-                    android:orientation="vertical"
-                    android:layout_toRightOf="@id/whole_qty"
-                    android:layout_width="90dp"
-                    android:layout_height="wrap_content">
-
+                <TableRow
+                    android:padding="12dp">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingBottom="8dp"/>
+                        android:paddingBottom="8dp"
+                        android:text="Partial"
+                        android:textAlignment="viewEnd"
+                        />
 
-                    <Spinner
-                        android:id="@+id/partial_qty_item"
+                    <Button
+                        android:paddingLeft="12dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/Base.Widget.AppCompat.Spinner.Underlined">
-                    </Spinner>
-                </LinearLayout>
+                        android:background="@android:color/transparent"
+                        style="?attr/borderlessButtonStyle"
+                        android:text="New Button"
+                        android:id="@+id/bQuantityPartial"
+                        android:layout_below="@+id/textView2"
+                        android:layout_alignParentLeft="true" />
+                </TableRow>
 
-
-                <LinearLayout
-                    android:id="@+id/mesurements"
-                    android:orientation="vertical"
-                    android:layout_toRightOf="@id/partial_qty"
-                    android:layout_width="95dp"
-                    android:layout_height="wrap_content">
-
+                <TableRow
+                    android:padding="12dp">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Measurement"
+                        android:text="Measure"
                         android:paddingBottom="8dp"/>
 
-                    <Spinner
-                        android:id="@+id/measurements_item"
+                    <Button
+                        android:paddingLeft="12dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/Base.Widget.AppCompat.Spinner.Underlined">
-                    </Spinner>
-                </LinearLayout>
+                        android:background="@android:color/transparent"
+                        style="?attr/borderlessButtonStyle"
+                        android:text="New Button"
+                        android:id="@+id/bMeasurement"
+                        android:layout_below="@+id/textView2"
+                        android:layout_alignParentLeft="true" />
+                </TableRow>
+                </TableLayout>
                 </RelativeLayout>
+
             </FrameLayout>
         </LinearLayout>
 
@@ -151,6 +160,8 @@
             android:layout_gravity="right|bottom"
             android:background="@drawable/ic_delete_black_24dp"
             android:id="@+id/edit_ingredient_delete" />
+
+
     </FrameLayout>
 
     <CheckBox

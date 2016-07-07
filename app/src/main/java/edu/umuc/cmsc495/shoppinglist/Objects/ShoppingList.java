@@ -44,7 +44,10 @@ public class ShoppingList extends GbList implements Serializable{
                 this.lastModifiedOn = sl.getLastModifiedOn();
                 this.recipesAdded = sl.getRecipesAdded();
                 this.ingredientList = sl.getIngredientList();
-                this.ingredientListFromStorage = sl.getIngredientList();
+                for(Ingredient i:this.ingredientList){
+                    this.ingredientListFromStorage.add(i);
+                }
+
                 addIngredientsFromRecipes();
             } else {
                 throw new IllegalStateException("The context must be passed in the shopping list constructor");

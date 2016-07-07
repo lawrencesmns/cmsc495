@@ -11,6 +11,8 @@ import java.util.Date;
  * Created by asdf on 6/20/2016.
  */
 public class UiUtils {
+    public final static String DEFAULT_RADIO_SELECTION_TEXT = "Not Selected";
+
     public static float round(float d, int decimalPlace) {
         BigDecimal bd = new BigDecimal(Float.toString(d));
         bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
@@ -35,7 +37,7 @@ public class UiUtils {
 
     public static final ArrayList<String> getCountFull(){
         ArrayList<String> spinnerArray =  new ArrayList<>();
-        spinnerArray.add("");
+        spinnerArray.add(DEFAULT_RADIO_SELECTION_TEXT);
         for(Integer i=1; i<=20; i++){
             spinnerArray.add(i.toString());
         }
@@ -45,7 +47,7 @@ public class UiUtils {
 
     public static final ArrayList<String> getCountPartial() {
             ArrayList<String> spinnerArray =  new ArrayList<>();
-            spinnerArray.add("");
+            spinnerArray.add(DEFAULT_RADIO_SELECTION_TEXT);
             spinnerArray.add("1/8");
             spinnerArray.add("1/4");
             spinnerArray.add("1/3");
@@ -57,12 +59,13 @@ public class UiUtils {
 
         public static final ArrayList<String> getMeasurementsShoppingList(){
             ArrayList<String> spinnerArray =  new ArrayList<>();
-            spinnerArray.add("");
+            spinnerArray.add(DEFAULT_RADIO_SELECTION_TEXT);
             spinnerArray.add("Box");
             spinnerArray.add("Bag");
             spinnerArray.add("Bottle");
             spinnerArray.add("Can");
             ArrayList<String> recipeMeasurements = getMeasurementsRecipe(); //put the small stuff at the end, after all, who buys one tsp of salt?
+            recipeMeasurements.remove(0);
             Collections.reverse(recipeMeasurements);
             for(String s: recipeMeasurements)
                 spinnerArray.add(s);
@@ -71,7 +74,7 @@ public class UiUtils {
 
         public static final ArrayList<String> getMeasurementsRecipe(){
             ArrayList<String> spinnerArray =  new ArrayList<>();
-            spinnerArray.add("");
+            spinnerArray.add(DEFAULT_RADIO_SELECTION_TEXT);
             spinnerArray.add("Pinch");
             spinnerArray.add("Tsp");
             spinnerArray.add("Tbsp");

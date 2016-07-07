@@ -1,7 +1,10 @@
 package edu.umuc.cmsc495.shoppinglist.UI;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,7 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Spinner;
+import android.widget.ListAdapter;
 
 import edu.umuc.cmsc495.shoppinglist.Objects.Ingredient;
 import edu.umuc.cmsc495.shoppinglist.Objects.Recipe;
@@ -18,18 +21,28 @@ import edu.umuc.cmsc495.shoppinglist.Objects.UiUtils;
 import edu.umuc.cmsc495.shoppinglist.R;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class NewIngredient extends FragmentActivity {
 
     Ingredient ingOld = null;
+    Ingredient ingNew = new Ingredient();
     ShoppingList sl = null;
     Recipe recipe;
     boolean isChanging = false;
     boolean isShoppingList = false;
     boolean isRecipe =false;
+    String dialogResult = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setContentView(R.layout.activity_new_ingredient);
+
+        Button bMeasurement = (Button) findViewById(R.id.bMeasurement);
+        Button bQuantityPartial = (Button) findViewById(R.id.bQuantityPartial);
+        Button bQuantityFull= (Button) findViewById(R.id.bQuantityFull);
 
         Intent intent = getIntent();
         try{
@@ -58,7 +71,7 @@ public class NewIngredient extends FragmentActivity {
         }catch(Exception e){
         }
 
-
+/*
         setContentView(R.layout.activity_new_ingredient);
         Spinner wholeQuantity = (Spinner)findViewById(R.id.whole_qty_item);
         Spinner partialQuantity = (Spinner)findViewById(R.id.partial_qty_item);
@@ -81,13 +94,18 @@ public class NewIngredient extends FragmentActivity {
         wholeQuantity.setAdapter(wholeQuantityAd);
         partialQuantity.setAdapter(partialQuantityAd);
         measurements.setAdapter(measurementsAd);
-
+*/
 
         if(ingOld != null){
-            wholeQuantity.setSelection(((ArrayAdapter<String>)wholeQuantity.getAdapter()).getPosition(ingOld.getCountFullString()));
-            partialQuantity.setSelection(((ArrayAdapter<String>)partialQuantity.getAdapter()).getPosition(ingOld.getCountPartialString()));
-            measurements.setSelection(((ArrayAdapter<String>)measurements.getAdapter()).getPosition(ingOld.getMeasurement()));
+            setButtonText(bQuantityFull, ingOld.getCountFullString());
+            setButtonText(bQuantityPartial, ingOld.getCountPartialString());
+            setButtonText(bMeasurement, ingOld.getMeasurement());
             ((EditText)findViewById(R.id.new_ingredient_name)).setText(ingOld.getName());
+        }else{
+            ingOld = new Ingredient();
+            setButtonText(bQuantityFull, "");
+            setButtonText(bQuantityPartial, "");
+            setButtonText(bMeasurement, "");
         }
 
 
@@ -97,12 +115,15 @@ public class NewIngredient extends FragmentActivity {
         btnSave.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Ingredient ingNew = new Ingredient();
-                //String[] sending = new String[4];
+
+                //Prolly redundant here
+                Button bMeasurement = (Button)findViewById(R.id.bMeasurement);
+                Button bQuantityPartial = (Button)findViewById(R.id.bQuantityPartial);
+                Button bQuantityFull= (Button)findViewById(R.id.bQuantityFull);
                 ingNew.setName(((EditText)findViewById(R.id.new_ingredient_name)).getText().toString());
-                ingNew.setCountPartial(((Spinner)findViewById(R.id.partial_qty_item)).getSelectedItem().toString());
-                ingNew.setCountFull(((Spinner)findViewById(R.id.whole_qty_item)).getSelectedItem().toString());
-                ingNew.setMeasurement(((Spinner)findViewById(R.id.measurements_item)).getSelectedItem().toString());
+                ingNew.setCountPartial(getButtonText(bQuantityPartial));
+                ingNew.setCountFull(getButtonText(bQuantityFull));
+                ingNew.setMeasurement(getButtonText(bMeasurement));
 
                 Intent intent = null;
 
@@ -191,6 +212,118 @@ public class NewIngredient extends FragmentActivity {
                 startActivity(intent);
             }
         });
+
+        final ListAdapter arrMeasurement = new ArrayAdapter(this,android.R.layout.simple_list_item_single_choice,getMeasurementChoices());
+        bMeasurement.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v)
+            {
+                final ArrayList<String> innerList = getMeasurementChoices();
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                builder.setTitle("Pick the measure");
+                AlertDialog dialog;
+
+                builder.setSingleChoiceItems(arrMeasurement,
+                        getIndex(ingNew.getMeasurement(),innerList), new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int item) {
+                                ingNew.setMeasurement(innerList.get(item));
+                                setButtonText((Button)findViewById(R.id.bMeasurement), innerList.get(item));
+                                dialog.dismiss();
+                            }
+                        });
+                dialog = builder.create();
+                dialog.show();
+                int width = (int)(getResources().getDisplayMetrics().widthPixels*0.70);
+                dialog.getWindow().setLayout(width, 1000);
+            }
+        });
+
+        final ListAdapter arrCountPartial = new ArrayAdapter(this,android.R.layout.simple_list_item_single_choice, UiUtils.getCountPartial());
+
+        bQuantityPartial.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v)
+            {
+                final ArrayList<String> innerList = UiUtils.getCountPartial();
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                builder.setTitle("Pick the partial quantity");
+                AlertDialog dialog;
+                builder.setSingleChoiceItems(arrCountPartial,
+                        getIndex(ingNew.getCountPartialString(),innerList), new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int item) {
+                                ingNew.setCountPartial(innerList.get(item));
+                                setButtonText((Button)findViewById(R.id.bQuantityPartial), innerList.get(item));
+                                dialog.dismiss();
+                            }
+                        });
+                dialog = builder.create();
+                dialog.show();
+                int width = (int)(getResources().getDisplayMetrics().widthPixels*0.70);
+                dialog.getWindow().setLayout(width, 1000);
+            }
+        });
+
+        final ListAdapter arrCountFull = new ArrayAdapter(this,android.R.layout.simple_list_item_single_choice, UiUtils.getCountFull());
+        bQuantityFull.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v)
+            {
+
+                // Creating and Building the Dialog
+                final ArrayList<String> innerList = UiUtils.getCountFull();
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                builder.setTitle("Pick the whole quantity");
+                AlertDialog dialog;
+                builder.setSingleChoiceItems(arrCountFull,
+                        getIndex(ingNew.getCountFullString(),innerList), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int item) {
+                        ingNew.setCountFull(innerList.get(item));
+                        setButtonText((Button)findViewById(R.id.bQuantityFull), innerList.get(item));
+                        dialog.dismiss();
+                    }
+                });
+                dialog = builder.create();
+                dialog.show();
+                int width = (int)(getResources().getDisplayMetrics().widthPixels*0.70);
+                dialog.getWindow().setLayout(width, 1000);
+            }
+        });
+
+
+
+    }
+
+    private String getButtonText(Button b){
+        if(b.getText().toString().equals(UiUtils.DEFAULT_RADIO_SELECTION_TEXT)){
+            return "";
+        }
+        else{
+            return b.getText().toString();
+        }
+    }
+
+    private void setButtonText(Button b, String in){
+        if(in.equals("")){
+            b.setText(UiUtils.DEFAULT_RADIO_SELECTION_TEXT);
+        }else
+            b.setText(in);
+    }
+
+    private int getIndex(String selectedItem,ArrayList<String> list) {
+
+        int index = -1;
+        if (selectedItem != null) {
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).equals(selectedItem)) {
+                    index = i;
+                }
+            }
+        }
+    return index;
+    }
+    public ArrayList<String> getMeasurementChoices() {
+        if (isShoppingList) {
+            return UiUtils.getMeasurementsShoppingList();
+        } else {
+            return UiUtils.getMeasurementsRecipe();
+        }
     }
 
 }
