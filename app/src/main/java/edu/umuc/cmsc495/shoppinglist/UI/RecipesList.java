@@ -98,7 +98,7 @@ public class RecipesList extends AppCompatActivity {
         String oldListName = sharedPref.getString(prefKey,DEFAULT_KEY);
 
         Intent intent = getIntent();
-        String incomingRecipe = intent.getStringExtra("recipe");
+        //String incomingRecipe = intent.getStringExtra("recipe");
 
       //  Ingredient incomingIngredient= null;
       //  try{

@@ -163,6 +163,7 @@ public class NewIngredient extends FragmentActivity {
 
                 if(moveToPage){
                     startActivity(intent);
+                    finish();
                 }else{
                     Toast toast = Toast.makeText(getApplicationContext(), errMsg, Toast.LENGTH_SHORT);
                     toast.show();
@@ -187,6 +188,7 @@ public class NewIngredient extends FragmentActivity {
                 intent.putExtra("list",sl);
                 intent.putExtra("recipe", recipe);
                 startActivity(intent);
+                finish();
 
             }
         });
@@ -210,6 +212,7 @@ public class NewIngredient extends FragmentActivity {
                 intent.putExtra("list",sl);
                 intent.putExtra("recipe", recipe);
                 startActivity(intent);
+                finish();
             }
         });
 
