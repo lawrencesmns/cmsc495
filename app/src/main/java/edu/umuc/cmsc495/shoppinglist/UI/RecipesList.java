@@ -225,6 +225,7 @@ public class RecipesList extends AppCompatActivity {
             public void onClick(View view) {
                 //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 //        .setAction("Action", null).show();
+                mRecipe.setInstructions(((EditText) findViewById(R.id.instructions)).getText().toString());
                 Intent intent = new Intent(view.getContext(), NewIngredient.class);
                 intent.putExtra("recipe", mRecipe);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -235,7 +236,7 @@ public class RecipesList extends AppCompatActivity {
 
         //Hides Keyboard when title and instructions edittext view loose focus
         final EditText recipeTitle = (EditText)findViewById(R.id.recipe_title);
-        EditText recipeInstructions = (EditText)findViewById(R.id.instructions);
+        final EditText recipeInstructions = (EditText)findViewById(R.id.instructions);
         View.OnFocusChangeListener ofcl = new View.OnFocusChangeListener(){
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -244,6 +245,11 @@ public class RecipesList extends AppCompatActivity {
                 //martin added 3 lines below so the title saves if a user exits the edittext
                 if(v.getId() == R.id.recipe_title && !v.hasFocus()){
                     mRecipe.setName(recipeTitle.getText().toString());
+                }
+
+                //martin added 3 lines below so the instructions save if a user exits the edittext
+                if(v.getId() == R.id.recipe_title && !v.hasFocus()){
+                    mRecipe.setInstructions(recipeInstructions.getText().toString());
                 }
 
                 //martin added 4 lines of code so tapping the + button didn't take two taps if a user was typing the instructions

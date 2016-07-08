@@ -156,7 +156,10 @@ public class NewShoppingListActivity extends AppCompatActivity {
         if(sl != null){
             shoppingList = sl;
         } else {
-            shoppingList.createNewList();
+            if(shoppingList == null || shoppingList.getName().equals("")){
+                shoppingList.createNewList();
+            }
+
         }
 
         oldListName = shoppingList.getName();

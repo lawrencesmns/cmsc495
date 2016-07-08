@@ -34,7 +34,6 @@ public class ShoppingList extends GbList implements Serializable{
 
     public ShoppingList loadShoppingList(String name){ //probably not the cleanest
         try {
-
             if (context != null) {
                 DataLayer d = new DataLayer(context);
                 ShoppingList sl = new ShoppingList();
@@ -47,7 +46,6 @@ public class ShoppingList extends GbList implements Serializable{
                 for(Ingredient i:this.ingredientList){
                     this.ingredientListFromStorage.add(i);
                 }
-
                 addIngredientsFromRecipes();
             } else {
                 throw new IllegalStateException("The context must be passed in the shopping list constructor");
@@ -89,11 +87,14 @@ public class ShoppingList extends GbList implements Serializable{
 
    public void addRecipe(Recipe newRecipe){
        boolean alreadyAdded = false;
-        for(Recipe recipe: recipesAdded){
-            if(recipe.getName().equals(newRecipe.getName())){
-                removeRecipe(newRecipe);
-            }
-        }
+       Iterator<Recipe> r = recipesAdded.iterator();
+       while(r.hasNext()){
+           Recipe rec = r.next();
+           if(rec.getName().equals(newRecipe.getName())){
+               r.remove();
+           }
+       }
+
         recipesAdded.add(newRecipe);
         save();
    }
@@ -115,6 +116,7 @@ public class ShoppingList extends GbList implements Serializable{
                 recipe.setIsAddedToShoppingList(true);
             for(Ingredient ingRecipe:recipe.ingredientList){
                 String  nonPluralRecipeIngredientName = ingRecipe.getName();
+                ingRecipe.setIsFromRecipe(true);
                 if(nonPluralRecipeIngredientName.endsWith("s")){
                     nonPluralRecipeIngredientName = nonPluralRecipeIngredientName.substring(0,nonPluralRecipeIngredientName.length()-1);
                 }
@@ -124,7 +126,7 @@ public class ShoppingList extends GbList implements Serializable{
                     if (nonPluralListIngredientName.endsWith("s")) {
                         nonPluralListIngredientName = nonPluralListIngredientName.substring(0, nonPluralListIngredientName.length() - 1);
                     }
-                    if(nonPluralListIngredientName.equals(nonPluralRecipeIngredientName)){
+                    if(nonPluralListIngredientName.equals(nonPluralRecipeIngredientName) && found == false){
                         //do arithmetic here
                         found = true;
                         ingHere.setDisplayName(ingHere.getDisplayName() + "  " + buildNameString(ingRecipe) + " for " + recipe.getName());
@@ -134,7 +136,7 @@ public class ShoppingList extends GbList implements Serializable{
                     }
                 }
                 if(!found){
-                    ingRecipe.setDisplayName(buildNameString(ingRecipe) + " for " + recipe.getName());
+                    ingRecipe.setDisplayName(buildNameString(ingRecipe)+"  " + ingRecipe.getName() + " for " + recipe.getName());
                     //Ingredient j= new Ingredient(ingRecipe.getName(), ingRecipe.getMeasurement(), ingRecipe.getCountFullString(), ingRecipe.getCountPartialString(),false);
                     //clear
                     //ingRecipe.setCountFull("");
@@ -165,7 +167,7 @@ public class ShoppingList extends GbList implements Serializable{
         if(!i.getMeasurement().equals("")){
             result += " " + i.getMeasurement();
         }
-        return "+" + result +"  " + i.getName();
+        return "+" + result;
     }
 
 /*
@@ -202,19 +204,35 @@ public class ShoppingList extends GbList implements Serializable{
     public void removeIngredient(Ingredient ingredient){
         removeIngredientFromStorageList(ingredient);
         super.removeIngredient(ingredient);
+
+        for(Recipe r:this.recipesAdded){
+            boolean found = false;
+            Iterator<Ingredient> i = r.ingredientList.iterator();
+            while(i.hasNext()){
+                Ingredient ing = i.next();
+                if(ingredient.getName().equals(ing.getName())){
+                    i.remove();
+                }
+            }
+        }
         save();
     }
 
     public void changeIngredient(Ingredient revisedIngredient, Ingredient originalIngredient){
         removeIngredientFromStorageList(originalIngredient);
+        if(originalIngredient.getIsFromRecipe()){
+            removeIngredient(originalIngredient);
+        }
         this.ingredientListFromStorage.add(revisedIngredient);
         super.changeIngredient(revisedIngredient, originalIngredient);
         save();
     }
-    private void removeIngredientFromStorageList(Ingredient ing){
-        for(int i=0; i< ingredientListFromStorage.size();i++){
-            if(ingredientListFromStorage.get(i).getName().equals(ing.getName())){
-                this.ingredientListFromStorage.remove(this.ingredientListFromStorage.get(i));
+    private void removeIngredientFromStorageList(Ingredient ingStor){
+        Iterator<Ingredient> i = ingredientListFromStorage.iterator();
+        while(i.hasNext()){
+            Ingredient ing = i.next();
+            if(ing.getName().equals(ingStor.getName())){
+                i.remove();
             }
         }
     }
@@ -227,20 +245,29 @@ public class ShoppingList extends GbList implements Serializable{
 
             this.lastModifiedOn = UiUtils.formatDate(new Date());
 
+            Iterator<Ingredient> i = ingredientList.iterator();
+            while(i.hasNext()){
+                Ingredient ing = i.next();
+                if(ing.getIsFromRecipe()){
+                    i.remove();
+                }
+            }
+
             checkValue = d.saveShoppingList(this);
 
             this.ingredientList.clear();
-            for(Ingredient i:this.ingredientListFromStorage ){
-                this.ingredientList.add(i);
+            for(Ingredient ing:this.ingredientListFromStorage ){
+                this.ingredientList.add(ing);
             }
             for(Recipe r:this.recipesAdded){
                 r.setIsAddedToShoppingList(false);
-                for(Ingredient i:r.ingredientList){
-                    i.setDisplayName(i.getName());
+                for(Ingredient ing:r.ingredientList){
+                    ing.setIsFromRecipe(true);
+                    ing.setDisplayName(ing.getName());
                 }
             }
-            for(Ingredient i:this.ingredientList){
-                i.setDisplayName(i.getName());
+            for(Ingredient ing:this.ingredientList){
+                ing.setDisplayName(ing.getName());
             }
             addIngredientsFromRecipes();
 

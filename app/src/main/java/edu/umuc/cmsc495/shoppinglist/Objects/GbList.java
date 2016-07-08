@@ -75,8 +75,8 @@ public class GbList implements Serializable {
     }
 
     public void changeIngredient(Ingredient revisedIngredient, Ingredient originalIngredient) {
-        removeIngredient(originalIngredient);
-        addIngredient(revisedIngredient);
+        this.removeIngredient(originalIngredient);
+        this.addIngredient(revisedIngredient);
     }
 
     //Checks if the ingredient name is already present

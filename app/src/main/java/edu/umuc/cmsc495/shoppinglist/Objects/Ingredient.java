@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class Ingredient implements Serializable {
     private String name = "", measurement = "", countFull = "", countPartial = "", displayName = "";
 
-    private boolean isCrossedOut = false, useDisplayName = false;
+    private boolean isCrossedOut = false, useDisplayName = false, isFromRecipe = false;
 
     public Ingredient(String name, String measurement, String countFull, String countPartial, boolean isCrossedOut){
         this.name = name;
@@ -61,6 +61,7 @@ public class Ingredient implements Serializable {
     }
     public void setDisplayName(String name){this.displayName = name;}
     public void setUseDisplayName(boolean use){this.useDisplayName = use;}
+    public void setIsFromRecipe(boolean use){this.isFromRecipe= use;}
 
     //Get Methods
     public String getName(){
@@ -85,6 +86,9 @@ public class Ingredient implements Serializable {
     }
     public Boolean getCrossed(){
         return this.isCrossedOut;
+    }
+    public Boolean getIsFromRecipe(){
+        return this.isFromRecipe;
     }
 
     //original:
