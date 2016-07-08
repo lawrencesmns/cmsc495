@@ -11,7 +11,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -21,6 +23,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
+import edu.umuc.cmsc495.shoppinglist.Objects.DataLayer;
 import edu.umuc.cmsc495.shoppinglist.Objects.FileList;
 import edu.umuc.cmsc495.shoppinglist.Objects.FileListItem;
 import edu.umuc.cmsc495.shoppinglist.Objects.ShoppingList;
@@ -45,6 +48,8 @@ public class ManageShoppingLists extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle(R.string.shopping_lists);
+
+
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -177,8 +182,9 @@ public class ManageShoppingLists extends AppCompatActivity {
     //Sets the Adapter that populates the ListView
     public void setListViewAdapter(){
         listView = (ListView)findViewById(R.id.shopping_lists);
-        ArrayAdapter<String> shoppingListAdaptor = new ArrayAdapter<>(this, R.layout.list_item_shopping_list, R.id.list_name, listNames);
+        ListsAdapter<String> shoppingListAdaptor = new ListsAdapter<>(this, R.layout.list_item_shopping_list,listNames);
         listView.setAdapter(shoppingListAdaptor);
+
     }
 
     //Populates an ArrayList of Shopping List Names
