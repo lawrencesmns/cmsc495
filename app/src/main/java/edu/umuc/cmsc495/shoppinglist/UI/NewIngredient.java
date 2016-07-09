@@ -41,6 +41,7 @@ public class NewIngredient extends FragmentActivity {
     boolean isRecipe =false;
     String dialogResult = "";
     Context context;
+    int startingIngCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,6 +154,7 @@ public class NewIngredient extends FragmentActivity {
                 try { //HUGE try but it's that or repeated err handling code sections
                     if (isShoppingList) {
                         intent = new Intent(v.getContext(), NewShoppingListActivity.class);
+                        startingIngCount = sl.getIngredientList().size();
                         if (isChanging) {
                             sl.changeIngredient(ingNew, ingOld);
                         } else {
@@ -183,6 +185,9 @@ public class NewIngredient extends FragmentActivity {
                 if(moveToPage){
                     startActivity(intent);
                     finish();
+                    if(startingIngCount==0 && isShoppingList){
+                        Toast.makeText(getApplicationContext(),"Long press an item to cross it off",Toast.LENGTH_LONG).show();
+                    }
                 }else{
                     Toast toast = Toast.makeText(getApplicationContext(), errMsg, Toast.LENGTH_LONG);
                     toast.show();
