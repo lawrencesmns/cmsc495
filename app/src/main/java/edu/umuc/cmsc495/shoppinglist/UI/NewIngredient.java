@@ -118,7 +118,7 @@ public class NewIngredient extends FragmentActivity {
             setButtonText(bMeasurement, ingOld.getMeasurement());
             ((EditText)findViewById(R.id.new_ingredient_name)).setText(ingOld.getName());
             if(ingOld.getName() != ingOld.getDisplayName()){
-                ((TextView)findViewById(R.id.ingredient_display_name)).setText("Save replaces:  " + ingOld.getDisplayName());
+                ((TextView)findViewById(R.id.ingredient_display_name)).setText("Save replaces:  " + ingOld.toString());
             }
         }else{
             ingOld = new Ingredient();
@@ -256,7 +256,8 @@ public class NewIngredient extends FragmentActivity {
                 dialog = builder.create();
                 dialog.show();
                 int width = (int)(getResources().getDisplayMetrics().widthPixels*0.70);
-                dialog.getWindow().setLayout(width, 1000);
+                int height = (int)(getResources().getDisplayMetrics().heightPixels*0.95);
+                dialog.getWindow().setLayout(width, height);
             }
         });
 
@@ -281,7 +282,8 @@ public class NewIngredient extends FragmentActivity {
                 dialog = builder.create();
                 dialog.show();
                 int width = (int)(getResources().getDisplayMetrics().widthPixels*0.70);
-                dialog.getWindow().setLayout(width, 1000);
+                int height = (int)(getResources().getDisplayMetrics().widthPixels*0.90);
+                dialog.getWindow().setLayout(width, height);
             }
         });
 
@@ -306,7 +308,9 @@ public class NewIngredient extends FragmentActivity {
                 dialog = builder.create();
                 dialog.show();
                 int width = (int)(getResources().getDisplayMetrics().widthPixels*0.70);
-                dialog.getWindow().setLayout(width, 1000);
+                int height = (int)(getResources().getDisplayMetrics().heightPixels*0.95);
+
+                dialog.getWindow().setLayout(width, height);
             }
         });
      }

@@ -87,6 +87,8 @@ public class SAXHandler_ShoppingList extends DefaultHandler{
             Log.i("count full;", elementValue);
         } else if (qName.equalsIgnoreCase("CountPartR")) {
             tempIngredient.setCountPartial(elementValue);
+        } else if (qName.equalsIgnoreCase("IsCrossedOutR")) {
+            tempIngredient.setCrossedOut(Boolean.parseBoolean(elementValue));
             tempRecipe.addIngredient(tempIngredient);
         }
 

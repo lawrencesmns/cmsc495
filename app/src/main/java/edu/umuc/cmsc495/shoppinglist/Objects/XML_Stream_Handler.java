@@ -204,6 +204,10 @@ public class XML_Stream_Handler{
                     countPartial.appendChild(doc.createTextNode(i.getCountPartialString()));
                     ingredient.appendChild(countPartial);
 
+                    Element isCrossedOutR = doc.createElement("IsCrossedOutR");
+                    isCrossedOutR.appendChild(doc.createTextNode(i.getCrossed().toString()));
+                    ingredient.appendChild(isCrossedOutR);
+                    
                     ingredientsR.appendChild(ingredient);
 
                 }

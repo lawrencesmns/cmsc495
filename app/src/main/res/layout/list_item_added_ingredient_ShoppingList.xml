@@ -6,7 +6,9 @@
         android:layout_height="@dimen/list_item_height"
         android:layout_marginLeft="@dimen/list_item_padding_sides"
         android:layout_marginRight="@dimen/list_item_padding_sides"
-        android:layout_marginTop="@dimen/list_item_padding_top">
+        android:layout_marginTop="@dimen/list_item_padding_top"
+        >
+
 
         <TextView
             android:layout_width="0dp"
@@ -14,7 +16,10 @@
             android:text="New Text"
             android:id="@+id/list_item_ingredient_textview"
             android:layout_weight="6"
-            android:gravity="center_vertical" />
+            android:gravity="center_vertical"
+            android:textSize="16sp"
+            android:textColor="#434343"
+            />
 
         <FrameLayout
             android:id="@id/drag"

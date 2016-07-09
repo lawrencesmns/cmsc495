@@ -5,29 +5,31 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.NavUtils;
-import android.support.v4.widget.TextViewCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
 
 import edu.umuc.cmsc495.shoppinglist.Objects.Ingredient;
 import edu.umuc.cmsc495.shoppinglist.Objects.Recipe;
@@ -174,14 +176,14 @@ public class NewShoppingListActivity extends AppCompatActivity {
                 shoppingList.addRecipe(recipe);
         }
 
-        mRecipeAdapter = new ArrayAdapter(this,
-                R.layout.list_item_added_ingredient, R.id.list_item_ingredient_textview,
-                shoppingList.ingredientList);
+        mRecipeAdapter = new  NewShoppingListAdapter(this, R.layout.list_item_added_ingredient_shoppinglist, (ArrayList<Ingredient>) shoppingList.ingredientList);
 
         draggableList = (DragSortListView) findViewById(R.id.listview_added_ingredient);
         draggableList.setAdapter(mRecipeAdapter);
 
         ((EditText) findViewById(R.id.shopping_list_title)).setText(oldListName);
+
+
     }
 
 
@@ -192,6 +194,7 @@ public class NewShoppingListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_shopping_list);
 
 
+
         DragSortListView.DropListener onDrop =
                 new DragSortListView.DropListener() {
                     @Override
@@ -199,12 +202,10 @@ public class NewShoppingListActivity extends AppCompatActivity {
                         Ingredient item = mRecipeAdapter.getItem(from);
 
                         mRecipeAdapter.remove(item);
+                        //mRecipeAdapter.notifyDataSetChanged();
                         mRecipeAdapter.insert(item, to);
-
-
-
-
-                    }
+                        mRecipeAdapter.notifyDataSetChanged();
+                     }
                 };
 
         DragSortListView.RemoveListener onRemove =
@@ -221,7 +222,6 @@ public class NewShoppingListActivity extends AppCompatActivity {
         DragSortListView.OnItemClickListener onClick = new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                 Intent intent = new Intent(view.getContext(), NewIngredient.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 Ingredient i = (Ingredient)parent.getItemAtPosition(position);
@@ -230,6 +230,23 @@ public class NewShoppingListActivity extends AppCompatActivity {
                 intent.putExtra("shoppinglist", shoppingList);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+            }
+        };
+
+        DragSortListView.OnItemLongClickListener onCheck = new AdapterView.OnItemLongClickListener()  {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Ingredient i = (Ingredient)parent.getItemAtPosition(position);
+                TextView row = (TextView) view.findViewById(R.id.list_item_ingredient_textview);
+                if(!i.getCrossed()){
+                    row.setPaintFlags(row.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    i.setCrossedOut(true);
+                }else{
+                    row.setPaintFlags(row.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
+                    i.setCrossedOut(false);
+                }
+                shoppingList.changeIngredient(i,i);
+                return true;
             }
         };
 
@@ -252,6 +269,8 @@ public class NewShoppingListActivity extends AppCompatActivity {
         draggableList.setDivider(null);
         draggableList.setDragScrollProfile(ssProfile);
         draggableList.setOnItemClickListener(onClick);
+        draggableList.setOnItemLongClickListener(onCheck);
+
         draggableList.setEmptyView((TextView)findViewById(android.R.id.empty));
         Toolbar mToolbar = (Toolbar) findViewById(R.id.new_shopping_list_toolbar);
         mToolbar.setTitle("");

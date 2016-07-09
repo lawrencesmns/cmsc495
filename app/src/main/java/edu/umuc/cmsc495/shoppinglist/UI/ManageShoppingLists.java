@@ -41,6 +41,36 @@ public class ManageShoppingLists extends AppCompatActivity {
         setContentView(R.layout.activity_manage_shopping_lists);
 
         fillListNames();
+
+        clearLists();
+        fillListNames();
+        setListViewAdapter();
+        Collections.sort(lists, new Comparator<FileListItem>() {
+            @Override
+            public int compare(FileListItem lhs, FileListItem rhs) {
+                DateFormat df = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT);
+                Date date1 = null;
+                Date date2 = null;
+                try {
+                    date1 = df.parse(lhs.getModifiedOn());
+                    date2 = df.parse(rhs.getModifiedOn());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                if (date1 != null) {
+                    if (date1.after(date2))
+                        return -1;
+                    else if (date1.equals(date2)) // it's equals
+                        return 0;
+                    else
+                        return 1;
+                }
+                return 0;
+            }
+
+
+        });
+        fillListNames();
         setListViewAdapter();
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.manage_shopping_lists_toolbar);

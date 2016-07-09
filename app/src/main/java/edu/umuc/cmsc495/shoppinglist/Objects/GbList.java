@@ -4,6 +4,7 @@ import android.content.Context;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -116,12 +117,11 @@ public class GbList implements Serializable {
     }
 
     public void removeIngredient(Ingredient ingredient){
-        boolean found = false;
-        for (Ingredient i: ingredientList) {
-            if(i.getName().compareTo(ingredient.getName()) == 0){
-                ingredientList.remove(i);
-                found = true;
-                break;
+        Iterator<Ingredient> i = ingredientList.iterator();
+        while(i.hasNext()){
+            Ingredient ing = i.next();
+            if(ing.getName().equals(ingredient.getName())){
+                i.remove();
             }
         }
        // if(found == false){

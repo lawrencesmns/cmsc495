@@ -5,8 +5,5 @@
         android:id="@+id/action_email"
         android:icon="@drawable/ic_email_white_24px"
         app:showAsAction="ifRoom"/>
-    <item
-        android:id="@+id/action_addRecipe"
-        android:icon="@drawable/ic_add_shopping_cart_white_24px"
-        app:showAsAction="ifRoom"/>
+
 </menu>

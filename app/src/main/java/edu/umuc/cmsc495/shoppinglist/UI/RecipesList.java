@@ -4,10 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.opengl.EGLDisplay;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,10 +19,6 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import edu.umuc.cmsc495.shoppinglist.Objects.Ingredient;
 import edu.umuc.cmsc495.shoppinglist.Objects.Recipe;
@@ -129,7 +122,7 @@ public class RecipesList extends AppCompatActivity {
         oldListName = mRecipe.getName();
 
         mRecipeAdapter = new ArrayAdapter(this,
-                R.layout.list_item_added_ingredient, R.id.list_item_ingredient_textview, mRecipe.getIngredientList());
+                R.layout.list_item_added_ingredient_recipe, R.id.list_item_ingredient_textview, mRecipe.getIngredientList());
 
         draggableList = (DragSortListView) findViewById(R.id.listview_added_ingredient);
         draggableList.setAdapter(mRecipeAdapter);

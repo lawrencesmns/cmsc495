@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by James on 6/6/2016.
  */
 public class Ingredient implements Serializable {
-    private String name = "", measurement = "", countFull = "", countPartial = "", displayName = "";
+    private String name = "", measurement = "", countFull = "", countPartial = "", displayName = "", recipeName = "";
 
     private boolean isCrossedOut = false, useDisplayName = false, isFromRecipe = false;
 
@@ -62,6 +62,7 @@ public class Ingredient implements Serializable {
     public void setDisplayName(String name){this.displayName = name;}
     public void setUseDisplayName(boolean use){this.useDisplayName = use;}
     public void setIsFromRecipe(boolean use){this.isFromRecipe= use;}
+    public void setRecipeName(String name){this.recipeName = name;}
 
     //Get Methods
     public String getName(){
@@ -70,6 +71,7 @@ public class Ingredient implements Serializable {
     public String getDisplayName(){
         return this.displayName;
     }
+
     public String getMeasurement(){
         return this.measurement;
     }
@@ -79,6 +81,10 @@ public class Ingredient implements Serializable {
     public String getCountPartialString(){
         return this.countPartial;
     }
+    public String getRecipeName(){
+        return this.recipeName;
+    }
+
     public Float getCountFloat(){
         Float full = Float.parseFloat(this.countFull );
         Float partial = UiUtils.getDecimalFromFraction(this.countPartial);
@@ -90,6 +96,10 @@ public class Ingredient implements Serializable {
     public Boolean getIsFromRecipe(){
         return this.isFromRecipe;
     }
+    public Boolean getUseDisplayName(){
+        return this.useDisplayName;
+    }
+
 
     //original:
         @Override
