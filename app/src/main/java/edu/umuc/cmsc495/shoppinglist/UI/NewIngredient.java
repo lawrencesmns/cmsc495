@@ -330,6 +330,8 @@ public class NewIngredient extends FragmentActivity {
         };
         if (ingredientName != null) {
             ingredientName.setOnFocusChangeListener(ofcl);
+            ingredientName.requestFocus();
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         }
     }
 

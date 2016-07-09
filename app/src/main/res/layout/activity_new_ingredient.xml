@@ -53,20 +53,30 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="16dp"
-
+        android:clickable="true"
+        android:focusableInTouchMode="true"
         >
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="textEnd"
+                android:id="@+id/ingredient_display_name"
+                />
 
             <EditText
                 android:id="@+id/new_ingredient_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Item Name"
-                />
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+            />
+
 
             <FrameLayout
                 android:orientation="horizontal"
@@ -95,6 +105,8 @@
 
                         <Button
                             android:paddingLeft="12dp"
+                            android:minWidth="100dp"
+                            android:minHeight="50dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@android:color/transparent"
@@ -119,6 +131,8 @@
                         android:paddingLeft="12dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:minWidth="100dp"
+                        android:minHeight="50dp"
                         android:background="@android:color/transparent"
                         style="?attr/borderlessButtonStyle"
                         android:text="New Button"
@@ -139,6 +153,8 @@
                         android:paddingLeft="12dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:minWidth="100dp"
+                        android:minHeight="50dp"
                         android:background="@android:color/transparent"
                         style="?attr/borderlessButtonStyle"
                         android:text="New Button"

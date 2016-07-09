@@ -57,12 +57,17 @@
             android:id="@+id/fab"
             android:layout_width="56dp"
             android:layout_height="56dp"
-            android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
+            android:background="@color/buttonBackgroundColor"
+            app:borderWidth="0dp"
+            android:scaleType="centerInside"
+            android:adjustViewBounds="true"
+            android:layout_gravity="bottom|right"
             android:tint="@android:color/white"
             android:src="@android:drawable/ic_input_add"
+            android:paddingTop="50dp"
             android:focusable="true"
             android:focusableInTouchMode="true"/>
-    </FrameLayout>
+        </FrameLayout>
 
 </LinearLayout>
