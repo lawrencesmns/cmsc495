@@ -246,17 +246,21 @@ public class RecipesList extends AppCompatActivity {
                 if(v.getId() == R.id.recipe_title && !v.hasFocus()){
                     mRecipe.setName(recipeTitle.getText().toString());
                 }
-
                 //martin added 3 lines below so the instructions save if a user exits the edittext
                 if(v.getId() == R.id.recipe_title && !v.hasFocus()){
                     mRecipe.setInstructions(recipeInstructions.getText().toString());
                 }
+                if(!recipeTitle.hasFocus() && !recipeInstructions.hasFocus() && !draggableList.hasFocus()){
+                    FloatingActionButton fab1= (FloatingActionButton)findViewById(R.id.fab);
+                    fab1.requestFocus();
+                }
 
                 //martin added 4 lines of code so tapping the + button didn't take two taps if a user was typing the instructions
-                FloatingActionButton fab1= (FloatingActionButton)findViewById(R.id.fab);
-                if(fab1.hasFocus()){
-                    fab1.performClick();
-                }
+
+
+                //if(fab1.hasFocus()){
+                //    fab1.performClick();
+                //}
             }
         };
 

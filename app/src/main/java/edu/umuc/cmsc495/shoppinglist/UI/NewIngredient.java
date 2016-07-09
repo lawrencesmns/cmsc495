@@ -1,5 +1,7 @@
 package edu.umuc.cmsc495.shoppinglist.UI;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
@@ -7,7 +9,10 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,6 +24,8 @@ import edu.umuc.cmsc495.shoppinglist.Objects.Recipe;
 import edu.umuc.cmsc495.shoppinglist.Objects.ShoppingList;
 import edu.umuc.cmsc495.shoppinglist.Objects.UiUtils;
 import edu.umuc.cmsc495.shoppinglist.R;
+
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -33,6 +40,7 @@ public class NewIngredient extends FragmentActivity {
     boolean isShoppingList = false;
     boolean isRecipe =false;
     String dialogResult = "";
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +79,14 @@ public class NewIngredient extends FragmentActivity {
         }catch(Exception e){
         }
 
+
+
+        //       if (((EditText)findViewById(R.id.new_ingredient_name)).getText() != null) {
+ //           .setOnFocusChangeListener(ofcl);
+ //       }
+
+
+
 /*
         setContentView(R.layout.activity_new_ingredient);
         Spinner wholeQuantity = (Spinner)findViewById(R.id.whole_qty_item);
@@ -101,6 +117,9 @@ public class NewIngredient extends FragmentActivity {
             setButtonText(bQuantityPartial, ingOld.getCountPartialString());
             setButtonText(bMeasurement, ingOld.getMeasurement());
             ((EditText)findViewById(R.id.new_ingredient_name)).setText(ingOld.getName());
+            if(ingOld.getName() != ingOld.getDisplayName()){
+                ((TextView)findViewById(R.id.ingredient_display_name)).setText("Save replaces:  " + ingOld.getDisplayName());
+            }
         }else{
             ingOld = new Ingredient();
             setButtonText(bQuantityFull, "");
@@ -165,7 +184,7 @@ public class NewIngredient extends FragmentActivity {
                     startActivity(intent);
                     finish();
                 }else{
-                    Toast toast = Toast.makeText(getApplicationContext(), errMsg, Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(getApplicationContext(), errMsg, Toast.LENGTH_LONG);
                     toast.show();
                 }
 
@@ -291,7 +310,29 @@ public class NewIngredient extends FragmentActivity {
 
 
 
+        //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        //ingredientName.setOnFocusChangeListener(ofcl);
+    //    ingredientName.setFocusableInTouchMode(false);
     }
+    protected void onPostResume() {
+        super.onPostResume();
+        LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        EditText ingredientName = (EditText) findViewById(R.id.new_ingredient_name);
+        //EditText ingredientName = (EditText)findViewById(R.id.new_ingredient_name);
+
+        View.OnFocusChangeListener ofcl = new View.OnFocusChangeListener(){
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                hideKeyboardFrom(v);
+
+                //martin added 3 lines below so the title saves if a user exits the edittext
+            }
+        };
+        if (ingredientName != null) {
+            ingredientName.setOnFocusChangeListener(ofcl);
+        }
+    }
+
 
     private String getButtonText(Button b){
         if(b.getText().toString().equals(UiUtils.DEFAULT_RADIO_SELECTION_TEXT)){
@@ -327,6 +368,10 @@ public class NewIngredient extends FragmentActivity {
         } else {
             return UiUtils.getMeasurementsRecipe();
         }
+    }
+    public void hideKeyboardFrom(View v) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
     }
 
 }
