@@ -239,6 +239,7 @@ public class NewIngredient extends FragmentActivity {
         bMeasurement.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v)
             {
+                hideKeyboardFrom(v);
                 final ArrayList<String> innerList = getMeasurementChoices();
                 AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
                 builder.setTitle("Pick the measure");
@@ -264,6 +265,7 @@ public class NewIngredient extends FragmentActivity {
         bQuantityPartial.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v)
             {
+                hideKeyboardFrom(v);
                 final ArrayList<String> innerList = UiUtils.getCountPartial();
                 AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
                 builder.setTitle("Pick the partial quantity");
@@ -287,7 +289,7 @@ public class NewIngredient extends FragmentActivity {
         bQuantityFull.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v)
             {
-
+                hideKeyboardFrom(v);
                 // Creating and Building the Dialog
                 final ArrayList<String> innerList = UiUtils.getCountFull();
                 AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
@@ -307,13 +309,7 @@ public class NewIngredient extends FragmentActivity {
                 dialog.getWindow().setLayout(width, 1000);
             }
         });
-
-
-
-        //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-        //ingredientName.setOnFocusChangeListener(ofcl);
-    //    ingredientName.setFocusableInTouchMode(false);
-    }
+     }
     protected void onPostResume() {
         super.onPostResume();
         LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -331,7 +327,6 @@ public class NewIngredient extends FragmentActivity {
             ingredientName.setOnFocusChangeListener(ofcl);
             if(ingOld.getName().equals("")){
                 ingredientName.requestFocus();
-
                 getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
             }
         }
