@@ -318,20 +318,22 @@ public class NewIngredient extends FragmentActivity {
         super.onPostResume();
         LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         EditText ingredientName = (EditText) findViewById(R.id.new_ingredient_name);
-        //EditText ingredientName = (EditText)findViewById(R.id.new_ingredient_name);
 
         View.OnFocusChangeListener ofcl = new View.OnFocusChangeListener(){
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                hideKeyboardFrom(v);
-
-                //martin added 3 lines below so the title saves if a user exits the edittext
+                if(!hasFocus){
+                    hideKeyboardFrom(v);
+                }
             }
         };
         if (ingredientName != null) {
             ingredientName.setOnFocusChangeListener(ofcl);
-            ingredientName.requestFocus();
-            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+            if(ingOld.getName().equals("")){
+                ingredientName.requestFocus();
+
+                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+            }
         }
     }
 
