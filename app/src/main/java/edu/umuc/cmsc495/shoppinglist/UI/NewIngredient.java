@@ -41,6 +41,7 @@ public class NewIngredient extends FragmentActivity {
     boolean isRecipe =false;
     String dialogResult = "";
     Context context;
+    int startingIngCount=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,6 +157,7 @@ public class NewIngredient extends FragmentActivity {
                         if (isChanging) {
                             sl.changeIngredient(ingNew, ingOld);
                         } else {
+                            startingIngCount = sl.getIngredientList().size();
                             sl.addIngredient(ingNew);
                         }
                     }
@@ -183,6 +185,9 @@ public class NewIngredient extends FragmentActivity {
                 if(moveToPage){
                     startActivity(intent);
                     finish();
+                    if(startingIngCount==0 && isShoppingList){
+                        Toast.makeText(getApplicationContext(),"Long press an item to cross it off",Toast.LENGTH_LONG).show();
+                    }
                 }else{
                     Toast toast = Toast.makeText(getApplicationContext(), errMsg, Toast.LENGTH_LONG);
                     toast.show();
