@@ -575,7 +575,7 @@ public class DragSortListView extends ListView {
                     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
                                            float velocityY) {
                         if (mFloatView != null) {
-                            if (Math.abs(velocityX) > 1000) {
+                            if (Math.abs(velocityX) > 500) {
                                 Rect r = mTempRect;
                                 mFloatView.getDrawingRect(r);
                                 if ( e2.getX() > r.right * 2 / 3 || e2.getX() > r.left * 2 / 3) {
