@@ -131,6 +131,7 @@ public class NewIngredient extends FragmentActivity {
 
         Button btnSave = (Button) findViewById(R.id.save);
         Button btnCancel = (Button) findViewById(R.id.cancel);
+        Button btnHelp = (Button) findViewById(R.id.help);
         ImageButton btnDelete = (ImageButton) findViewById(R.id.edit_ingredient_delete);
         btnSave.setOnClickListener(new Button.OnClickListener(){
             @Override
