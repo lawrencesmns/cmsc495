@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -227,6 +228,7 @@ public class ManageRecipes extends AppCompatActivity {
                 String recipeName = listView.getItemAtPosition(position).toString();
                 ComponentName callingActivity = getCallingActivity();
                 if(callingActivity != null && callingActivity.getClassName().equals(NewShoppingListActivity.class.getCanonicalName())){
+                    Log.d("Boop", "Boops");
                     Intent returnIntent = new Intent();
                     returnIntent.putExtra("RecipeName", recipeName);
                     setResult(Activity.RESULT_OK,returnIntent);
